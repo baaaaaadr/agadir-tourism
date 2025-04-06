@@ -1,0 +1,24 @@
+{
+  "name": "Visit Agadir - Guide Touristique",
+  "short_name": "Agadir Guide",
+  "description": "Votre guide PWA pour découvrir les merveilles d'Agadir.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0077cc",   /* CHANGE CETTE COULEUR si tu veux un autre thème */
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/icons/icon-192x192.png", /* Assure-toi que le chemin est correct */
+      "type": "image/png",
+      "sizes": "192x192",
+       "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-512x512.png", /* Assure-toi que le chemin est correct */
+      "type": "image/png",
+      "sizes": "512x512",
+       "purpose": "any maskable"
+    }
+  ]
+}
