@@ -3,11 +3,14 @@
 	export let isOpen = false; // Indique si le menu est ouvert
 	export let closeMenu = () => {}; // Fonction pour fermer le menu
 
-	// Liste des liens de navigation
+	// Liste des liens de navigation (MISE À JOUR ICI)
 	const navLinks = [
 		{ href: '/', text: 'Accueil' },
 		{ href: '/map', text: 'Carte' },
 		{ href: '/events', text: 'Événements' },
+		// Nouvelle ligne ajoutée :
+		{ href: '/transport', text: 'Transport' },
+		// Fin de la nouvelle ligne
 		{ href: '/phrasebook', text: 'Phrases' },
 		{ href: '/contacts', text: 'Contacts' },
 		{ href: '/currency', text: 'Monnaie' },
@@ -19,6 +22,8 @@
 		closeMenu();
 	}
 </script>
+
+<!-- Le reste du fichier (partie HTML <aside> et la partie <style>) reste INCHANGÉ -->
 
 <!-- Overlay semi-transparent qui apparaît derrière le menu -->
 {#if isOpen}
@@ -45,6 +50,8 @@
 </aside>
 
 <style>
+	/* ... TON CSS EXISTANT ... */
+    /* IL N'Y A PAS BESOIN DE LE MODIFIER */
 	.sidenav {
 		position: fixed;
 		top: 0;
