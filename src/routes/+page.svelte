@@ -1,78 +1,155 @@
 <script>
-    import PlaceCard from '$lib/components/PlaceCard.svelte';
-    import RestaurantCard from '$lib/components/RestaurantCard.svelte';
-    import LoadingSpinner from '$lib/components/LoadingSpinner.svelte'; // Importe le spinner
     import WeatherWidget from '$lib/components/WeatherWidget.svelte';
-
-    // 'data' est automatiquement fournie par la fonction load() dans +page.js
-    export let data;
-
-    // Indicateur pour savoir si les données sont en train d'être chargées initialement
-    // Note: SvelteKit gère souvent ça avec la navigation, mais on peut l'expliciter
-    let loading = !data; // Si data n'existe pas encore, on charge
-
-    // Utilise une déclaration réactive pour mettre à jour les listes quand 'data' arrive
-    $: places = data?.places || [];
-    $: restaurants = data?.restaurants || [];
-    $: loading = !data; // Met à jour 'loading' quand 'data' change
-
-</script>
-
-<svelte:head>
-    <title>Accueil - Visit Agadir</title>
-    <meta name="description" content="Découvrez les meilleures attractions et restaurants d'Agadir." />
-</svelte:head>
-
-<WeatherWidget />
-
-<section>
-    <h2>Lieux à découvrir</h2>
-    {#if loading}
-        <LoadingSpinner />
-    {:else if places.length > 0}
-        <div class="list-container">
-            {#each places as place (place.id)}
-                <PlaceCard {place} />
-            {/each}
-        </div>
-        {#if places.length >= 6} <!-- Adapte le nombre si tu changes HOME_PAGE_LIMIT -->
-           <p style="text-align: center; margin-top: 1rem;">
-               <a href="/map">Voir tous les lieux sur la carte →</a>
-           </p>
-        {/if}
-    {:else}
-        <p>Aucun lieu à afficher pour le moment.</p>
-    {/if}
-</section>
-
-<section style="margin-top: 2rem;">
-    <h2>Où manger ?</h2>
-     {#if loading}
-        <LoadingSpinner />
-    {:else if restaurants.length > 0}
-        <div class="list-container">
-            {#each restaurants as restaurant (restaurant.id)}
-                <RestaurantCard {restaurant} />
-            {/each}
-        </div>
-         {#if restaurants.length >= 6} <!-- Adapte le nombre si tu changes HOME_PAGE_LIMIT -->
-           <p style="text-align: center; margin-top: 1rem;">
-               <a href="/map">Voir tous les restaurants sur la carte →</a>
-           </p>
-        {/if}
-    {:else}
-        <p>Aucun restaurant à afficher pour le moment.</p>
-    {/if}
-</section>
-
-<style>
-    h2 {
-        color: #333;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid #0077cc;
-        padding-bottom: 0.5rem;
+    // Assure-toi que le chemin d'importation ci-dessus est correct pour ton projet.
+  
+    // Définition des raccourcis
+    const shortcuts = [
+      { href: '/map', label: 'Carte Interactive', icon: '🗺️' },
+      { href: '/places', label: 'Sites à Visiter', icon: '🏛️' }, // Assure-toi que '/places' est une page qui liste les lieux ou change le lien
+      { href: '/restaurants', label: 'Où Manger', icon: '🍽️' }, // Idem pour '/restaurants'
+      { href: '/events', label: 'Événements', icon: '📅' },
+      { href: '/transport', label: 'Transport', icon: '🚌' },
+      { href: '/contacts', label: 'Infos Utiles', icon: 'ℹ️' } // Pointe vers Contacts pour l'instant
+    ];
+  </script>
+  
+  <svelte:head>
+    <title>Accueil - Office du Tourisme Agadir</title>
+    <meta name="description" content="Votre guide officiel pour découvrir Agadir. Accès rapide à la carte, lieux, restaurants, événements, transport et informations utiles." />
+  </svelte:head>
+  
+  <div class="home-container content-padding">
+  
+    <section class="welcome-section">
+      <h1>Bienvenue à Agadir !</h1>
+      <p>Votre application pour explorer la ville.</p>
+    </section>
+  
+    <!-- Section Raccourcis (MAINTENANT AVANT LA MÉTÉO) -->
+    <section class="shortcuts-section">
+      <h2>Accès Rapides</h2>
+      <div class="shortcuts-grid">
+        {#each shortcuts as shortcut (shortcut.href)}
+          <a href={shortcut.href} class="shortcut-button">
+            <span class="shortcut-icon">{shortcut.icon}</span>
+            <span class="shortcut-label">{shortcut.label}</span>
+          </a>
+        {/each}
+      </div>
+    </section>
+  
+    <!-- Section Météo (MAINTENANT APRÈS LES RACCOURCIS) -->
+    <section class="weather-section">
+       <!-- On pourrait ajouter un petit titre ici si besoin -->
+       <!-- <h3>Météo Actuelle</h3> -->
+      <WeatherWidget />
+    </section>
+  
+    <!-- Vous pourrez ajouter d'autres sections ici plus tard si nécessaire -->
+  
+  </div>
+  
+  <style>
+    .home-container {
+      padding-top: 1.5rem;
+      padding-bottom: 2rem;
     }
-    section + section {
-         margin-top: 2.5rem; /* Espace entre les sections */
+  
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 1.5rem; /* Espacement avant les raccourcis */
     }
-</style>
+  
+    .welcome-section h1 {
+      color: var(--primary-color, #007bff);
+      margin-bottom: 0.5rem;
+    }
+  
+     .welcome-section p {
+      color: var(--secondary-color, #555);
+      font-size: 1.1rem;
+     }
+  
+    /* Section Raccourcis */
+    .shortcuts-section {
+      margin-bottom: 2.5rem; /* Espacement avant la météo */
+    }
+  
+    .shortcuts-section h2 {
+      text-align: center;
+      color: var(--secondary-color, #333);
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+  
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  
+    .shortcut-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--primary-color, #007bff);
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      min-height: 120px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+  
+    .shortcut-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  
+    .shortcut-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+  
+    .shortcut-label {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  
+    /* Section Météo */
+    .weather-section {
+      margin-bottom: 2rem; /* Espacement après la météo */
+      display: flex;
+      justify-content: center;
+    }
+  
+    /* Responsive: Passer à 3 colonnes sur les écrans plus larges */
+    @media (min-width: 600px) {
+      .shortcuts-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+       .shortcut-button {
+          padding: 2rem 1rem;
+          min-height: 140px;
+       }
+       .shortcut-icon {
+          font-size: 3rem;
+       }
+       .shortcut-label {
+          font-size: 1.1rem;
+       }
+    }
+  
+    /* Ajustement du padding global */
+    .content-padding {
+        padding-left: var(--padding-global, 1rem);
+        padding-right: var(--padding-global, 1rem);
+    }
+  </style>

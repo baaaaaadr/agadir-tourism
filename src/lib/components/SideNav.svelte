@@ -1,29 +1,34 @@
 <script>
+	import { Home, Map as MapIcon, Calendar, Bus, Languages, Phone, Coins, Info, LifeBuoy } from 'lucide-svelte';
+	// Importe les icônes dont nous avons besoin depuis la bibliothèque
+
+
 	// Props reçues du composant parent (Header)
 	export let isOpen = false; // Indique si le menu est ouvert
 	export let closeMenu = () => {}; // Fonction pour fermer le menu
 
-	// Liste des liens de navigation (MISE À JOUR ICI)
+	// Liste des liens de navigation MISE À JOUR avec les composants icônes
 	const navLinks = [
-		{ href: '/', text: 'Accueil' },
-		{ href: '/map', text: 'Carte' },
-		{ href: '/events', text: 'Événements' },
-		// Nouvelle ligne ajoutée :
-		{ href: '/transport', text: 'Transport' },
-		// Fin de la nouvelle ligne
-		{ href: '/phrasebook', text: 'Phrases' },
-		{ href: '/contacts', text: 'Contacts' },
-		{ href: '/currency', text: 'Monnaie' },
-		{ href: '/about', text: 'À Propos' }
-	];
+    { href: '/', text: 'Accueil', icon: Home },
+    { href: '/map', text: 'Carte', icon: MapIcon },
+    { href: '/events', text: 'Événements', icon: Calendar },
+    { href: '/transport', text: 'Transport', icon: Bus },
+    // Peut-être regrouper les infos pratiques ici :
+    { href: '/phrasebook', text: 'Phrases', icon: Languages },
+    { href: '/currency', text: 'Monnaie', icon: Coins },
+    // NOUVELLE LIGNE CI-DESSOUS :
+    { href: '/conseils', text: 'Conseils', icon: LifeBuoy },
+    // FIN NOUVELLE LIGNE
+    { href: '/contacts', text: 'Contacts', icon: Phone },
+    // Fin groupe infos
+    { href: '/about', text: 'À Propos', icon: Info }
+];
 
 	// Ferme le menu quand on clique sur un lien (utile sur mobile)
 	function handleLinkClick() {
 		closeMenu();
 	}
 </script>
-
-<!-- Le reste du fichier (partie HTML <aside> et la partie <style>) reste INCHANGÉ -->
 
 <!-- Overlay semi-transparent qui apparaît derrière le menu -->
 {#if isOpen}
@@ -42,7 +47,11 @@
 		<ul>
 			{#each navLinks as link (link.href)}
 				<li>
-					<a href={link.href} on:click={handleLinkClick}>{link.text}</a>
+					<!-- MISE À JOUR ICI pour afficher l'icône -->
+					<a href={link.href} on:click={handleLinkClick}>
+						<svelte:component this={link.icon} size={20} strokeWidth={2} class="nav-icon" />
+						<span>{link.text}</span>
+					</a>
 				</li>
 			{/each}
 		</ul>
@@ -50,26 +59,25 @@
 </aside>
 
 <style>
-	/* ... TON CSS EXISTANT ... */
-    /* IL N'Y A PAS BESOIN DE LE MODIFIER */
+	/* Styles existants (non modifiés ou légèrement ajustés) */
 	.sidenav {
 		position: fixed;
 		top: 0;
 		left: 0;
-		height: 100vh; /* Toute la hauteur */
-		width: 280px; /* Largeur du menu */
-		max-width: 80%; /* Limite sur très petits écrans */
+		height: 100vh;
+		width: 280px;
+		max-width: 80%;
 		background-color: #fff;
 		box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
-		transform: translateX(-100%); /* Caché par défaut sur la gauche */
+		transform: translateX(-100%);
 		transition: transform 0.3s ease-out;
-		z-index: 1000; /* Au-dessus de tout sauf peut-être des popups carte */
+		z-index: 1000;
 		display: flex;
 		flex-direction: column;
 	}
 
 	.sidenav.open {
-		transform: translateX(0); /* Visible quand la classe 'open' est ajoutée */
+		transform: translateX(0);
 	}
 
 	.sidenav-header {
@@ -102,8 +110,8 @@
 
 	nav {
 		padding: 1rem 0;
-		flex-grow: 1; /* Prend l'espace restant */
-		overflow-y: auto; /* Ajoute une barre de défilement si trop de liens */
+		flex-grow: 1;
+		overflow-y: auto;
 	}
 
 	ul {
@@ -112,8 +120,11 @@
 		margin: 0;
 	}
 
+	/* Style des liens - AJUSTÉ pour l'icône */
 	li a {
-		display: block;
+		display: flex; /* Utilise flexbox pour aligner icône et texte */
+		align-items: center; /* Centre verticalement */
+		gap: 0.8rem; /* Espace entre icône et texte */
 		padding: 0.8rem 1.5rem;
 		color: #333;
 		text-decoration: none;
@@ -129,21 +140,28 @@
 		border-bottom: none;
 	}
 
+	/* Style spécifique pour l'icône (optionnel, pour ajuster la couleur etc.) */
+	.nav-icon {
+		/* La couleur est héritée du lien 'a' par défaut (currentColor) */
+		/* Vous pourriez forcer une couleur si besoin: color: #555; */
+		flex-shrink: 0; /* Empêche l'icône de rétrécir si le texte est long */
+	}
+
+	/* Style de l'overlay */
 	.overlay {
 		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5); /* Noir semi-transparent */
-		z-index: 999; /* Juste en dessous du menu latéral */
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 999;
 		opacity: 1;
 		transition: opacity 0.3s ease-out;
 	}
 
-	/* Optionnel: Cacher l'overlay quand le menu n'est pas ouvert (même si le #if le fait déjà) */
 	.sidenav:not(.open) + .overlay {
 		opacity: 0;
-		pointer-events: none; /* Empêche les clics quand caché */
+		pointer-events: none;
 	}
 </style>
