@@ -9,7 +9,8 @@
         "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
         "lint": "prettier --check . && eslint .",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "context": "powershell -Command \"$outputFile = 'AllCode.txt'; if (Get-Command tree -ErrorAction SilentlyContinue) { tree src /f | Out-File -FilePath $outputFile -Encoding UTF8 } else { Get-ChildItem -Path src -Recurse | Select-Object FullName | Out-File -FilePath $outputFile -Encoding UTF8 }; Add-Content -Path $outputFile -Value \\\"`n`n==================== CONTENU DES FICHIERS ====================`n`n\\\" -Encoding UTF8; Get-ChildItem -Path src -Include *.svelte, *.js, *.css, *.html -Recurse | ForEach-Object { $filePath = $_.FullName; Add-Content -Path $outputFile -Value \\\"========== FICHIER: $filePath ==========`n\\\" -Encoding UTF8; Get-Content -Path $filePath -Raw | Add-Content -Path $outputFile -Encoding UTF8; Add-Content -Path $outputFile -Value \\\"`n========== FIN FICHIER: $filePath ==========`n`n\\\" -Encoding UTF8 }; Write-Host \\\"Fichier '$outputFile' créé avec succès !\\\"\""
     },
     "devDependencies": {
         "@sveltejs/adapter-auto": "^3.0.0",

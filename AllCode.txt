@@ -1,0 +1,3462 @@
+﻿Structure du dossier pour le volume Acer
+Le numéro de série du volume est 00000031 7498:EC45
+C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
+│   app.css
+│   app.d.ts
+│   app.html
+│   service-worker.js
+│   
+├───lib
+│   │   index.js
+│   │   supabaseClient.js
+│   │   
+│   ├───components
+│   │       ErrorMessage.svelte
+│   │       Footer.svelte
+│   │       Header.svelte
+│   │       LoadingSpinner.svelte
+│   │       Map.svelte
+│   │       PlaceCard.svelte
+│   │       RestaurantCard.svelte
+│   │       SideNav.svelte
+│   │       WeatherWidget.svelte
+│   │       
+│   └───stores
+│           navStore.js
+│           
+└───routes
+    │   +layout.svelte
+    │   +page.js
+    │   +page.svelte
+    │   
+    ├───about
+    │       +page.svelte
+    │       
+    ├───conseils
+    │       +page.svelte
+    │       
+    ├───contacts
+    │       +page.svelte
+    │       
+    ├───currency
+    │       +page.svelte
+    │       
+    ├───events
+    │       +page.js
+    │       +page.svelte
+    │       
+    ├───map
+    │       +page.js
+    │       +page.svelte
+    │       
+    ├───phrasebook
+    │       +page.svelte
+    │       
+    ├───places
+    │   └───[id]
+    │           +page.js
+    │           +page.svelte
+    │           
+    ├───restaurants
+    │   └───[id]
+    │           +page.js
+    │           +page.svelte
+    │           
+    └───transport
+            +page.svelte
+            
+
+
+==================== CONTENU DES FICHIERS ====================
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\ErrorMessage.svelte ==========
+
+<script>
+    export let message = "Une erreur s'est produite.";
+</script>
+
+<div class="error-message">
+    <p>ðŸ˜• Oops !</p>
+    <p>{message}</p>
+</div>
+
+<style>
+    .error-message {
+        border: 1px solid #dc3545;
+        color: #721c24;
+        background-color: #f8d7da;
+        border-radius: 5px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+    }
+    .error-message p:first-child {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\ErrorMessage.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Footer.svelte ==========
+
+<script>
+    // Import des icÃ´nes de rÃ©seaux sociaux depuis lucide-svelte
+    import { Facebook, Instagram, Twitter, Youtube, Linkedin } from 'lucide-svelte';
+
+    // Liste des rÃ©seaux sociaux (tu adapteras les liens '#' par les vrais URLs)
+    const socialLinks = [
+        { name: 'Facebook', href: '#', icon: Facebook, ariaLabel: 'Suivez-nous sur Facebook' },
+        { name: 'Instagram', href: '#', icon: Instagram, ariaLabel: 'Suivez-nous sur Instagram' },
+        { name: 'Twitter', href: '#', icon: Twitter, ariaLabel: 'Suivez-nous sur Twitter (X)' },
+        { name: 'YouTube', href: '#', icon: Youtube, ariaLabel: 'Suivez-nous sur YouTube' },
+        // Tu peux ajouter/supprimer des rÃ©seaux ici
+        // { name: 'LinkedIn', href: '#', icon: Linkedin, ariaLabel: 'Suivez-nous sur LinkedIn' },
+    ];
+</script>
+
+<footer>
+    <div class="footer-content">
+        <div class="copyright">
+            <p>Â© {new Date().getFullYear()} Office du Tourisme Agadir (Maquette PWA). Tous droits rÃ©servÃ©s.</p>
+        </div>
+
+        <div class="social-icons">
+            {#each socialLinks as link (link.name)}
+                <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.ariaLabel} title={link.name}>
+                    <svelte:component this={link.icon} size={24} strokeWidth={1.5} />
+                </a>
+            {/each}
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer {
+        /* Utilisation des variables pour padding, margin, couleur fond/texte, bordure */
+        padding: var(--space-xl) var(--space-md); /* 32px 16px */
+        margin-top: var(--space-xxl); /* 48px */
+        background-color: var(--bg-secondary); /* Fond secondaire (light-sand) */
+        color: var(--text-secondary); /* Texte secondaire (medium-gray) */
+        font-size: 0.9em; /* Garde la taille lÃ©gÃ¨rement rÃ©duite */
+        border-top: 1px solid var(--border-color); /* Bordure avec variable (sandy-beige-dark) */
+    }
+
+    .footer-content {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-lg); /* Utilise variable (24px) */
+        text-align: center;
+    }
+
+    .copyright p {
+        margin: 0;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: var(--space-md); /* Utilise variable (16px) pour mobile */
+        align-items: center;
+    }
+
+    .social-icons a {
+        color: var(--text-secondary); /* Utilise variable pour icÃ´nes par dÃ©faut */
+        /* Garde les transitions existantes */
+        transition: color var(--transition-normal), transform var(--transition-normal);
+        display: inline-block;
+    }
+
+    .social-icons a:hover {
+        color: var(--ocean-blue); /* Utilise la couleur primaire au survol */
+        transform: scale(1.1);
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+        .footer-content {
+            flex-direction: row;
+            text-align: left;
+        }
+         .social-icons {
+            gap: var(--space-lg); /* Utilise variable (24px) sur desktop */
+         }
+    }
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Footer.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Header.svelte ==========
+
+<script>
+	// Importe les icÃ´nes nÃ©cessaires depuis lucide-svelte
+	import { Menu, Search } from 'lucide-svelte';
+	// Importe le store pour gÃ©rer l'Ã©tat du menu latÃ©ral
+	import { isSideNavOpen } from '$lib/stores/navStore'; // Note: utilisation de $lib
+  
+	// Fonction pour ouvrir/fermer le menu latÃ©ral en modifiant le store
+	function toggleNav() {
+	  isSideNavOpen.update(value => !value); // Inverse la valeur actuelle (true -> false, false -> true)
+	}
+  
+	// TODO: ImplÃ©menter la fonction de recherche quand le bouton sera cliquÃ©
+	function handleSearchClick() {
+	  console.log("Bouton Recherche cliquÃ© - Ã  implÃ©menter");
+	  // Pourrait ouvrir un modal, naviguer vers /search, ou afficher un champ input
+	}
+  
+	// Optionnel: Chemin vers le logo si tu prÃ©fÃ¨res garder une image
+	// const logoUrl = '/assets/images/logo.png';
+  </script>
+  
+  <header>
+	<div class="header-content">
+	  <!-- Bouton Menu (Hamburger) -->
+	  <button class="menu-button" on:click={toggleNav} aria-label="Ouvrir ou fermer le menu">
+		<Menu size={24} />
+	  </button>
+  
+	  <!-- Logo (Texte) -->
+	  <div class="logo">
+		<!-- Si tu veux utiliser une image Ã  la place : -->
+		<!-- <a href="/" aria-label="Accueil"> -->
+		<!--   <img src={logoUrl} alt="Logo Agadir Tourism" class="logo-img" /> -->
+		<!-- </a> -->
+		 <a href="/" class="logo-link">
+		  <h1>Agadir Tourism</h1>
+		</a>
+	  </div>
+  
+	  <!-- Bouton Recherche -->
+	  <button class="search-button" on:click={handleSearchClick} aria-label="Rechercher">
+		<Search size={24} />
+	  </button>
+	</div>
+  </header>
+  
+  <!-- IMPORTANT: Le composant <SideNav> n'est PLUS ici ! -->
+  <!-- Il sera gÃ©rÃ© dans le fichier layout principal (ex: +layout.svelte) -->
+  
+  <style>
+	header {
+	  /* Utilise les nouvelles variables CSS */
+	  background-color: var(--ocean-blue);
+	  color: white;
+	  position: sticky; /* Reste en haut lors du scroll */
+	  top: 0;
+	  z-index: 100; /* Assure qu'il est au-dessus de la plupart du contenu */
+	  box-shadow: var(--shadow-md); /* Ombre dÃ©finie dans app.css */
+	  padding: 0 var(--space-md); /* Espace Ã  gauche/droite seulement */
+	}
+  
+	.header-content {
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+	  /* Hauteur fixe pour le header, ajuster si besoin */
+	  height: 60px;
+	  /* Limite la largeur sur les grands Ã©crans */
+	  max-width: 1200px;
+	  margin: 0 auto; /* Centre le contenu */
+	}
+  
+	.logo {
+	  /* Prend la place restante pour centrer le logo */
+	  flex-grow: 1;
+	  text-align: center;
+	}
+  
+	.logo-link {
+	  color: white;
+	  text-decoration: none;
+	  display: inline-block; /* Pour que le lien ne prenne pas toute la largeur */
+	}
+  
+	.logo-link h1 {
+	  font-family: var(--font-heading); /* Police dÃ©finie dans app.css */
+	  font-size: 1.5rem; /* 24px */
+	  font-weight: 700;
+	  margin: 0; /* Supprime marges par dÃ©faut du h1 */
+	  line-height: 1; /* Ajuste pour un meilleur alignement vertical */
+	}
+  
+	/* Si tu utilises une image logo: */
+	/*
+	.logo-img {
+	  height: 40px; // Ajuster la taille
+	  display: block; // Assurer un bon alignement
+	}
+	*/
+  
+	.menu-button,
+	.search-button {
+	  background: transparent;
+	  border: none;
+	  color: white;
+	  cursor: pointer;
+	  padding: var(--space-sm); /* Utilise variable d'espacement */
+	  border-radius: var(--radius-full); /* Rond */
+	  display: flex; /* Pour centrer l'icÃ´ne */
+	  align-items: center;
+	  justify-content: center;
+	  transition: background-color var(--transition-normal); /* Transition dÃ©finie dans app.css */
+	}
+  
+	.menu-button:hover,
+	.search-button:hover {
+	  background-color: rgba(255, 255, 255, 0.1); /* LÃ©ger fond au survol */
+	}
+  
+	/* Ajustement pour petits Ã©crans si le titre est trop long */
+	@media (max-width: 480px) {
+	  .logo-link h1 {
+		font-size: 1.25rem; /* 20px */
+	  }
+	   .header-content {
+		  height: 56px; /* LÃ©gÃ¨rement moins haut sur mobile */
+	   }
+	   /* Masquer le texte du logo si VRAIMENT nÃ©cessaire (prÃ©fÃ©rer rÃ©duire la taille) */
+	   /*
+	   .logo-link h1 span {
+		  display: none; // Cache le texte, garde juste une icÃ´ne si on en met une plus tard
+	   }
+	   */
+	  }
+	</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Header.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\LoadingSpinner.svelte ==========
+
+<div class="spinner-container">
+    <div class="spinner"></div>
+    <p>Chargement...</p>
+</div>
+
+<style>
+    .spinner-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        color: #555;
+    }
+    .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border-left-color: #0077cc; /* Couleur thÃ¨me */
+        animation: spin 1s ease infinite;
+        margin-bottom: 0.5rem;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\LoadingSpinner.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Map.svelte ==========
+
+<script>
+    import { browser } from '$app/environment';
+    import { onMount, onDestroy, tick } from 'svelte';
+
+    // Props
+    export let center = [30.4202, -9.5982];
+    export let zoom = 13;
+    export let markers = [];
+    export let mapId = 'leaflet-map';
+
+    // RÃ©fÃ©rences et Ã©tat interne
+    let mapContainerElement = null;
+    let mapInstance = null;
+    let markerLayerGroup = null;
+    // 'L' sera disponible globalement grÃ¢ce au script dans app.html
+    let L = null; // On le garde pour vÃ©rifier sa prÃ©sence
+
+    let isLoading = true; // Pour afficher message avant montage
+    let errorLoading = null;
+
+    onMount(async () => {
+        if (browser) {
+            // Attend que le DOM soit prÃªt ET que le script Leaflet (du CDN) ait potentiellement chargÃ© L
+            await tick();
+
+            if (!mapContainerElement) {
+                 console.error(`[${mapId}] Ã‰lÃ©ment conteneur introuvable au montage.`);
+                 errorLoading = "Erreur interne: Conteneur de carte non trouvÃ©.";
+                 isLoading = false;
+                 return;
+             }
+
+            // VÃ©rifie si l'objet global 'L' existe (chargÃ© par le script CDN)
+            if (typeof window.L === 'undefined' || window.L === null) {
+                console.error(`[${mapId}] ERREUR: Objet global L non trouvÃ©. Le script Leaflet du CDN n'a pas chargÃ©?`);
+                errorLoading = "Impossible de charger la librairie de carte (CDN).";
+                isLoading = false;
+                return;
+            }
+
+            L = window.L; // Assigne l'objet global L
+             console.log(`[${mapId}] Objet global L trouvÃ©.`);
+
+             // Initialise si tout est prÃªt
+            if (mapContainerElement && !mapInstance) {
+                 initializeMap();
+            }
+            isLoading = false; // Fin du chargement
+
+        } else {
+            isLoading = false;
+        }
+    });
+
+    onDestroy(() => {
+        if (mapInstance) {
+            console.log(`[${mapId}] Destruction de la carte.`);
+            mapInstance.remove();
+            mapInstance = null;
+            markerLayerGroup = null;
+            // Pas besoin de mettre L Ã  null car il est global
+        }
+    });
+
+    function initializeMap() {
+        if (!L || !mapContainerElement || mapInstance) return;
+
+        console.log(`[${mapId}] Initialisation de la carte Leaflet via CDN.`);
+        try {
+            mapInstance = L.map(mapContainerElement).setView(center, zoom);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Â© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(mapInstance);
+
+            markerLayerGroup = L.layerGroup().addTo(mapInstance);
+            updateMapMarkers(markers);
+
+            setTimeout(() => {
+                if (mapInstance) { mapInstance.invalidateSize(); }
+            }, 150);
+
+        } catch (e) {
+             console.error(`[${mapId}] Erreur pendant L.map() ou ajout de couches (CDN):`, e);
+             errorLoading = `Erreur lors de la crÃ©ation de la carte: ${e.message}`;
+             if (mapInstance) mapInstance.remove();
+             mapInstance = null;
+        }
+    }
+
+    function updateMapMarkers(newMarkers) {
+        if (!mapInstance || !markerLayerGroup || !L) return;
+
+        // console.log(`[${mapId}] Mise Ã  jour des marqueurs via CDN (${newMarkers?.length || 0}).`);
+        markerLayerGroup.clearLayers();
+
+        (newMarkers || []).forEach(markerInfo => {
+            if (markerInfo.lat != null && markerInfo.lon != null) {
+                try {
+                    const marker = L.marker([markerInfo.lat, markerInfo.lon]);
+                    if (markerInfo.popupText) {
+                        marker.bindPopup(markerInfo.popupText, { closeButton: true, autoClose: false });
+                    }
+                    marker.addTo(markerLayerGroup);
+                } catch (e) {
+                    console.error(`[${mapId}] Erreur crÃ©ation marqueur (CDN): `, markerInfo, e);
+                }
+            }
+        });
+    }
+
+    // RÃ©activitÃ© aux changements de props (reste pareil)
+    $: if (mapInstance && L) {
+        updateMapMarkers(markers);
+    }
+    $: if (mapInstance && L) {
+        // const currentCenter = mapInstance.getCenter();
+        // const currentZoom = mapInstance.getZoom();
+        // if (center && zoom && (currentCenter.lat !== center[0] || currentCenter.lng !== center[1] || currentZoom !== zoom)) {
+        //    mapInstance.setView(center, zoom);
+        // }
+    }
+
+</script>
+
+<!-- Conteneur de la carte (reste pareil) -->
+<div bind:this={mapContainerElement} id={mapId} class="map-container-style" role="application" aria-label="Carte interactive">
+    {#if !browser}
+        <p>Carte interactive (chargement...)</p>
+    {:else if isLoading}
+        <p>Chargement de la carte...</p>
+    {:else if errorLoading}
+        <p class="map-error">Erreur: {errorLoading}</p>
+    {/if}
+</div>
+
+<style>
+    /* Le CSS reste identique */
+    .map-container-style {
+        height: 400px;
+        width: 100%;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-top: 1rem;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+    :global(#main-map.map-container-style) { height: 500px; }
+    :global(#detail-map.map-container-style) { height: 300px; }
+    .map-container-style p {
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%); color: #555;
+        font-style: italic; text-align: center; padding: 0 1rem;
+    }
+    .map-error { color: #dc3545; font-weight: bold; font-style: normal; }
+    :global(.leaflet-popup-content-wrapper) { border-radius: 5px; background-color: rgba(255, 255, 255, 0.9); box-shadow: 0 1px 5px rgba(0,0,0,0.2); }
+    :global(.leaflet-popup-content) { font-size: 0.9rem; line-height: 1.4; margin: 10px 15px; max-height: 200px; overflow-y: auto; }
+    :global(.leaflet-popup-content p) { margin: 0.5em 0; }
+    :global(.leaflet-popup-content a) { color: var(--primary-color, #007bff); font-weight: bold; text-decoration: none; }
+    :global(.leaflet-popup-content a:hover) { text-decoration: underline; }
+    :global(.leaflet-container a.leaflet-popup-close-button) { color: #555 !important; padding: 6px 6px 0 0 !important; }
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Map.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\PlaceCard.svelte ==========
+
+<script>
+    export let place;
+
+    // Chemin vers l'image par dÃ©faut
+    const defaultImage = '/assets/images/default-placeholder.jpg';
+</script>
+
+<a href="/places/{place.id}" class="card-link">
+    <article class="card">
+        <img
+            src={place.image_url || defaultImage}
+            alt="Image de {place.name}"
+            class="card-image"
+            loading="lazy"
+            onerror="this.onerror=null; this.src='{defaultImage}';"
+        />
+        <div class="card-content">
+            <h3>{place.name}</h3>
+            {#if place.category}
+                <span class="category-badge">{place.category}</span>
+            {/if}
+            {#if place.description}
+                <p>{place.description.substring(0, 100)}{place.description.length > 100 ? '...' : ''}</p>
+            {/if}
+        </div>
+    </article>
+</a>
+
+<style>
+    .card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block; /* Pour que le lien prenne toute la place de la carte */
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border-radius: 8px;
+        overflow: hidden; /* Pour que l'image respecte le border-radius */
+    }
+    .card-link:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+
+    .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Assure que les cartes dans une grille ont la mÃªme hauteur */
+    }
+
+    .card-image {
+        width: 100%;
+        height: 180px; /* Hauteur fixe pour l'image */
+        object-fit: cover; /* Assure que l'image couvre la zone sans se dÃ©former */
+    }
+
+    .card-content {
+        padding: 1rem;
+        flex-grow: 1; /* Permet au contenu de prendre l'espace restant */
+    }
+
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        color: #005fa3;
+    }
+
+    .category-badge {
+        display: inline-block;
+        background-color: #e2e3e5;
+        color: #495057;
+        padding: 0.2em 0.6em;
+        border-radius: 0.25rem;
+        font-size: 0.8em;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        font-size: 0.95rem;
+        color: #555;
+        margin-bottom: 0; /* EnlÃ¨ve marge basse du paragraphe */
+    }
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\PlaceCard.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\RestaurantCard.svelte ==========
+
+<script>
+    export let restaurant;
+    const defaultImage = '/assets/images/default-placeholder.jpg';
+</script>
+
+<a href="/restaurants/{restaurant.id}" class="card-link">
+    <article class="card">
+        <img
+            src={restaurant.image_url || defaultImage}
+            alt="Image de {restaurant.name}"
+            class="card-image"
+            loading="lazy"
+            onerror="this.onerror=null; this.src='{defaultImage}';"
+        />
+        <div class="card-content">
+            <h3>{restaurant.name}</h3>
+            {#if restaurant.cuisine_type || restaurant.price_range}
+                 <div class="badges">
+                     {#if restaurant.cuisine_type}
+                        <span class="category-badge cuisine">{restaurant.cuisine_type}</span>
+                     {/if}
+                     {#if restaurant.price_range}
+                        <span class="category-badge price">{restaurant.price_range}</span>
+                     {/if}
+                 </div>
+            {/if}
+            {#if restaurant.description}
+                <p>{restaurant.description.substring(0, 100)}{restaurant.description.length > 100 ? '...' : ''}</p>
+            {/if}
+        </div>
+    </article>
+</a>
+
+<style>
+    /* Styles trÃ¨s similaires Ã  PlaceCard.svelte */
+    .card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .card-link:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+    .card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .card-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .card-content {
+        padding: 1rem;
+        flex-grow: 1;
+    }
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        color: #005fa3;
+    }
+    .badges {
+        margin-bottom: 0.7rem;
+    }
+    .category-badge {
+        display: inline-block;
+        background-color: #e2e3e5;
+        color: #495057;
+        padding: 0.2em 0.6em;
+        border-radius: 0.25rem;
+        font-size: 0.8em;
+        margin-right: 0.4rem; /* Espace entre les badges */
+    }
+     .category-badge.price {
+        background-color: #d1ecf1; /* Couleur diffÃ©rente pour le prix */
+        color: #0c5460;
+    }
+    p {
+        font-size: 0.95rem;
+        color: #555;
+        margin-bottom: 0;
+    }
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\RestaurantCard.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\SideNav.svelte ==========
+
+<script>
+	// Importe les transitions Svelte
+	import { fly, fade } from 'svelte/transition';
+	// Importe le store (CORRIGÃ‰ pour utiliser $lib)
+	import { isSideNavOpen } from '$lib/stores/navStore';
+  
+	// Importe les icÃ´nes nÃ©cessaires
+	import {
+	  Home, Map as MapIcon, /* RenommÃ© car Map est aussi un composant */
+	  Coffee, Calendar, Bus, Book, DollarSign, Info as InfoIcon, /* RenommÃ© car Info existe */
+	  Phone, Heart, X, Settings, /* Ajout de Settings pour 'Conseils' par exemple */
+	  Users, /* Pour 'About' ? */
+	  Search /* Si on met la recherche ici plus tard */
+	} from 'lucide-svelte';
+  
+	// Fonction pour fermer le menu en mettant le store Ã  false
+	function closeNav() {
+	  isSideNavOpen.set(false);
+	}
+  
+	// DÃ©finition des Ã©lÃ©ments du menu (adapter les icÃ´nes et labels si besoin)
+	// J'ai essayÃ© de deviner les icÃ´nes, tu peux les changer
+	const navItems = [
+	  { path: '/', label: 'Accueil', icon: Home },
+	  { path: '/map', label: 'Carte', icon: MapIcon },
+	  // { path: '/places', label: 'Lieux', icon: MapPin }, // Ajoute si tu as une page liste /places
+	  // { path: '/restaurants', label: 'Restaurants', icon: Coffee }, // Ajoute si tu as une page liste /restaurants
+	  { path: '/events', label: 'Ã‰vÃ©nements', icon: Calendar },
+	  { path: '/transport', label: 'Transport', icon: Bus },
+	  { path: '/phrasebook', label: 'Phrases Utiles', icon: Book },
+	  { path: '/currency', label: 'Monnaie', icon: DollarSign },
+	  { path: '/favorites', label: 'Favoris', icon: Heart }, // Ã€ crÃ©er
+	  { path: '/conseils', label: 'Conseils', icon: InfoIcon }, // Ou Settings?
+	  { path: '/contacts', label: 'Contacts Utiles', icon: Phone },
+	  { path: '/about', label: 'Ã€ Propos', icon: Users } // Ou InfoIcon si Conseils prend Settings?
+	];
+  
+	// Ajouter/Retirer des liens selon tes pages rÃ©elles
+  </script>
+  
+  <!-- Le composant SideNav n'est rendu que si $isSideNavOpen est true (gÃ©rÃ© dans +layout.svelte) -->
+  <!-- Donc, pas besoin de {#if} ici, mais on garde l'overlay et la nav -->
+  
+  <!-- Overlay pour fermer en cliquant Ã  cÃ´tÃ© -->
+  <div
+	class="overlay"
+	on:click={closeNav}
+	transition:fade={{ duration: 200 }}
+	aria-hidden="true"
+  ></div>
+  
+  <!-- Conteneur du menu latÃ©ral -->
+  <nav
+	class="side-nav"
+	transition:fly={{ x: -300, duration: 300, opacity: 1 }}
+	aria-label="Menu principal"
+  >
+	<!-- EntÃªte du menu -->
+	<div class="nav-header">
+	  <h2>Agadir Tourism</h2>
+	  <button class="close-button" on:click={closeNav} aria-label="Fermer le menu">
+		<X size={24} />
+	  </button>
+	</div>
+  
+	<!-- Liste des liens de navigation -->
+	<ul class="nav-links" role="menu">
+	  {#each navItems as { path, label, icon: Icon }}
+		<li role="none">
+		  <!-- Utilise on:click pour fermer le menu APRES la navigation pour mobile -->
+		  <a href={path} role="menuitem" on:click={closeNav}>
+			<Icon size={20} aria-hidden="true" />
+			<span>{label}</span>
+		  </a>
+		</li>
+	  {/each}
+	</ul>
+  </nav>
+  
+  
+  <style>
+	.overlay {
+	  position: fixed;
+	  inset: 0; /* Raccourci pour top, left, right, bottom = 0 */
+	  background-color: rgba(0, 0, 0, 0.5);
+	  z-index: 150; /* Doit Ãªtre en dessous du side-nav mais au-dessus du reste */
+	}
+  
+	.side-nav {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  bottom: 0;
+	  width: 280px; /* Largeur du menu */
+	  background-color: var(--bg-primary); /* Utilise variable CSS */
+	  box-shadow: var(--shadow-lg); /* Utilise variable CSS */
+	  z-index: 200; /* Au-dessus de l'overlay */
+	  overflow-y: auto; /* Permet le scroll si le contenu dÃ©passe */
+	  display: flex;
+	  flex-direction: column;
+	}
+  
+	.nav-header {
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+	  padding: var(--space-lg);
+	  background-color: var(--ocean-blue); /* Couleur primaire */
+	  color: white;
+	  flex-shrink: 0; /* EmpÃªche l'entÃªte de rÃ©trÃ©cir */
+	}
+  
+	.nav-header h2 {
+	  font-family: var(--font-heading);
+	  font-size: 1.25rem; /* 20px */
+	  margin: 0;
+	}
+  
+	.close-button {
+	  background: transparent;
+	  border: none;
+	  color: white;
+	  cursor: pointer;
+	  padding: var(--space-xs);
+	  border-radius: var(--radius-full);
+	  transition: background-color var(--transition-normal);
+	  display: flex; /* Pour bien aligner l'icÃ´ne X */
+	  align-items: center;
+	  justify-content: center;
+	}
+  
+	.close-button:hover {
+	  background-color: rgba(255, 255, 255, 0.1);
+	}
+  
+	.nav-links {
+	  list-style: none;
+	  padding: var(--space-md) 0; /* Espace en haut/bas de la liste */
+	  margin: 0;
+	  flex-grow: 1; /* Prend l'espace restant */
+	  overflow-y: auto; /* Scroll interne si besoin */
+	}
+  
+	.nav-links li a {
+	  display: flex;
+	  align-items: center;
+	  /* Padding vertical et horizontal */
+	  padding: var(--space-md) var(--space-lg);
+	  color: var(--text-primary); /* Utilise variable */
+	  text-decoration: none;
+	  transition: background-color var(--transition-normal), color var(--transition-normal);
+	  font-weight: 500; /* Texte lÃ©gÃ¨rement plus gras */
+	}
+  
+	.nav-links li a:hover,
+	.nav-links li a:focus { /* Ajout focus pour accessibilitÃ© */
+	  background-color: var(--sandy-beige-light); /* Utilise variable */
+	  color: var(--ocean-blue); /* Change couleur texte au survol */
+	  outline: none; /* On gÃ¨re le focus avec le fond */
+	}
+  
+	.nav-links li a span {
+	  margin-left: var(--space-md); /* Espace entre icÃ´ne et texte */
+	}
+  </style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\SideNav.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\WeatherWidget.svelte ==========
+
+<script>
+    import { browser } from '$app/environment';
+    import { onMount } from 'svelte';
+    import LoadingSpinner from '$lib/components/LoadingSpinner.svelte'; // RÃ©utilise le spinner
+    import ErrorMessage from '$lib/components/ErrorMessage.svelte'; // RÃ©utilise le message d'erreur
+
+    // --- Configuration ---
+    const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
+    const lat = 30.4202; // Latitude d'Agadir
+    const lon = -9.5982; // Longitude d'Agadir
+    const units = 'metric'; // Pour avoir les tempÃ©ratures en Celsius
+    const lang = 'fr'; // Pour avoir les descriptions en franÃ§ais
+
+    // --- State ---
+    let weatherData = null;
+    let loading = true;
+    let error = null;
+
+    // --- Fetch Data ---
+    async function fetchWeatherData() {
+        loading = true;
+        error = null;
+
+        if (!apiKey) {
+            error = "ClÃ© API OpenWeatherMap manquante dans les variables d'environnement (.env).";
+            loading = false;
+            console.error(error);
+            return;
+        }
+
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}&lang=${lang}`;
+
+        try {
+            const response = await fetch(apiUrl);
+
+            if (!response.ok) {
+                // GÃ¨re les erreurs HTTP (ex: 401 Unauthorized si clÃ© API invalide, 404 Not Found...)
+                const errorData = await response.json().catch(() => ({ message: response.statusText })); // Essaie de lire le message d'erreur JSON
+                throw new Error(`Erreur ${response.status}: ${errorData.message || response.statusText}`);
+            }
+
+            weatherData = await response.json();
+            console.log("DonnÃ©es mÃ©tÃ©o reÃ§ues:", weatherData); // Pour le dÃ©bogage
+
+        } catch (err) {
+            console.error("Erreur lors de la rÃ©cupÃ©ration de la mÃ©tÃ©o:", err);
+            error = `Impossible de charger la mÃ©tÃ©o : ${err.message}`;
+            weatherData = null; // S'assure qu'aucune donnÃ©e partielle n'est affichÃ©e
+        } finally {
+            loading = false;
+        }
+    }
+
+    // --- Lifecycle ---
+    onMount(() => {
+        // Ne fetch que cÃ´tÃ© client
+        if (browser) {
+            fetchWeatherData();
+            // Optionnel: Mettre Ã  jour la mÃ©tÃ©o toutes les X minutes
+            // setInterval(fetchWeatherData, 30 * 60 * 1000); // 30 minutes
+        } else {
+            // Pendant le SSR, on ne charge pas la mÃ©tÃ©o
+            loading = false;
+            error = "La mÃ©tÃ©o se charge cÃ´tÃ© client."; // Message informatif
+        }
+    });
+
+    // --- Helpers ---
+    function capitalizeFirstLetter(string) {
+        if (!string) return '';
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    // GÃ©nÃ¨re l'URL de l'icÃ´ne mÃ©tÃ©o OpenWeatherMap
+    $: iconUrl = weatherData?.weather?.[0]?.icon
+        ? `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
+        : null;
+
+</script>
+
+<div class="weather-widget">
+    <h3>MÃ©tÃ©o Ã  Agadir</h3>
+
+    {#if loading}
+        <LoadingSpinner />
+    {:else if error}
+        <ErrorMessage message={error} />
+    {:else if weatherData}
+        <div class="weather-content">
+            {#if iconUrl}
+                <img src={iconUrl} alt={weatherData.weather[0].description || 'IcÃ´ne mÃ©tÃ©o'} class="weather-icon">
+            {/if}
+            <div class="weather-details">
+                <span class="temperature">{Math.round(weatherData.main.temp)}Â°C</span>
+                <span class="description">{capitalizeFirstLetter(weatherData.weather[0].description)}</span>
+                {#if weatherData.main.feels_like}
+                     <span class="feels-like">Ressenti: {Math.round(weatherData.main.feels_like)}Â°C</span>
+                {/if}
+            </div>
+        </div>
+        <p class="data-source">
+            DonnÃ©es: <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeatherMap</a>
+        </p>
+    {:else}
+         <p>Impossible d'afficher la mÃ©tÃ©o pour le moment.</p>
+    {/if}
+</div>
+
+<style>
+    .weather-widget {
+        background-color: #e7f3fe; /* Bleu trÃ¨s clair */
+        border: 1px solid #bce0fd;
+        border-radius: 8px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    h3 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: #005fa3; /* Bleu un peu plus foncÃ© */
+        text-align: center;
+        font-size: 1.1rem;
+    }
+
+    .weather-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        min-height: 60px; /* Pour Ã©viter les sauts pendant le chargement */
+    }
+
+    .weather-icon {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        margin: 0;
+    }
+
+    .weather-details {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Aligne Ã  gauche dans la colonne */
+    }
+
+    .temperature {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333;
+        line-height: 1;
+    }
+
+    .description {
+        font-size: 1rem;
+        color: #555;
+        margin-top: 0.2rem;
+    }
+    .feels-like {
+        font-size: 0.85rem;
+        color: #777;
+        margin-top: 0.2rem;
+    }
+
+    /* Centre le spinner et l'erreur s'ils s'affichent */
+    .weather-widget :global(.spinner-container),
+    .weather-widget :global(.error-message) {
+        padding: 0.5rem; /* Moins de padding que la version standard */
+        margin: 0 auto; /* Centre horizontalement */
+        border: none;
+        background: none;
+    }
+     .weather-widget :global(.error-message) {
+        text-align: left; /* Garde le texte de l'erreur alignÃ© Ã  gauche */
+         max-width: 90%;
+         font-size: 0.9rem;
+     }
+
+    .data-source {
+        text-align: center;
+        font-size: 0.75rem;
+        color: #888;
+        margin-top: 0.8rem;
+        margin-bottom: 0;
+    }
+    .data-source a {
+        color: #666;
+    }
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\WeatherWidget.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\navStore.js ==========
+
+// src/lib/stores/navStore.js
+import { writable } from 'svelte/store';
+
+/**
+ * ContrÃ´le l'Ã©tat d'ouverture/fermeture du menu latÃ©ral (SideNav).
+ * @type {import('svelte/store').Writable<boolean>}
+ */
+export const isSideNavOpen = writable(false); // Par dÃ©faut, le menu est fermÃ©
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\navStore.js ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\index.js ==========
+
+// place files you want to import through the `$lib` alias in this folder.
+
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\index.js ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\supabaseClient.js ==========
+
+import { createClient } from '@supabase/supabase-js';
+
+// RÃ©cupÃ¨re les variables d'environnement (mÃ©thode SvelteKit standard)
+// Tu devras crÃ©er un fichier .env Ã  la racine du projet pour stocker ces clÃ©s
+// Fichier .env (NE PAS COMMITTER CE FICHIER S'IL CONTIENT DES CLÃ‰S SECRÃˆTES)
+// PUBLIC_SUPABASE_URL=TON_URL_SUPABASE
+// PUBLIC_SUPABASE_ANON_KEY=TA_CLE_ANON_SUPABASE
+
+// Utilise import.meta.env pour Vite
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// VÃ©rification simple
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error("Erreur: Variables d'environnement Supabase manquantes.");
+  console.error("Assurez-vous d'avoir un fichier .env avec VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY");
+  // On pourrait lancer une erreur plus formelle si on veut arrÃªter l'app
+}
+
+// CrÃ©e et exporte le client Supabase
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Note importante sur la sÃ©curitÃ©:
+// La clÃ© 'anon' est publique et conÃ§ue pour Ãªtre utilisÃ©e cÃ´tÃ© client.
+// La sÃ©curitÃ© repose ENTIÃˆREMENT sur les Row Level Security (RLS) Policies
+// que tu as dÃ©finies dans Supabase. Assure-toi qu'elles sont correctes !
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\supabaseClient.js ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\about\+page.svelte ==========
+
+<script>
+    // Pas de script nÃ©cessaire pour une page statique
+</script>
+
+<svelte:head>
+    <title>Ã€ Propos d'Agadir - Visit Agadir</title>
+    <meta name="description" content="DÃ©couvrez l'histoire et les charmes de la ville d'Agadir." />
+</svelte:head>
+
+<div class="about-page">
+    <h1>Ã€ Propos d'Agadir</h1>
+
+    <img src="/assets/images/default-placeholder.jpg" alt="Paysage d'Agadir" class="about-image">
+    <!-- REMPLACE l'image ci-dessus par une belle image d'Agadir si tu en as une -->
+
+    <p>
+        Agadir, capitale de la rÃ©gion Souss-Massa, est l'une des principales destinations touristiques du Maroc. Reconnue pour sa magnifique baie, sa longue plage de sable fin et son climat agrÃ©able toute l'annÃ©e, la ville offre un mÃ©lange unique de modernitÃ© et de traditions.
+    </p>
+
+    <h2>Une Ville Reconstruite</h2>
+    <p>
+        Tragiquement dÃ©truite par un tremblement de terre dÃ©vastateur en 1960, Agadir a Ã©tÃ© entiÃ¨rement reconstruite un peu plus au sud de l'Ã©picentre. Cette reconstruction a donnÃ© naissance Ã  une ville moderne, aux larges avenues et Ã  l'architecture contemporaine, tout en prÃ©servant l'esprit chaleureux marocain. Les ruines de l'ancienne Kasbah d'Agadir Oufella, perchÃ©es sur une colline, tÃ©moignent de ce passÃ© et offrent un panorama spectaculaire sur la ville nouvelle et l'ocÃ©an Atlantique.
+    </p>
+
+    <h2>Attractions et ActivitÃ©s</h2>
+    <p>
+        Aujourd'hui, Agadir attire les visiteurs par sa plage animÃ©e, idÃ©ale pour la dÃ©tente et les sports nautiques. La Marina moderne propose des restaurants, des cafÃ©s et des boutiques. Le Souk El Had, l'un des plus grands marchÃ©s du Maroc, est une Ã©tape incontournable pour s'immerger dans les couleurs, les senteurs et l'artisanat local. Les environs d'Agadir offrent Ã©galement des possibilitÃ©s d'excursions vers la VallÃ©e du Paradis, les plages de Taghazout (rÃ©putÃ©es pour le surf) ou le Parc National de Souss-Massa.
+    </p>
+
+     <h2>Culture et HospitalitÃ©</h2>
+    <p>
+        Agadir est aussi un carrefour de la culture Amazigh (berbÃ¨re), dont vous pourrez dÃ©couvrir les richesses au MusÃ©e du Patrimoine Amazigh. L'hospitalitÃ© lÃ©gendaire des habitants d'Agadir rendra votre sÃ©jour encore plus mÃ©morable.
+    </p>
+
+    <p>
+        Cette application a pour but de vous aider Ã  dÃ©couvrir les trÃ©sors de notre belle ville. Bon sÃ©jour Ã  Agadir !
+    </p>
+
+</div>
+
+<style>
+    .about-page {
+        background-color: #fff;
+        padding: 1.5rem 2rem; /* Un peu plus de padding horizontal */
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        max-width: 850px;
+        margin: 1rem auto;
+        line-height: 1.8; /* AmÃ©liore la lisibilitÃ© */
+    }
+
+    h1 {
+        color: #0077cc;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+     .about-image {
+        width: 100%;
+        max-height: 350px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+     }
+
+    h2 {
+        color: #005fa3;
+        margin-top: 2rem;
+        margin-bottom: 0.8rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.4rem;
+    }
+
+    p {
+        margin-bottom: 1.2rem;
+        color: #333;
+        text-align: justify; /* Justifie le texte pour un look plus propre */
+    }
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\about\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\conseils\+page.svelte ==========
+
+<script>
+    // Pas de logique JavaScript nÃ©cessaire pour cette page statique.
+  </script>
+  
+  <svelte:head>
+    <title>Conseils aux Voyageurs - Agadir</title>
+    <meta name="description" content="Conseils pratiques pour votre sÃ©jour Ã  Agadir : sÃ©curitÃ©, santÃ©, pourboires, marchandage, culture locale et plus." />
+  </svelte:head>
+  
+  <div class="conseils-page content-padding">
+    <h1>Conseils aux Voyageurs</h1>
+    <p>Quelques recommandations pour profiter pleinement et sereinement de votre sÃ©jour Ã  Agadir.</p>
+  
+    <section>
+      <h2><span class="icon">ðŸ›¡ï¸</span> SÃ©curitÃ© GÃ©nÃ©rale</h2>
+      <ul>
+        <li>Agadir est gÃ©nÃ©ralement une ville sÃ»re, mais comme partout, restez vigilant, surtout dans les zones trÃ¨s frÃ©quentÃ©es (souks, plages).</li>
+        <li>Gardez un Å“il sur vos effets personnels (sacs, tÃ©lÃ©phones, appareils photo). Ã‰vitez d'exhiber des objets de valeur de maniÃ¨re ostentatoire.</li>
+        <li>Utilisez les coffres-forts des hÃ´tels pour vos documents importants (passeports) et grosses sommes d'argent. Gardez une copie de vos papiers sur vous ou en ligne.</li>
+        <li>Le soir, privilÃ©giez les rues bien Ã©clairÃ©es et animÃ©es. Si vous sortez tard, prenez un taxi officiel.</li>
+        <li>NumÃ©ros d'urgence : Police (19), Pompiers/Ambulance (15). Voir la page <a href="/contacts">Contacts</a> pour plus de dÃ©tails.</li>
+      </ul>
+    </section>
+  
+    <section>
+      <h2><span class="icon">ðŸ’§</span> SantÃ© et HygiÃ¨ne</h2>
+      <ul>
+        <li>Buvez de prÃ©fÃ©rence de l'eau en bouteille capsulÃ©e, facilement disponible partout. Ã‰vitez l'eau du robinet pour la boisson.</li>
+        <li>Lavez-vous frÃ©quemment les mains, surtout avant de manger.</li>
+        <li>Soyez prudent avec les aliments crus ou peu cuits achetÃ©s dans la rue si vous avez un estomac sensible. PrivilÃ©giez les restaurants et stands qui semblent propres et frÃ©quentÃ©s.</li>
+        <li>ProtÃ©gez-vous du soleil : crÃ¨me solaire Ã  indice Ã©levÃ©, chapeau, lunettes de soleil, surtout entre 11h et 16h. Hydratez-vous bien.</li>
+        <li>Une petite trousse Ã  pharmacie de base (pansements, dÃ©sinfectant, anti-douleurs, anti-diarrhÃ©ique) peut Ãªtre utile. Des pharmacies (reconnaissables Ã  leur croix verte) sont nombreuses en ville.</li>
+      </ul>
+    </section>
+  
+    <section>
+      <h2><span class="icon">ðŸ’¸</span> Argent et Pourboires</h2>
+      <ul>
+        <li>La monnaie est le Dirham Marocain (MAD). Voir la page <a href="/currency">Monnaie</a> pour les dÃ©tails et le convertisseur.</li>
+        <li>Le pourboire ("bakchich") fait partie de la culture locale pour les petits services rendus. Il n'est pas obligatoire mais apprÃ©ciÃ©.</li>
+        <li>Quelques indications (variables) : 1-2 Dh pour un gardien de parking, 5-10 Dh pour un bagagiste Ã  l'hÃ´tel, 5-10% de la note dans les restaurants si le service n'est pas inclus. Pour les guides, cela dÃ©pend de la durÃ©e et de la qualitÃ© (demandez conseil si besoin).</li>
+        <li>Ayez toujours un peu de monnaie (piÃ¨ces et petits billets) sur vous pour ces occasions.</li>
+      </ul>
+    </section>
+  
+    <section>
+      <h2><span class="icon">ðŸ¤</span> Marchandage et Achats</h2>
+      <ul>
+        <li>Le marchandage est courant dans les souks et certains petits magasins d'artisanat, mais pas dans les magasins modernes Ã  prix fixes, les supermarchÃ©s ou la plupart des restaurants.</li>
+        <li>ConsidÃ©rez-le comme un jeu social plutÃ´t qu'une confrontation. Gardez le sourire !</li>
+        <li>Ayez une idÃ©e du prix que vous Ãªtes prÃªt Ã  payer avant de commencer. Le premier prix annoncÃ© est souvent une base de nÃ©gociation.</li>
+        <li>Si vous n'Ãªtes pas intÃ©ressÃ©, un "La, shukran" (Non, merci) poli suffit gÃ©nÃ©ralement.</li>
+        <li>Ne vous sentez jamais obligÃ© d'acheter aprÃ¨s avoir nÃ©gociÃ©.</li>
+      </ul>
+    </section>
+  
+     <section>
+      <h2><span class="icon">ðŸ“¸</span> Photos et Respect Culturel</h2>
+      <ul>
+        <li>Demandez toujours la permission avant de prendre des personnes en photo, en particulier les femmes et les enfants. Certains peuvent refuser ou demander une petite rÃ©tribution (surtout les artistes de rue, porteurs d'eau, etc.).</li>
+        <li>Habillez-vous de maniÃ¨re respectueuse, surtout si vous visitez des zones moins touristiques ou des lieux religieux (quand la visite est autorisÃ©e aux non-musulmans, ce qui est rare pour l'intÃ©rieur des mosquÃ©es au Maroc, sauf exceptions comme la MosquÃ©e Hassan II Ã  Casablanca). Pour Agadir, une tenue de plage est normale sur le front de mer, mais une tenue plus couvrante (Ã©paules et genoux couverts) est apprÃ©ciÃ©e en ville ou dans les villages alentour.</li>
+        <li>Pendant le mois de Ramadan, soyez discret si vous mangez, buvez ou fumez en public pendant les heures de jeÃ»ne.</li>
+        <li>Apprendre quelques mots de base en Darija (voir <a href="/phrasebook">Guide de Conversation</a>) sera trÃ¨s apprÃ©ciÃ©.</li>
+      </ul>
+    </section>
+  
+     <section>
+      <h2><span class="icon">ðŸ”Œ</span> Divers</h2>
+      <ul>
+        <li>Le courant Ã©lectrique est de 220V, les prises sont de type europÃ©en (Type C/E). Apportez un adaptateur si nÃ©cessaire.</li>
+        <li>Le week-end au Maroc est le samedi et le dimanche. Les administrations sont souvent fermÃ©es.</li>
+        <li>La langue officielle est l'Arabe et l'Amazigh. Le FranÃ§ais est trÃ¨s rÃ©pandu dans le tourisme et les affaires. L'Anglais est de plus en plus parlÃ© dans les zones touristiques.</li>
+        <li>Profitez de l'hospitalitÃ© marocaine, elle est lÃ©gendaire !</li>
+      </ul>
+    </section>
+  
+    <p class="important-note">
+      Ces conseils sont gÃ©nÃ©raux. N'hÃ©sitez pas Ã  demander plus d'informations Ã  votre hÃ´tel ou Ã  l'Office du Tourisme. Excellent sÃ©jour Ã  Agadir !
+    </p>
+  
+  </div>
+  
+  <style>
+    .conseils-page {
+      max-width: 850px;
+      margin: 1rem auto;
+      line-height: 1.7;
+    }
+  
+    /* Style pour le padding global si dÃ©fini dans app.css */
+    .content-padding {
+        padding-left: var(--padding-global, 1rem);
+        padding-right: var(--padding-global, 1rem);
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+  
+    h1 {
+      color: var(--primary-color, #007bff);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--primary-color, #007bff);
+      padding-bottom: 0.5rem;
+    }
+  
+    section {
+      margin-bottom: 2.5rem;
+      background-color: #fdfdff; /* TrÃ¨s lÃ©ger fond pour distinguer sections */
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+  
+    h2 {
+      color: var(--secondary-color, #555);
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      display: flex; /* Pour aligner l'icÃ´ne et le texte */
+      align-items: center;
+      gap: 0.7rem; /* Espace entre icÃ´ne et titre */
+    }
+  
+    h2 .icon {
+       font-size: 1.3em; /* Taille de l'emoji icÃ´ne */
+       display: inline-block;
+       /* Optionnel: ajuster l'alignement vertical si nÃ©cessaire */
+       /* vertical-align: middle; */
+    }
+  
+    p {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+  
+    ul {
+      margin-left: 0; /* On retire l'indentation par dÃ©faut */
+      padding-left: 1.5rem; /* On utilise padding pour l'alignement avec le titre */
+      list-style: disc; /* Puces standard */
+      margin-bottom: 1rem;
+    }
+  
+    li {
+      margin-bottom: 0.8rem;
+    }
+  
+     li a {
+       color: var(--primary-color, #007bff);
+       text-decoration: none;
+     }
+     li a:hover {
+       text-decoration: underline;
+     }
+  
+    .important-note {
+      margin-top: 2rem;
+      font-size: 0.9em;
+      color: #555;
+      background-color: #f9f9f9;
+      border-left: 4px solid var(--primary-color, #007bff);
+      padding: 1rem;
+      border-radius: 4px;
+    }
+  </style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\conseils\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\contacts\+page.svelte ==========
+
+<script>
+    // Pas de script spÃ©cifique nÃ©cessaire pour cette page statique pour l'instant
+</script>
+
+<svelte:head>
+    <title>Contacts d'Urgence - Visit Agadir</title>
+    <meta name="description" content="NumÃ©ros de tÃ©lÃ©phone importants et contacts d'urgence Ã  Agadir." />
+</svelte:head>
+
+<div class="contacts-page">
+    <h1>Contacts d'Urgence Ã  Agadir</h1>
+    <p>Voici quelques numÃ©ros utiles en cas de besoin pendant votre sÃ©jour Ã  Agadir.</p>
+
+    <ul class="contacts-list">
+        <li>
+            <span class="contact-name">Police (SÃ»retÃ© Nationale)</span>
+            <span class="contact-number">
+                <a href="tel:19" title="Appeler la Police">19</a>
+            </span>
+        </li>
+         <li>
+            <span class="contact-name">Gendarmerie Royale (Hors zone urbaine)</span>
+            <span class="contact-number">
+                <a href="tel:177" title="Appeler la Gendarmerie">177</a>
+            </span>
+        </li>
+        <li>
+            <span class="contact-name">Pompiers (Protection Civile)</span>
+            <span class="contact-number">
+                <a href="tel:15" title="Appeler les Pompiers">15</a>
+            </span>
+        </li>
+         <li>
+            <span class="contact-name">Ambulance / SAMU</span>
+            <span class="contact-number">
+                 <a href="tel:150" title="Appeler une Ambulance">150</a>
+                 <!-- Note: Au Maroc, le 15 est souvent utilisÃ© pour les urgences mÃ©dicales via la Protection Civile -->
+            </span>
+        </li>
+         <li>
+            <span class="contact-name">Police Touristique Agadir</span>
+            <span class="contact-number">
+                <a href="tel:+212528840912" title="Appeler la Police Touristique">05 28 84 09 12</a>
+                 (NumÃ©ro exemple, Ã  vÃ©rifier)
+            </span>
+        </li>
+         <li>
+            <span class="contact-name">Renseignements TÃ©lÃ©phoniques</span>
+            <span class="contact-number">
+                <a href="tel:160" title="Appeler les Renseignements">160</a>
+            </span>
+        </li>
+        <!-- Ajoutez d'autres contacts si nÃ©cessaire (Consulat, etc.) -->
+    </ul>
+
+    <p class="important-note">
+        <strong>Note :</strong> Pour appeler depuis un numÃ©ro Ã©tranger, composez l'indicatif du Maroc (+212) et supprimez le premier '0' du numÃ©ro local (si applicable). VÃ©rifiez toujours ces numÃ©ros auprÃ¨s de sources officielles car ils peuvent changer.
+    </p>
+</div>
+
+<style>
+    .contacts-page {
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        max-width: 800px;
+        margin: 1rem auto;
+    }
+
+    h1 {
+        color: #d9534f; /* Couleur rouge pour l'urgence */
+        margin-top: 0;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #f0ad4e; /* Orange */
+        padding-bottom: 0.5rem;
+    }
+
+    .contacts-list {
+        list-style: none;
+        padding: 0;
+        margin: 1.5rem 0;
+    }
+
+    .contacts-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .contacts-list li:last-child {
+        border-bottom: none;
+    }
+
+    .contact-name {
+        font-weight: bold;
+        color: #333;
+        flex-basis: 60%; /* Donne plus de place au nom */
+    }
+
+    .contact-number a {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #0077cc;
+        text-decoration: none;
+        background-color: #e7f3fe;
+        padding: 0.3rem 0.8rem;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+    .contact-number a:hover {
+        background-color: #cce5ff;
+        text-decoration: none;
+    }
+
+     .contact-number span { /* Pour le texte Ã  cÃ´tÃ© du numÃ©ro */
+        font-size: 0.8em;
+        color: #666;
+        margin-left: 5px;
+     }
+
+
+    .important-note {
+        margin-top: 2rem;
+        font-size: 0.9em;
+        color: #555;
+        background-color: #f9f9f9;
+        border-left: 4px solid #f0ad4e;
+        padding: 1rem;
+        border-radius: 4px;
+    }
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\contacts\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\currency\+page.svelte ==========
+
+<script>
+    import { onMount } from 'svelte';
+
+    // RÃ©cupÃ¨re la clÃ© API depuis les variables d'environnement
+    const apiKey = import.meta.env.VITE_EXCHANGERATE_API_KEY;
+    const apiUrlBase = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/`; // Base de l'URL
+
+    let amount = 100; // Montant par dÃ©faut
+    let fromCurrency = 'EUR'; // Devise source par dÃ©faut
+    const toCurrency = 'MAD'; // Toujours convertir vers MAD
+    let rates = null; // Pour stocker les taux de change reÃ§us
+    let convertedAmount = null;
+    let isLoading = true; // Commence en chargement
+    let error = null;
+    let lastUpdate = null;
+
+    // Liste des devises courantes Ã  proposer
+    const supportedCurrencies = ['EUR', 'USD', 'GBP', 'CAD', 'CHF']; // Tu peux en ajouter/retirer
+
+    // Fonction pour rÃ©cupÃ©rer les taux de change (basÃ©e sur fromCurrency)
+    async function fetchRates() {
+        isLoading = true;
+        error = null;
+        rates = null; // RÃ©initialise les taux avant de les chercher
+        convertedAmount = null; // RÃ©initialise le montant converti
+
+        if (!apiKey) {
+            error = "ClÃ© API manquante. VÃ©rifiez la configuration (.env)";
+            isLoading = false;
+            console.error("ClÃ© API non trouvÃ©e dans .env");
+            return;
+        }
+
+        // Utilise la devise "from" comme base pour minimiser les appels si elle change souvent,
+        // mais pour cette API, utiliser une base fixe (EUR ou USD) est souvent plus simple.
+        // Restons sur EUR comme base pour l'instant, car l'API gratuite le gÃ¨re bien.
+        const apiUrl = `${apiUrlBase}EUR`;
+        console.log("Tentative de fetch vers :", apiUrl);
+
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                console.error("Erreur rÃ©ponse API:", response.status, errorData);
+                throw new Error(`Erreur API (${response.status}): ${errorData['error-type'] || response.statusText || 'Erreur inconnue'}`);
+            }
+            const data = await response.json();
+            console.log("DonnÃ©es API reÃ§ues:", data);
+
+            if (data.result === 'success') {
+                rates = data.conversion_rates;
+                lastUpdate = new Date(data.time_last_update_utc).toLocaleString('fr-FR');
+                // Appel initial pour calculer avec les valeurs par dÃ©faut
+                calculateConversion();
+            } else {
+                console.error("Erreur dans les donnÃ©es API:", data['error-type']);
+                throw new Error(data['error-type'] || 'Erreur lors de la rÃ©cupÃ©ration des taux.');
+            }
+        } catch (err) {
+            console.error("Erreur catch fetchRates:", err);
+            error = `Impossible de charger les taux: ${err.message}`;
+            rates = null;
+        } finally {
+            isLoading = false;
+        }
+    }
+
+    // Fonction pour calculer la conversion
+    function calculateConversion() {
+        if (rates && amount !== null && fromCurrency) {
+            const rateFrom = rates[fromCurrency]; // Taux de la devise source par rapport Ã  l'EUR (base)
+            const rateTo = rates[toCurrency];   // Taux du MAD par rapport Ã  l'EUR (base)
+
+            if (rateFrom && rateTo) {
+                 // Conversion: Montant en EUR = amount / rateFrom (si from n'est pas EUR)
+                 // Montant en MAD = Montant en EUR * rateTo
+                 const amountInBase = fromCurrency === 'EUR' ? parseFloat(amount) : parseFloat(amount) / rateFrom;
+                 if (!isNaN(amountInBase)) { // VÃ©rifie que le montant est un nombre valide
+                    convertedAmount = (amountInBase * rateTo).toFixed(2); // Arrondi Ã  2 dÃ©cimales
+                 } else {
+                    convertedAmount = 'N/A'; // Montant invalide
+                 }
+            } else {
+                convertedAmount = 'N/A'; // Taux non trouvÃ©
+                console.warn(`Taux non trouvÃ© pour ${fromCurrency} ou ${toCurrency}`);
+            }
+        } else {
+            convertedAmount = null; // Pas assez d'infos pour calculer
+        }
+    }
+
+    // RÃ©cupÃ¨re les taux au chargement du composant (DÃ‰COMMENTÃ‰)
+    onMount(fetchRates);
+
+    // Recalcule quand le montant ou la devise source change (DÃ‰COMMENTÃ‰)
+    $: if (amount !== null && fromCurrency && rates && !isLoading) calculateConversion();
+    // Ajout de !isLoading pour Ã©viter calcul pendant chargement initial
+
+</script>
+
+<svelte:head>
+    <title>Monnaie, Change & Convertisseur - Agadir</title>
+    <meta name="description" content="Informations sur le Dirham marocain (MAD), taux de change, convertisseur de devises et oÃ¹ changer de l'argent Ã  Agadir." />
+</svelte:head>
+
+<!-- Ajout de content-padding pour cohÃ©rence globale -->
+<div class="currency-page content-padding">
+
+    <!-- SECTION: Convertisseur de Devises -->
+    <section class="converter-section">
+        <h2>Convertisseur Rapide (vers MAD)</h2>
+
+        {#if isLoading && !rates} <!-- ModifiÃ© pour afficher chargement seulement au dÃ©but -->
+            <p class="loading-message">Chargement des taux de change...</p>
+        {:else if error}
+            <p class="error-message">{error}</p>
+        {:else if rates}
+            <div class="converter-form">
+                <div class="input-group">
+                    <label for="amount">Montant :</label>
+                    <!-- Utilisation de type="text" et inputmode="decimal" pour meilleure compatibilitÃ© mobile -->
+                    <input type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" id="amount" bind:value={amount} placeholder="Entrez un montant">
+                </div>
+                <div class="input-group">
+                    <label for="fromCurrency">De :</label>
+                    <select id="fromCurrency" bind:value={fromCurrency}>
+                        {#each supportedCurrencies as currency}
+                            <option value={currency}>{currency}</option>
+                        {/each}
+                    </select>
+                </div>
+                <div class="result-group">
+                    <span>â‰ˆ</span>
+                    <span class="converted-value">{convertedAmount ?? (isLoading ? '...' : 'N/A')}</span> <!-- Affiche ... si recalcul en cours -->
+                    <span>{toCurrency}</span>
+                </div>
+            </div>
+            {#if lastUpdate}
+                 <p class="update-info">Taux mis Ã  jour le : {lastUpdate} (Source: ExchangeRate-API)</p>
+            {/if}
+        {:else}
+             <p class="error-message">Impossible d'afficher le convertisseur.</p>
+        {/if}
+    </section>
+    <!-- FIN SECTION Convertisseur -->
+
+    <!-- Contenu statique existant commence ici -->
+    <h1>Monnaie Marocaine (Dirham - MAD)</h1>
+
+    <section>
+        <h2>Le Dirham Marocain (MAD)</h2>
+        <p>
+            La monnaie officielle du Maroc est le <strong>Dirham marocain</strong>, souvent abrÃ©gÃ© en <strong>MAD</strong> ou <strong>Dh</strong>. Un Dirham est divisÃ© en 100 centimes.
+        </p>
+        <p>
+            Vous trouverez des piÃ¨ces de 1, 5, 10, 20, 50 centimes et de 1, 2, 5, 10 Dirhams. Les billets les plus courants sont ceux de 20, 50, 100 et 200 Dirhams.
+        </p>
+        <p>
+            <strong>Important :</strong> Le Dirham marocain est une monnaie non convertible en dehors du Maroc. Il est illÃ©gal d'importer ou d'exporter des Dirhams en grande quantitÃ©. Vous devrez donc changer votre argent Ã  votre arrivÃ©e et rechanger les Dirhams restants (sur prÃ©sentation du bordereau de change initial) avant votre dÃ©part.
+        </p>
+    </section>
+
+    <section>
+        <h2>Taux de Change Indicatifs (Variables)</h2>
+        <p>
+            Les taux de change varient constamment. Pour une conversion prÃ©cise, utilisez le convertisseur ci-dessus. Les chiffres ci-dessous sont de moins en moins pertinents mais peuvent donner un ordre d'idÃ©e historique.
+        </p>
+        <!-- La liste statique est moins utile maintenant, mais on la laisse pour l'instant -->
+        <ul class="rates-list">
+            <li><strong>1 Euro (EUR)</strong> â‰ˆ 10.8 - 11.0 MAD</li>
+            <li><strong>1 Dollar US (USD)</strong> â‰ˆ 9.8 - 10.2 MAD</li>
+            <li><strong>1 Livre Sterling (GBP)</strong> â‰ˆ 12.3 - 12.7 MAD</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>OÃ¹ Changer de l'Argent Ã  Agadir ?</h2>
+        <p>Plusieurs options s'offrent Ã  vous pour changer vos devises en Dirhams :</p>
+        <ul>
+            <li>
+                <strong>AÃ©roport d'Agadir Al Massira :</strong> Des bureaux de change sont disponibles Ã  l'aÃ©roport, pratiques Ã  l'arrivÃ©e mais les taux peuvent Ãªtre lÃ©gÃ¨rement moins favorables.
+            </li>
+            <li>
+                <strong>Banques :</strong> Les principales banques marocaines (Attijariwafa Bank, BMCE Bank of Africa, Banque Populaire, CIH Bank, etc.) ont des agences dans toute la ville et offrent gÃ©nÃ©ralement des taux de change officiels et fiables. Elles peuvent avoir des horaires d'ouverture limitÃ©s (fermÃ©es le week-end aprÃ¨s-midi, par exemple).
+            </li>
+            <li>
+                <strong>Bureaux de Change AgrÃ©Ã©s :</strong> Vous trouverez de nombreux bureaux de change indÃ©pendants en ville, notamment dans les zones touristiques (front de mer, centre-ville). Assurez-vous qu'ils sont agrÃ©Ã©s (affichent souvent un logo officiel). Leurs taux sont gÃ©nÃ©ralement compÃ©titifs et leurs horaires plus Ã©tendus que les banques. Comparez les taux affichÃ©s avant de choisir.
+            </li>
+             <li>
+                <strong>Distributeurs Automatiques de Billets (DAB / ATM) :</strong> C'est souvent l'option la plus simple. De nombreux distributeurs acceptent les cartes internationales (Visa, Mastercard). Ils vous donneront directement des Dirhams au taux de change de votre banque (vÃ©rifiez les frais Ã©ventuels appliquÃ©s par votre banque et par la banque locale). C'est une bonne option pour retirer de petites sommes au fur et Ã  mesure.
+            </li>
+            <li>
+                <strong>HÃ´tels :</strong> Certains grands hÃ´tels proposent un service de change, mais les taux sont souvent moins avantageux qu'en banque ou dans les bureaux de change. Ã€ utiliser en dÃ©pannage.
+            </li>
+        </ul>
+    </section>
+
+     <section>
+        <h2>Conseils Pratiques</h2>
+        <ul>
+            <li><strong>Comparez les taux :</strong> Surtout pour de grosses sommes, une petite diffÃ©rence de taux peut compter. Le convertisseur ci-dessus utilise des taux interbancaires, les taux rÃ©els dans les bureaux peuvent lÃ©gÃ¨rement diffÃ©rer (commission).</li>
+            <li><strong>Gardez le bordereau :</strong> Conservez le reÃ§u de change. Il vous sera demandÃ© si vous souhaitez rechanger vos Dirhams restants avant de partir.</li>
+            <li><strong>Pas de change "au noir" :</strong> Ã‰vitez les personnes proposant du change dans la rue, c'est illÃ©gal et risquÃ©.</li>
+            <li><strong>Ayez un peu de liquide :</strong> Bien que les cartes soient acceptÃ©es dans de nombreux hÃ´tels, restaurants et boutiques modernes, il est toujours utile d'avoir de l'argent liquide pour les petits commerces, les souks, les taxis, etc.</li>
+             <li><strong>PrÃ©venez votre banque :</strong> Informez votre banque de votre voyage au Maroc pour Ã©viter que vos cartes ne soient bloquÃ©es par mesure de sÃ©curitÃ©.</li>
+        </ul>
+    </section>
+
+</div>
+
+<style>
+    /* Styles existants (adaptÃ©s si nÃ©cessaire) */
+    .currency-page {
+        max-width: 850px;
+        margin: 1rem auto;
+        line-height: 1.7;
+    }
+
+     /* Style pour le padding global si dÃ©fini dans app.css */
+    .content-padding {
+        padding-left: var(--padding-global, 1rem);
+        padding-right: var(--padding-global, 1rem);
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+   }
+
+    /* Styles pour la section convertisseur */
+    .converter-section {
+        background-color: #eef8ff; /* Fond bleu trÃ¨s clair */
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2.5rem; /* Espace avant le contenu statique */
+        border: 1px solid #bde0fe;
+    }
+
+    .converter-section h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color, #007bff);
+        text-align: center;
+        font-size: 1.6rem;
+    }
+
+    .converter-form {
+        display: flex;
+        flex-wrap: wrap; /* Permet de passer Ã  la ligne sur petits Ã©crans */
+        align-items: center;
+        justify-content: center; /* Centre les Ã©lÃ©ments */
+        gap: 1rem; /* Espace entre les groupes */
+        margin-bottom: 1rem;
+    }
+
+    .input-group, .result-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .input-group label {
+        font-weight: 500;
+        color: #333;
+    }
+
+    /* Style pour l'input montant */
+    .input-group input[type="text"] {
+         padding: 0.6rem 0.8rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 1rem;
+        min-width: 80px;
+        /* Pour l'alignement du texte Ã  droite si besoin */
+        /* text-align: right; */
+    }
+
+    /* Style pour le select devise */
+    .input-group select {
+        padding: 0.6rem 0.8rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 1rem;
+        min-width: 80px; /* Largeur minimale */
+    }
+
+
+    .result-group {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--primary-color, #007bff);
+    }
+
+    .result-group .converted-value {
+        background-color: #fff;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+        min-width: 100px; /* Largeur minimale pour l'affichage */
+        display: inline-block; /* Pour appliquer padding/border */
+        text-align: right;
+    }
+
+    .update-info {
+        font-size: 0.85rem;
+        color: #6c757d;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+     .loading-message, .error-message {
+        text-align: center;
+        padding: 1rem;
+        border-radius: 4px;
+     }
+     .loading-message {
+         color: #004085;
+         background-color: #cce5ff;
+         border: 1px solid #b8daff;
+     }
+     .error-message {
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        font-weight: 500;
+     }
+
+    /* Styles pour le contenu statique */
+    h1 {
+        color: var(--secondary-color, #333);
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        border-bottom: 2px solid var(--secondary-color, #ccc);
+        padding-bottom: 0.5rem;
+    }
+
+    section {
+        margin-bottom: 2.5rem;
+    }
+
+    h2 { /* Style par dÃ©faut pour les titres H2 des sections statiques */
+        color: var(--primary-color, #007bff);
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+    }
+
+    p {
+        margin-bottom: 1rem;
+        color: #333;
+    }
+    strong {
+         font-weight: bold;
+         color: inherit;
+    }
+
+    ul {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    li {
+        margin-bottom: 0.7rem;
+    }
+
+    .rates-list {
+        list-style: none;
+        padding-left: 0;
+        opacity: 0.7;
+    }
+     .rates-list li {
+         background-color: #f8f9fa;
+         padding: 0.5rem 1rem;
+         border-left: 3px solid #6c757d;
+         margin-bottom: 0.5rem;
+     }
+     .rates-list strong {
+         color: #343a40;
+     }
+
+    /* Pour la section Conseils */
+    section:last-child ul {
+        list-style-type: 'ðŸ’¡ ';
+    }
+     section:last-child li {
+         margin-bottom: 0.8rem;
+     }
+
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\currency\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.js ==========
+
+import { supabase } from '$lib/supabaseClient';
+import { error } from '@sveltejs/kit';
+
+export async function load() {
+    console.log("Chargement des Ã©vÃ©nements...");
+
+    // Date actuelle pour filtrer les Ã©vÃ©nements passÃ©s
+    const now = new Date().toISOString();
+
+    try {
+        // MODIFIÃ‰ : Ajout de ticket_url et place_id dans le select
+        const { data: events, error: eventsError } = await supabase
+            .from('events')
+            // SÃ©lectionne toutes les colonnes existantes + les nouvelles
+            .select('*, place_id, ticket_url')
+            // Filtre pour les Ã©vÃ©nements futurs ou en cours (mÃªme logique qu'avant)
+            .or(`end_date.gte.${now},and(end_date.is.null,start_date.gte.${now}),and(start_date.lte.${now},end_date.gte.${now})`)
+            .order('start_date', { ascending: true }); // Trie par date de dÃ©but
+
+        if (eventsError) {
+            throw eventsError;
+        }
+
+        console.log("Ã‰vÃ©nements chargÃ©s (avec place_id et ticket_url):", events);
+        return {
+            events: events || []
+        };
+
+    } catch (err) {
+        console.error("Erreur lors du chargement des Ã©vÃ©nements:", err.message);
+        // S'assurer de retourner une structure de donnÃ©es vide en cas d'erreur pour que la page ne plante pas
+        // throw error(500, `Impossible de charger les Ã©vÃ©nements: ${err.message}`); // On pourrait aussi faire Ã§a
+         return {
+             events: [],
+             error: `Impossible de charger les Ã©vÃ©nements: ${err.message}` // On passe l'erreur Ã  la page
+         };
+    }
+}
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.js ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.svelte ==========
+
+<script>
+    import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+    import ErrorMessage from '$lib/components/ErrorMessage.svelte'; // Assure-toi d'avoir ce composant ou adapte
+    import { ExternalLink } from 'lucide-svelte'; // IcÃ´ne pour les liens externes
+
+    export let data; // ReÃ§oit les donnÃ©es de +page.js
+    $: events = data?.events || [];
+    $: pageError = data?.error; // RÃ©cupÃ¨re l'erreur Ã©ventuelle
+    $: loading = !data && !pageError; // Chargement si pas de donnÃ©es et pas d'erreur
+
+    const defaultImage = '/assets/images/default-placeholder.jpg';
+
+    function formatEventDate(startDate, endDate) {
+        // ... (la fonction formatEventDate reste exactement la mÃªme) ...
+         if (!startDate) return "Date inconnue";
+
+        const start = new Date(startDate);
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute:'2-digit' };
+        const startFormatted = start.toLocaleDateString('fr-FR', options);
+
+        if (!endDate) {
+            // Affichage si juste date de dÃ©but
+             const startTime = start.toLocaleTimeString('fr-FR', { hour: 'numeric', minute:'2-digit' });
+             return `Le ${start.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} Ã  ${startTime}`;
+        }
+
+        const end = new Date(endDate);
+        if (start.toDateString() === end.toDateString()) {
+             const startTime = start.toLocaleTimeString('fr-FR', { hour: 'numeric', minute:'2-digit' });
+             const endTime = end.toLocaleTimeString('fr-FR', { hour: 'numeric', minute:'2-digit' });
+             return `Le ${start.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} de ${startTime} Ã  ${endTime}`;
+        } else {
+             const endFormatted = end.toLocaleDateString('fr-FR', options);
+             return `Du ${startFormatted} au ${endFormatted}`;
+        }
+    }
+
+</script>
+
+<svelte:head>
+    <title>Ã‰vÃ©nements Ã  Agadir - Visit Agadir</title>
+    <meta name="description" content="DÃ©couvrez les prochains Ã©vÃ©nements, festivals, marchÃ©s et concerts Ã  Agadir." />
+</svelte:head>
+
+<!-- Ajout de content-padding -->
+<div class="events-page content-padding">
+    <h1>Ã‰vÃ©nements Ã  Venir Ã  Agadir</h1>
+
+    {#if loading}
+        <LoadingSpinner />
+    {:else if pageError}
+        <ErrorMessage message={pageError} /> <!-- Affiche l'erreur si elle existe -->
+    {:else if events.length > 0}
+        <ul class="events-list">
+            {#each events as event (event.id)}
+                <li class="event-item">
+                    <img
+                        src={event.image_url || defaultImage}
+                        alt="Image pour {event.name}"
+                        class="event-image"
+                        loading="lazy"
+                        onerror="this.onerror=null; this.src='{defaultImage}';"
+                    />
+                    <div class="event-details">
+                        <h2>{event.name}</h2>
+                        {#if event.category}
+                            <span class="category-badge">{event.category}</span>
+                        {/if}
+                        <p class="event-date">{formatEventDate(event.start_date, event.end_date)}</p>
+
+                        <!-- MODIFIÃ‰ : Logique pour afficher le lieu -->
+                        {#if event.location_name}
+                            <p class="event-location">
+                                <strong>Lieu :</strong>
+                                {#if event.place_id}
+                                    <!-- Si place_id existe, crÃ©e un lien vers la page du lieu -->
+                                    <a href="/places/{event.place_id}" class="location-link">{event.location_name}</a>
+                                {:else}
+                                    <!-- Sinon, affiche juste le nom du lieu -->
+                                    {event.location_name}
+                                {/if}
+                            </p>
+                        {/if}
+                        <!-- FIN MODIFICATION Lieu -->
+
+                        {#if event.description}
+                            <p class="event-description">{event.description}</p>
+                        {/if}
+
+                        <!-- NOUVEAU : Affichage conditionnel du lien Ticket/Site -->
+                        {#if event.ticket_url}
+                            <a href={event.ticket_url} target="_blank" rel="noopener noreferrer" class="ticket-link">
+                                Tickets / Infos <ExternalLink size={16} style="display:inline-block; vertical-align: middle; margin-left: 4px;" />
+                            </a>
+                        {/if}
+                        <!-- FIN NOUVEAU Lien Ticket -->
+
+                    </div>
+                </li>
+            {/each}
+        </ul>
+    {:else}
+        <p class="no-events">Aucun Ã©vÃ©nement Ã  venir trouvÃ© pour le moment. Revenez bientÃ´t !</p>
+    {/if}
+</div>
+
+<style>
+    .events-page {
+        max-width: 950px;
+        margin: 1rem auto;
+    }
+
+     /* Style pour le padding global */
+    .content-padding {
+        padding-left: var(--padding-global, 1rem);
+        padding-right: var(--padding-global, 1rem);
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    h1 {
+        color: var(--primary-color, #007bff); /* Couleur standard */
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        border-bottom: 2px solid var(--primary-color, #007bff);
+        padding-bottom: 0.5rem;
+    }
+
+    .events-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .event-item {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08); /* Ombre plus douce */
+        margin-bottom: 2rem;
+        overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+        .event-item {
+            flex-direction: row;
+        }
+    }
+
+    .event-image {
+        width: 100%;
+        max-width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 6px;
+        align-self: center;
+    }
+     @media (min-width: 768px) {
+        .event-image {
+             width: 30%; /* Ajustement largeur */
+             height: auto;
+             max-width: 250px; /* RÃ©duction max width */
+             align-self: flex-start;
+        }
+     }
+
+
+    .event-details {
+        flex: 1;
+        display: flex; /* Ajout pour mieux gÃ©rer l'espacement vertical */
+        flex-direction: column;
+    }
+
+    .event-details h2 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        color: var(--secondary-color, #333);
+        font-size: 1.5rem;
+    }
+
+    .category-badge {
+        display: inline-block;
+        background-color: #e9ecef; /* Fond neutre */
+        color: #495057;
+        padding: 0.2em 0.7em;
+        border-radius: 0.25rem;
+        font-size: 0.8em;
+        font-weight: 500; /* Moins gras */
+        margin-bottom: 0.8rem;
+        align-self: flex-start; /* Pour qu'il ne prenne pas toute la largeur */
+    }
+
+    .event-date {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+     .event-location {
+         color: #666;
+         font-size: 0.95rem; /* LÃ©gÃ¨rement plus grand */
+         margin-bottom: 1rem;
+     }
+     .event-location strong {
+          color: #444;
+     }
+
+     /* Style pour le lien du lieu */
+     .location-link {
+        color: var(--primary-color, #007bff);
+        text-decoration: none;
+        font-weight: 500;
+     }
+     .location-link:hover {
+        text-decoration: underline;
+     }
+
+    .event-description {
+        color: #333;
+        line-height: 1.6;
+        font-size: 0.95rem;
+        margin-bottom: 1rem; /* Ajout espace avant lien ticket */
+        flex-grow: 1; /* Permet Ã  la description de pousser le lien en bas */
+    }
+
+    .no-events {
+        text-align: center;
+        font-style: italic;
+        color: #666;
+        margin-top: 3rem;
+        padding: 2rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    /* NOUVEAU : Style pour le lien ticket */
+    .ticket-link {
+        display: inline-block;
+        align-self: flex-start; /* AlignÃ© Ã  gauche */
+        margin-top: auto; /* Pousse le lien en bas si description courte */
+        padding: 0.5rem 1rem;
+        background-color: var(--primary-color, #007bff);
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+    }
+    .ticket-link:hover {
+        background-color: #0056b3; /* Couleur plus foncÃ©e au survol */
+    }
+
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.js ==========
+
+import { supabase } from '$lib/supabaseClient';
+import { error } from '@sveltejs/kit';
+
+export async function load() {
+    console.log("Chargement des donnÃ©es pour la page carte...");
+    try {
+        // Fetch TOUTES les places avec coordonnÃ©es valides
+        const { data: places, error: placesError } = await supabase
+            .from('places')
+            .select('id, name, latitude, longitude, category') // Seulement les infos nÃ©cessaires pour les marqueurs
+            .not('latitude', 'is', null) // Ne prend que ceux qui ont une latitude
+            .not('longitude', 'is', null); // et une longitude
+
+        if (placesError) throw placesError;
+
+        // Fetch TOUS les restaurants avec coordonnÃ©es valides
+        const { data: restaurants, error: restaurantsError } = await supabase
+            .from('restaurants')
+            .select('id, name, latitude, longitude, cuisine_type')
+            .not('latitude', 'is', null)
+            .not('longitude', 'is', null);
+
+        if (restaurantsError) throw restaurantsError;
+
+        console.log("DonnÃ©es carte chargÃ©es:", { places, restaurants });
+
+        // Combine et formate les donnÃ©es pour les marqueurs de la carte
+        const markersData = [
+            ...(places || []).map(p => ({
+                id: `place-${p.id}`,
+                lat: p.latitude,
+                lon: p.longitude,
+                // Texte simple pour le popup, lien vers la page dÃ©tail
+                popupText: `<b>${p.name}</b><br>${p.category || ''}<br><a href="/places/${p.id}">Voir dÃ©tails</a>`,
+                type: 'place' // Pour diffÃ©rencier si besoin (couleur marqueur...)
+            })),
+            ...(restaurants || []).map(r => ({
+                 id: `resto-${r.id}`,
+                lat: r.latitude,
+                lon: r.longitude,
+                popupText: `<b>${r.name}</b><br>${r.cuisine_type || ''}<br><a href="/restaurants/${r.id}">Voir dÃ©tails</a>`,
+                type: 'restaurant'
+            }))
+        ];
+
+        return {
+            markers: markersData
+        };
+
+    } catch (err) {
+        console.error("Erreur lors du chargement des donnÃ©es carte:", err.message);
+        throw error(500, `Impossible de charger les donnÃ©es pour la carte: ${err.message}`);
+    }
+}
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.js ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.svelte ==========
+
+<script>
+    import { browser } from '$app/environment';
+    import { onMount } from 'svelte';
+    import Map from '$lib/components/Map.svelte';
+    import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+
+    export let data; // ReÃ§oit les donnÃ©es de +page.js
+    $: markers = data?.markers || [];
+
+    // Centre initial de la carte (Agadir)
+    let mapCenter = [30.4202, -9.5982];
+    let mapZoom = 13; // Zoom un peu plus large pour voir plusieurs marqueurs
+
+</script>
+
+<svelte:head>
+    <title>Carte d'Agadir - Visit Agadir</title>
+    <meta name="description" content="Explorez les points d'intÃ©rÃªt et restaurants d'Agadir sur la carte interactive." />
+</svelte:head>
+
+<section class="map-page-section">
+    <h1>Carte Interactive d'Agadir</h1>
+    <p>DÃ©couvrez les lieux et restaurants directement sur la carte.</p>
+
+    {#if browser}
+        {#if markers.length > 0}
+            <Map markers={markers} center={mapCenter} zoom={mapZoom} mapId="main-map" />
+        {:else if data}
+             <!-- Si data est chargÃ© mais markers est vide -->
+             <p>Aucun point d'intÃ©rÃªt avec coordonnÃ©es trouvÃ© Ã  afficher sur la carte.</p>
+        {:else}
+             <!-- Si data n'est pas encore chargÃ© (initialement) -->
+            <LoadingSpinner />
+        {/if}
+    {:else}
+        <!-- Placeholder pendant le rendu serveur -->
+         <div style="height: 500px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+             Carte en cours de chargement...
+         </div>
+    {/if}
+
+</section>
+
+<style>
+    .map-page-section {
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        margin-top: 0;
+        color: #0077cc;
+    }
+    p {
+        margin-bottom: 1.5rem;
+        color: #555;
+    }
+
+    /* Assure-toi que le composant Map a une hauteur dÃ©finie */
+    /* Le style est peut-Ãªtre DANS le composant Map.svelte, sinon ajoute-le ici */
+     /* :global(.leaflet-container) {
+         height: 500px;
+         border-radius: 8px;
+         border: 1px solid #ccc;
+     } */
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\phrasebook\+page.svelte ==========
+
+<script>
+    // Exemple de donnÃ©es de phrases (MODIFIÃ‰: tachelhit -> amazigh)
+    const categories = [
+        {
+            name: "Salutations & Essentiels",
+            phrases: [
+                { fr: "Bonjour", en: "Hello / Good morning", darija: "Salam / SbÃ¢h lkhir", amazigh: "Azul / Fulkin" }, // Exemples actualisÃ©s
+                { fr: "Bonsoir", en: "Good evening", darija: "Msa lkhir", amazigh: "Azul / TidggÊ·atin" }, // Exemples actualisÃ©s
+                { fr: "Au revoir", en: "Goodbye", darija: "Bslama", amazigh: "Ar timlilit" }, // Exemple actualisÃ©
+                { fr: "Oui", en: "Yes", darija: "Wakha / Iyyeh", amazigh: "Wah / Yan" }, // Exemple actualisÃ©
+                { fr: "Non", en: "No", darija: "La", amazigh: "Oho" }, // InchangÃ©
+                { fr: "S'il vous plaÃ®t", en: "Please", darija: "Afak", amazigh: "Æafak / IÉ£ D ak iÉ›jb" }, // Exemple actualisÃ©
+                { fr: "Merci (beaucoup)", en: "Thank you (very much)", darija: "Shukran (bzaf)", amazigh: "Shukran / Tanmirt (bahra)" }, // Exemple actualisÃ©
+                { fr: "Excusez-moi / Pardon", en: "Excuse me / Sorry", darija: "Smah liya", amazigh: "Surf iyi" }, // Exemple actualisÃ©
+                { fr: "Comment Ã§a va ?", en: "How are you?", darija: "Labas?", amazigh: "Manzaakin? / Mamec tkkit?" }, // Exemple actualisÃ©
+                { fr: "Je ne comprends pas", en: "I don't understand", darija: "Ma fhemtch", amazigh: "Ur fhimeÉ£" }, // Exemple actualisÃ©
+                { fr: "Parlez-vous anglais/franÃ§ais ?", en: "Do you speak English/French?", darija: "Wach kat hdar b lognlizia/franÃ§ia?", amazigh: "Is tsawalt s Tngliziyt/Tfransist?" }, // Exemple actualisÃ©
+            ]
+        },
+        {
+            name: "Au Restaurant / CafÃ©",
+            phrases: [
+                { fr: "Une table pour deux, svp", en: "A table for two, please", darija: "Wahd tabla dyal jouj, afak", amazigh: "Yan tabla n sin, É›afak" },
+                { fr: "Le menu, svp", en: "The menu, please", darija: "Lmenu, afak", amazigh: "Lmenu, É›afak" },
+                { fr: "L'addition, svp", en: "The bill, please", darija: "Lhssab, afak", amazigh: "Lá¸¥sab, É›afak" },
+                { fr: "De l'eau, svp", en: "Water, please", darija: "Lma, afak", amazigh: "Aman, É›afak" }, // ModifiÃ©
+                { fr: "ThÃ© Ã  la menthe", en: "Mint tea", darija: "Atay b neanaa", amazigh: "Atay s nnaÉ›naÉ›" }, // ModifiÃ©
+                { fr: "CafÃ©", en: "Coffee", darija: "Qahwa", amazigh: "Lqhwa" }, // ModifiÃ©
+                { fr: "C'Ã©tait dÃ©licieux !", en: "It was delicious!", darija: "Kan ldid / Kan zwin!", amazigh: "Ifulki / Yexla !" }, // ModifiÃ©
+            ]
+        },
+         {
+            name: "Directions",
+            phrases: [
+                { fr: "OÃ¹ est... ?", en: "Where is...?", darija: "Fin kayna... ?", amazigh: "Mani illa...?" }, // InchangÃ©
+                { fr: "Ã€ gauche", en: "Left", darija: "Ala lissr", amazigh: "Æ”er uzelmaá¸" }, // ModifiÃ©
+                { fr: "Ã€ droite", en: "Right", darija: "Ala limn", amazigh: "Æ”er ufusi" }, // ModifiÃ©
+                { fr: "Tout droit", en: "Straight ahead", darija: "Nishan", amazigh: "Garas garas / Nishan" }, // ModifiÃ©
+                { fr: "La plage", en: "The beach", darija: "Lbhar / La plage", amazigh: "La plage / Ifri" }, // ModifiÃ©
+                { fr: "Le souk", en: "The souk/market", darija: "Souk", amazigh: "Souk" }, // InchangÃ©
+            ]
+        },
+        // Ajoute d'autres catÃ©gories (Shopping, Transport...)
+    ];
+    
+    // Note: Les traductions en Darija et Amazigh sont des exemples et
+    // peuvent varier (dialectes, prononciation). La vÃ©rification par des locaux est idÃ©ale.
+    // J'ai essayÃ© de mettre des traductions Amazigh plus plausibles mais elles restent Ã  vÃ©rifier.
+    </script>
+    
+    <svelte:head>
+        <!-- MODIFIÃ‰: Tachelhit -> Amazigh -->
+        <title>Guide de Conversation - Visit Agadir</title>
+        <meta name="description" content="Phrases utiles en franÃ§ais, anglais, arabe marocain (darija) et amazigh pour votre sÃ©jour Ã  Agadir." />
+    </svelte:head>
+    
+    <div class="phrasebook-page content-padding"> <!-- Ajout de content-padding pour cohÃ©rence -->
+        <h1>Guide de Conversation</h1>
+        <p>Quelques phrases pour vous aider Ã  communiquer lors de votre visite.</p>
+    
+        {#each categories as category (category.name)}
+            <section class="category-section">
+                <h2>{category.name}</h2>
+                <!-- NOUVEAU: Conteneur pour le dÃ©filement horizontal -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>FranÃ§ais / English</th>
+                                <th>Darija (Arabe Marocain)</th>
+                                <!-- MODIFIÃ‰: Tachelhit -> Amazigh -->
+                                <th>Amazigh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each category.phrases as phrase}
+                                <tr>
+                                    <td>{phrase.fr}<br><small>{phrase.en}</small></td>
+                                    <td>{phrase.darija}</td>
+                                    <!-- MODIFIÃ‰: Utilise la clÃ© 'amazigh' -->
+                                    <td>{phrase.amazigh || 'N/A'}</td>
+                                </tr>
+                            {/each}
+                        </tbody>
+                    </table>
+                </div> <!-- FIN: Conteneur pour le dÃ©filement -->
+            </section>
+        {/each}
+    
+        <p class="important-note">
+            <strong>Note :</strong> La prononciation peut varier. Ã‰couter les locaux est la meilleure faÃ§on d'apprendre ! Les transcriptions en Darija et Amazigh sont simplifiÃ©es et donnÃ©es Ã  titre indicatif.
+        </p>
+    </div>
+    
+    <style>
+        .phrasebook-page {
+            /*background-color: #fff; SupprimÃ© pour potentiellement hÃ©riter du fond global */
+            /* padding: 1.5rem; SupprimÃ© car gÃ©rÃ© par content-padding */
+            /*border-radius: 8px; Optionnel */
+            /*box-shadow: 0 2px 10px rgba(0,0,0,0.1); Optionnel */
+            max-width: 900px; /* Garde une largeur max */
+            margin: 1rem auto;
+        }
+    
+         /* Style pour le padding global si dÃ©fini dans app.css */
+        .content-padding {
+            padding-left: var(--padding-global, 1rem);
+            padding-right: var(--padding-global, 1rem);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+       }
+    
+        h1 {
+            color: var(--primary-color, #007bff); /* Utilise variable globale ou fallback */
+            margin-top: 0;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color, #007bff);
+            padding-bottom: 0.5rem;
+        }
+    
+        .category-section {
+            margin-top: 2rem;
+            margin-bottom: 2rem; /* Ajout d'espace entre les sections */
+        }
+    
+        h2 {
+            color: var(--secondary-color, #555); /* Utilise variable globale ou fallback */
+            margin-bottom: 1rem;
+        }
+    
+        /* NOUVEAU: Style pour le conteneur du tableau */
+        .table-container {
+            width: 100%;
+            overflow-x: auto; /* Ajoute une barre de dÃ©filement HORIZONTALE si nÃ©cessaire */
+            -webkit-overflow-scrolling: touch; /* AmÃ©liore le dÃ©filement sur iOS */
+        }
+    
+        table {
+            width: 100%;
+            min-width: 500px; /* Force une largeur minimale pour que le scroll apparaisse plus tÃ´t si besoin */
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+    
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+            vertical-align: top;
+            white-space: nowrap; /* EmpÃªche le texte de passer Ã  la ligne trop vite, forÃ§ant le scroll */
+        }
+    
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            white-space: normal; /* Permet aux titres de colonnes de passer Ã  la ligne */
+        }
+    
+         /* Permet au contenu des cellules FranÃ§ais/Anglais de passer Ã  la ligne */
+        td:first-child {
+            white-space: normal;
+        }
+    
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+        td small {
+            display: block;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 0.2rem;
+        }
+    
+         td:nth-child(2), td:nth-child(3) { /* Darija & Amazigh */
+            font-style: italic;
+            color: #333;
+         }
+    
+        .important-note {
+            margin-top: 2rem;
+            font-size: 0.9em;
+            color: #555;
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--primary-color, #007bff);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+    </style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\phrasebook\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.js ==========
+
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.js ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.svelte ==========
+
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.js ==========
+
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.js ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.svelte ==========
+
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\transport\+page.svelte ==========
+
+<script>
+    // Pas de logique JavaScript nÃ©cessaire pour cette page statique pour le moment
+  </script>
+  
+  <svelte:head>
+    <title>Transport Ã  Agadir - Office du Tourisme</title>
+    <meta name="description" content="Informations pratiques sur les bus, taxis, location de voiture et navette aÃ©roport Ã  Agadir." />
+  </svelte:head>
+  
+  <div class="transport-container content-padding">
+    <h1>Se dÃ©placer Ã  Agadir</h1>
+  
+    <section>
+      <h2>Bus Locaux</h2>
+      <p><strong>Compagnies :</strong> Les bus locaux Ã  Agadir sont principalement gÃ©rÃ©s par des compagnies privÃ©es. Les tarifs sont gÃ©nÃ©ralement abordables, variant entre 5 et 20 MAD (dirhams marocains) selon la distance.</p>
+      <p><strong>Lignes et Horaires :</strong> Les lignes de bus couvrent la plupart des quartiers d'Agadir, avec des frÃ©quences rÃ©guliÃ¨res. Ils circulent gÃ©nÃ©ralement entre 6h00 et 20h00.</p>
+    </section>
+  
+    <section>
+      <h2>Taxis</h2>
+      <p><strong>Types :</strong> Il y a deux types principaux de taxis :</p>
+      <ul>
+        <li><strong>Petits Taxis (Rouges) :</strong> Pour les trajets Ã  l'intÃ©rieur de la ville. Ils utilisent un compteur (demandez Ã  ce qu'il soit activÃ©). La prise en charge est d'environ 2 MAD le jour et 3 MAD la nuit, avec un tarif minimum par course.</li>
+        <li><strong>Grands Taxis (Blancs) :</strong> Pour les trajets plus longs, y compris vers les banlieues ou d'autres villes. Ils n'ont souvent pas de compteur et le prix doit Ãªtre nÃ©gociÃ© Ã  l'avance ou partagÃ© avec d'autres passagers sur une ligne fixe.</li>
+      </ul>
+      <p><strong>Tarifs Indicatifs (Petits Taxis) :</strong> Les tarifs commencent gÃ©nÃ©ralement Ã  environ 10 MAD pour les petits trajets en ville. Les courses plus longues peuvent coÃ»ter entre 20 et 50 MAD.</p>
+      <p><strong>DisponibilitÃ© :</strong> Vous pouvez hÃ©ler un petit taxi dans la rue s'il est libre (lumiÃ¨re sur le toit Ã©teinte) ou les trouver aux stations de taxis.</p>
+      <p><strong>NumÃ©ros Utiles :</strong> Il n'y a pas de centrale d'appel unique comme dans d'autres pays. Le plus simple est de les hÃ©ler ou de demander Ã  votre hÃ´tel d'en appeler un.</p>
+    </section>
+  
+    <section>
+      <h2>Location de Voitures</h2>
+      <p><strong>Agences :</strong> Plusieurs agences internationales (Europcar, Hertz, Sixt, Avis...) et locales sont prÃ©sentes, notamment Ã  l'aÃ©roport Al Massira (AGA) et en ville.</p>
+      <p><strong>Tarifs :</strong> Comptez environ 200 Ã  400 MAD par jour pour une voiture Ã©conomique, hors assurance complÃ©mentaire et carburant. Les tarifs peuvent Ãªtre plus Ã©levÃ©s en haute saison.</p>
+      <p><strong>Conditions :</strong> Permis de conduire international recommandÃ© mais le permis national est souvent acceptÃ© (vÃ©rifier avec l'agence). Ã‚ge minimum requis (souvent 21 ou 25 ans) et carte de crÃ©dit pour la caution.</p>
+    </section>
+  
+    <section>
+      <h2>Navette AÃ©roport Al Massira (AGA)</h2>
+      <p><strong>Options :</strong></p>
+      <ul>
+        <li><strong>Grands Taxis :</strong> Disponibles Ã  la sortie du terminal. Le tarif est rÃ©glementÃ© et affichÃ©, gÃ©nÃ©ralement autour de 200-250 MAD pour le centre-ville d'Agadir. Confirmez le prix avant de monter.</li>
+        <li><strong>Bus :</strong> La ligne L-AE (Airport Express) relie l'aÃ©roport au centre-ville (passage par Inezgane). C'est l'option la plus Ã©conomique (environ 50 MAD) mais moins frÃ©quente et potentiellement plus longue que le taxi. VÃ©rifiez les horaires Ã  l'avance.</li>
+         <li><strong>Navettes privÃ©es / HÃ´tels :</strong> Certains hÃ´tels proposent leur propre service de navette (souvent payant). Des services de transfert privÃ©s peuvent aussi Ãªtre rÃ©servÃ©s en ligne Ã  l'avance.</li>
+      </ul>
+       <p><strong>Tarifs Navette / Taxi :</strong> Comptez entre 200 et 300 MAD pour un taxi ou une navette privÃ©e standard.</p>
+    </section>
+  
+    <section>
+      <h2>Autres Informations Utiles</h2>
+      <p><strong>Stationnement :</strong> Le stationnement en centre-ville est souvent payant (parcmÃ¨tres ou gardiens). Tarifs : environ 5 Ã  10 MAD par heure ou un forfait pour quelques heures/la journÃ©e.</p>
+      <p><strong>RÃ¨gles de la Route :</strong> Conduite Ã  droite. La ceinture de sÃ©curitÃ© est obligatoire. Attention aux limitations de vitesse et aux contrÃ´les frÃ©quents. La prioritÃ© Ã  droite est courante dans les ronds-points non signalisÃ©s.</p>
+       <p><strong>PiÃ©tons :</strong> Soyez vigilant, la traversÃ©e des routes peut nÃ©cessiter de la prudence.</p>
+    </section>
+  
+  </div>
+  
+  <style>
+    .transport-container {
+      padding: 1rem; /* Utilise la variable si dÃ©finie globalement */
+      /* max-width: 800px; */ /* Optionnel: Limiter la largeur sur grand Ã©cran */
+      /* margin: 0 auto; */ /* Optionnel: Centrer le contenu */
+    }
+  
+    h1 {
+      color: var(--primary-color, #007bff); /* Utilise la variable ou une couleur par dÃ©faut */
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+  
+    h2 {
+      color: var(--secondary-color, #555);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+  
+    section {
+      margin-bottom: 1.5rem;
+    }
+  
+    p, ul {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+  
+    ul {
+      list-style: disc;
+      padding-left: 2rem; /* Indentation pour les listes */
+    }
+  
+    li {
+      margin-bottom: 0.5rem;
+    }
+  
+    strong {
+      font-weight: bold;
+    }
+  
+    /* Style pour le padding global si dÃ©fini dans app.css */
+    .content-padding {
+          padding-left: var(--padding-global, 1rem);
+          padding-right: var(--padding-global, 1rem);
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+     }
+  
+  </style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\transport\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+layout.svelte ==========
+
+<script>
+	import Header from '$lib/components/Header.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import SideNav from '$lib/components/SideNav.svelte'; // <-- RÃ‰-AJOUTÃ‰
+	import ErrorMessage from '$lib/components/ErrorMessage.svelte';
+	import { isSideNavOpen } from '$lib/stores/navStore'; // <-- RÃ‰-AJOUTÃ‰
+	import '../app.css';
+
+	import { page } from '$app/stores';
+	$: error = $page.error;
+
+</script>
+
+<!-- RÃ‰-AJOUTÃ‰ : Affiche SideNav si le store est true -->
+{#if $isSideNavOpen}
+	<SideNav />
+{/if}
+
+<div class="app-container">
+	<Header />
+
+	<main>
+		{#if error}
+			<ErrorMessage message={error.message || 'Une erreur est survenue.'} />
+		{:else}
+			<slot />
+		{/if}
+	</main>
+
+	<Footer />
+</div>
+
+<style>
+	/* Styles existants */
+	.app-container {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		position: relative;
+	}
+
+	main {
+		flex: 1;
+		padding: var(--space-lg) var(--space-md);
+		max-width: 1200px;
+		margin: var(--space-lg) auto;
+		width: 100%;
+		box-sizing: border-box;
+	}
+</style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+layout.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.js ==========
+
+import { supabase } from '$lib/supabaseClient';
+import { error } from '@sveltejs/kit'; // Pour gÃ©rer les erreurs de chargement
+
+// Nombre d'Ã©lÃ©ments Ã  afficher par catÃ©gorie sur l'accueil (pour ne pas tout charger)
+const HOME_PAGE_LIMIT = 6;
+
+export async function load() {
+    console.log("Chargement des donnÃ©es pour la page d'accueil...");
+    try {
+        // Fetch les N premiÃ¨res places (triÃ©es par nom, par exemple)
+        const { data: places, error: placesError } = await supabase
+            .from('places')
+            .select('id, name, description, category, image_url') // SÃ©lectionne les champs nÃ©cessaires pour la carte
+            .order('name', { ascending: true })
+            .limit(HOME_PAGE_LIMIT);
+
+        if (placesError) throw placesError; // Lance l'erreur si Supabase Ã©choue
+
+        // Fetch les N premiers restaurants
+        const { data: restaurants, error: restaurantsError } = await supabase
+            .from('restaurants')
+            .select('id, name, description, cuisine_type, price_range, image_url')
+            .order('name', { ascending: true })
+            .limit(HOME_PAGE_LIMIT);
+
+        if (restaurantsError) throw restaurantsError;
+
+        console.log("DonnÃ©es chargÃ©es :", { places, restaurants });
+
+        // Retourne les donnÃ©es qui seront disponibles dans +page.svelte via la prop 'data'
+        return {
+            places: places || [],
+            restaurants: restaurants || []
+        };
+
+    } catch (err) {
+        console.error("Erreur lors du chargement des donnÃ©es d'accueil:", err.message);
+        // Retourne une erreur que le layout peut attraper et afficher
+        throw error(500, `Impossible de charger les donnÃ©es depuis Supabase: ${err.message}`);
+    }
+}
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.js ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.svelte ==========
+
+<script>
+    import WeatherWidget from '$lib/components/WeatherWidget.svelte';
+    // Assure-toi que le chemin d'importation ci-dessus est correct pour ton projet.
+  
+    // DÃ©finition des raccourcis
+    const shortcuts = [
+      { href: '/map', label: 'Carte Interactive', icon: 'ðŸ—ºï¸' },
+      { href: '/places', label: 'Sites Ã  Visiter', icon: 'ðŸ›ï¸' }, // Assure-toi que '/places' est une page qui liste les lieux ou change le lien
+      { href: '/restaurants', label: 'OÃ¹ Manger', icon: 'ðŸ½ï¸' }, // Idem pour '/restaurants'
+      { href: '/events', label: 'Ã‰vÃ©nements', icon: 'ðŸ“…' },
+      { href: '/transport', label: 'Transport', icon: 'ðŸšŒ' },
+      { href: '/contacts', label: 'Infos Utiles', icon: 'â„¹ï¸' } // Pointe vers Contacts pour l'instant
+    ];
+  </script>
+  
+  <svelte:head>
+    <title>Accueil - Office du Tourisme Agadir</title>
+    <meta name="description" content="Votre guide officiel pour dÃ©couvrir Agadir. AccÃ¨s rapide Ã  la carte, lieux, restaurants, Ã©vÃ©nements, transport et informations utiles." />
+  </svelte:head>
+  
+  <div class="home-container content-padding">
+  
+    <section class="welcome-section">
+      <h1>Bienvenue Ã  Agadir !</h1>
+      <p>Votre application pour explorer la ville.</p>
+    </section>
+  
+    <!-- Section Raccourcis (MAINTENANT AVANT LA MÃ‰TÃ‰O) -->
+    <section class="shortcuts-section">
+      <h2>AccÃ¨s Rapides</h2>
+      <div class="shortcuts-grid">
+        {#each shortcuts as shortcut (shortcut.href)}
+          <a href={shortcut.href} class="shortcut-button">
+            <span class="shortcut-icon">{shortcut.icon}</span>
+            <span class="shortcut-label">{shortcut.label}</span>
+          </a>
+        {/each}
+      </div>
+    </section>
+  
+    <!-- Section MÃ©tÃ©o (MAINTENANT APRÃˆS LES RACCOURCIS) -->
+    <section class="weather-section">
+       <!-- On pourrait ajouter un petit titre ici si besoin -->
+       <!-- <h3>MÃ©tÃ©o Actuelle</h3> -->
+      <WeatherWidget />
+    </section>
+  
+    <!-- Vous pourrez ajouter d'autres sections ici plus tard si nÃ©cessaire -->
+  
+  </div>
+  
+  <style>
+    .home-container {
+      padding-top: 1.5rem;
+      padding-bottom: 2rem;
+    }
+  
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 1.5rem; /* Espacement avant les raccourcis */
+    }
+  
+    .welcome-section h1 {
+      color: var(--primary-color, #007bff);
+      margin-bottom: 0.5rem;
+    }
+  
+     .welcome-section p {
+      color: var(--secondary-color, #555);
+      font-size: 1.1rem;
+     }
+  
+    /* Section Raccourcis */
+    .shortcuts-section {
+      margin-bottom: 2.5rem; /* Espacement avant la mÃ©tÃ©o */
+    }
+  
+    .shortcuts-section h2 {
+      text-align: center;
+      color: var(--secondary-color, #333);
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+  
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  
+    .shortcut-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--primary-color, #007bff);
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      min-height: 120px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+  
+    .shortcut-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  
+    .shortcut-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+  
+    .shortcut-label {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  
+    /* Section MÃ©tÃ©o */
+    .weather-section {
+      margin-bottom: 2rem; /* Espacement aprÃ¨s la mÃ©tÃ©o */
+      display: flex;
+      justify-content: center;
+    }
+  
+    /* Responsive: Passer Ã  3 colonnes sur les Ã©crans plus larges */
+    @media (min-width: 600px) {
+      .shortcuts-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+       .shortcut-button {
+          padding: 2rem 1rem;
+          min-height: 140px;
+       }
+       .shortcut-icon {
+          font-size: 3rem;
+       }
+       .shortcut-label {
+          font-size: 1.1rem;
+       }
+    }
+  
+    /* Ajustement du padding global */
+    .content-padding {
+        padding-left: var(--padding-global, 1rem);
+        padding-right: var(--padding-global, 1rem);
+    }
+  </style>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.svelte ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.css ==========
+
+/* src/app.css */
+
+/* 1. Importation des Polices Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap');
+
+/* 2. DÃ©finition des Variables CSS Globales */
+:root {
+  /* Palette Couleurs */
+  /* Primary Colors - Ocean Blue */
+  --ocean-blue: #3E8CAA;
+  --ocean-blue-light: #65A7C0;
+  --ocean-blue-dark: #2A6F8C;
+
+  /* Secondary Colors - Sandy Beige */
+  --sandy-beige: #E2D1B5;
+  --sandy-beige-light: #F0E6D6;
+  --sandy-beige-dark: #C9B596;
+
+  /* Accent Colors - Sunset Orange */
+  --sunset-orange: #E88C50;
+  --sunset-orange-light: #F2AA7A;
+  --sunset-orange-dark: #D06F35;
+
+  /* Neutral Colors (Mode Clair par dÃ©faut) */
+  --bg-primary: var(--soft-white); /* Fond principal */
+  --bg-secondary: var(--light-sand); /* Fond secondaire (cartes, etc.) */
+  --text-primary: var(--charcoal); /* Texte principal */
+  --text-secondary: var(--medium-gray); /* Texte secondaire */
+  --border-color: var(--sandy-beige-dark); /* Bordures */
+
+  /* Neutrals spÃ©cifiques */
+  --soft-white: #F8F9FA;
+  --light-sand: #F2EBE1;
+  --charcoal: #303841;
+  --medium-gray: #8A959E;
+
+  /* Espacement */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+
+  /* Rayon de Bordure */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Ombres */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* Typographie */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Open Sans', sans-serif;
+}
+
+/* 3. Styles Globaux de Base (Reset lÃ©ger et application des variables) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* Inclusion padding/border dans la taille totale */
+}
+
+html {
+  /* Permet d'utiliser facilement rem pour le responsive font size si besoin */
+  font-size: 16px;
+}
+
+body {
+  margin: 0; /* Supprime marges par dÃ©faut */
+  font-family: var(--font-body); /* Police par dÃ©faut pour le corps */
+  font-size: 1rem; /* Taille de police de base (16px) */
+  line-height: 1.6; /* Hauteur de ligne */
+  color: var(--text-primary); /* Couleur texte principale */
+  background-color: var(--bg-primary); /* Couleur de fond principale */
+  -webkit-font-smoothing: antialiased; /* Meilleur rendu des polices */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Styles par dÃ©faut pour les liens */
+a {
+  color: var(--ocean-blue); /* Utilise la couleur primaire */
+  text-decoration: none; /* Pas de soulignement par dÃ©faut */
+  transition: color var(--transition-fast); /* Transition couleur au survol */
+}
+
+a:hover {
+  color: var(--ocean-blue-dark); /* Assombrit au survol */
+  text-decoration: underline; /* Souligne au survol */
+}
+
+/* Styles par dÃ©faut pour les images */
+img, video, svg {
+  max-width: 100%; /* Assure la responsivitÃ© */
+  height: auto; /* Garde les proportions */
+  display: block; /* Ã‰vite les espaces indÃ©sirables en dessous */
+}
+
+/* Styles pour les titres (exemple de base, peut Ãªtre ajustÃ© dans les composants) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading); /* Police pour les titres */
+  font-weight: 700; /* Poids par dÃ©faut (Playfair Display) */
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-md);
+  line-height: 1.2; /* Hauteur de ligne plus serrÃ©e pour les titres */
+}
+
+h1 { font-size: 2rem; } /* 32px */
+h2 { font-size: 1.5rem; } /* 24px */
+h3 { font-size: 1.25rem; } /* 20px */
+h4 { font-size: 1.125rem; } /* 18px */
+h5 { font-size: 1rem; } /* 16px */
+h6 { font-size: 0.875rem; } /* 14px */
+
+/* Paragraphes */
+p {
+  margin-bottom: var(--space-md);
+}
+
+/* Conteneur principal de contenu (ajustÃ© de l'ancien 'main') */
+main {
+  display: block; /* Assure que c'est un block */
+  max-width: 1200px; /* Garde la largeur max */
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--space-lg) var(--space-md); /* Utilise les variables d'espacement */
+}
+
+
+/* --- Styles spÃ©cifiques de l'ancienne version (CommentÃ©s pour le moment) --- */
+
+/*
+.list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);  // Utilisation de la variable d'espacement
+    padding: var(--space-md) 0;
+}
+
+.back-button {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-lg);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.back-button:hover {
+    background-color: var(--sandy-beige); // Plus clair au survol
+}
+*/
+
+/* src/app.css (AJOUTER Ã€ LA FIN) */
+
+/* --- 4. Styles pour les Boutons --- */
+
+/* Style de base commun Ã  tous les boutons */
+.btn {
+  display: inline-block; /* Comportement bloc mais en ligne */
+  padding: var(--space-sm) var(--space-lg); /* 8px 24px - Plus large que haut */
+  font-family: var(--font-body); /* Utilise la police du corps */
+  font-size: 1rem; /* 16px */
+  font-weight: 600; /* Un peu plus gras */
+  text-align: center;
+  text-decoration: none; /* Au cas oÃ¹ on utilise sur un <a> */
+  border: 1px solid transparent; /* Bordure transparente par dÃ©faut */
+  border-radius: var(--radius-md); /* Coins arrondis (8px) */
+  cursor: pointer;
+  transition: background-color var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal), transform var(--transition-fast);
+  user-select: none; /* EmpÃªche la sÃ©lection de texte sur le bouton */
+  white-space: nowrap; /* EmpÃªche le texte de passer Ã  la ligne */
+}
+
+/* Style "Primary" (Bleu OcÃ©an) - Pour les actions principales */
+.btn-primary {
+  background-color: var(--ocean-blue);
+  color: white;
+  border-color: var(--ocean-blue);
+}
+
+.btn-primary:hover,
+.btn-primary:focus { /* Ajout :focus pour accessibilitÃ© */
+  background-color: var(--ocean-blue-dark);
+  border-color: var(--ocean-blue-dark);
+  color: white; /* S'assurer que la couleur reste blanche */
+  transform: translateY(-2px); /* Effet de soulÃ¨vement lÃ©ger */
+  outline: none; /* On gÃ¨re le focus avec les autres styles */
+}
+.btn-primary:active {
+    transform: translateY(0); /* Retour Ã  la position initiale au clic */
+}
+
+
+/* Style "Secondary" (Contour Bleu OcÃ©an) - Pour actions secondaires */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--ocean-blue);
+  border-color: var(--ocean-blue);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: var(--ocean-blue-light); /* Fond trÃ¨s lÃ©ger au survol */
+  color: white;
+  border-color: var(--ocean-blue);
+  transform: translateY(-2px);
+  outline: none;
+}
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+
+/* Style "Accent" (Orange Coucher de Soleil) - Pour actions mises en avant (ex: CTA) */
+.btn-accent {
+  background-color: var(--sunset-orange);
+  color: white;
+  border-color: var(--sunset-orange);
+}
+
+.btn-accent:hover,
+.btn-accent:focus {
+  background-color: var(--sunset-orange-dark);
+  border-color: var(--sunset-orange-dark);
+  color: white;
+  transform: translateY(-2px);
+  outline: none;
+}
+.btn-accent:active {
+    transform: translateY(0);
+}
+
+
+/* Style "Danger/Warning" (Optionnel - Rouge doux) - Pour actions de suppression/alerte */
+/* On utilise une nuance de l'orange foncÃ© pour rester dans la palette */
+.btn-danger {
+    background-color: var(--sunset-orange-dark);
+    color: white;
+    border-color: var(--sunset-orange-dark);
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+    background-color: #c05a23; /* Version encore plus foncÃ©e de l'orange */
+    border-color: #c05a23;
+    color: white;
+    transform: translateY(-2px);
+    outline: none;
+}
+.btn-danger:active {
+    transform: translateY(0);
+}
+
+/* Style pour bouton "texte" (sans fond ni bordure) */
+.btn-text {
+    background-color: transparent;
+    color: var(--ocean-blue);
+    border: none;
+    padding: var(--space-sm); /* Moins de padding horizontal */
+}
+.btn-text:hover,
+.btn-text:focus {
+    background-color: rgba(62, 140, 170, 0.1); /* LÃ©ger fond bleu transparent */
+    color: var(--ocean-blue-dark);
+    outline: none;
+}
+
+
+/* Ajustements Taille (Optionnel) */
+.btn-sm {
+    font-size: 0.875rem; /* 14px */
+    padding: var(--space-xs) var(--space-md); /* 4px 16px */
+}
+
+.btn-lg {
+    font-size: 1.125rem; /* 18px */
+    padding: var(--space-md) var(--space-xl); /* 16px 32px */
+}
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.css ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.html ==========
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!-- Liens CDN pour Leaflet (CSS & JS) - UNE SEULE FOIS -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+		<!-- Favicon gÃ©rÃ© par SvelteKit/Vite -->
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+
+		<!-- Meta Tags PWA -->
+		<!-- ðŸŽ¨ Mise Ã  jour de la couleur thÃ¨me avec la nouvelle couleur primaire -->
+		<meta name="theme-color" content="#3E8CAA" />
+		<link rel="manifest" href="%sveltekit.assets%/manifest.json" />
+
+		<!-- Google Fonts seront importÃ©es via app.css -->
+
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.html ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\service-worker.js ==========
+
+/// <reference types="@sveltejs/kit" />
+import { build, files, version } from '$service-worker';
+import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
+import { StaleWhileRevalidate, CacheFirst, NetworkFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
+
+// --- Configuration ---
+const CACHE_PREFIX = 'agadir-pwa';
+const CORE_CACHE_NAME = `${CACHE_PREFIX}-core-v${version}`; // Cache pour les fichiers de l'app (gÃ©rÃ© par Workbox)
+const ASSETS_CACHE_NAME = `${CACHE_PREFIX}-assets-v1`;     // Cache pour les images locales, fontes...
+const API_CACHE_NAME = `${CACHE_PREFIX}-api-v1`;          // Cache pour les rÃ©ponses Supabase
+const MAP_TILES_CACHE_NAME = `${CACHE_PREFIX}-map-tiles-v1`; // Cache pour les tuiles de carte
+
+// --- PrÃ©-cache des fichiers de l'application ---
+// 'build' contient les fichiers gÃ©nÃ©rÃ©s par SvelteKit (JS, CSS chunks)
+// 'files' contient les fichiers statiques (dans /static)
+// 'prerendered' contient les routes prÃ©-rendues (si activÃ©)
+
+// Fichiers Ã  mettre en cache immÃ©diatement lors de l'installation
+// On ajoute explicitement les fichiers importants de /static qui ne sont pas automatiquement inclus par `files` parfois
+const coreAssetsToCache = [
+    ...build,
+    ...files.filter(f => f.startsWith('/assets/') || f === '/manifest.json'), // Inclut nos assets et le manifest
+    // Tu peux ajouter d'autres fichiers statiques importants ici si besoin
+];
+
+// Utilise Workbox pour gÃ©rer le prÃ©-cache
+precacheAndRoute(
+    coreAssetsToCache.map(url => ({ url, revision: version })), // Associe une rÃ©vision pour la mise Ã  jour
+    {
+        cacheName: CORE_CACHE_NAME,
+        // Ignore les paramÃ¨tres d'URL pour le cache des fichiers de base
+        ignoreURLParametersMatching: [/.*/]
+    }
+);
+
+
+// --- Mise en cache des Ressources Locales (Images, Fontes...) ---
+// StratÃ©gie: Cache First - On sert depuis le cache si dispo, sinon rÃ©seau, puis on met en cache.
+registerRoute(
+    ({ request, url }) => request.destination === 'image' && url.origin === self.location.origin,
+    new CacheFirst({
+        cacheName: ASSETS_CACHE_NAME,
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 100, // Garde les 100 derniÃ¨res images
+                maxAgeSeconds: 30 * 24 * 60 * 60, // 30 jours
+                purgeOnQuotaError: true, // Supprime ce cache si manque de place
+            }),
+        ],
+    })
+);
+// Tu peux ajouter une rÃ¨gle similaire pour les fontes (request.destination === 'font')
+
+// --- Mise en cache des Tuiles de Carte (OpenStreetMap) ---
+// StratÃ©gie: Stale While Revalidate - On sert depuis le cache (rapide), mais on met Ã  jour en arriÃ¨re-plan.
+registerRoute(
+    ({ url }) => url.origin === 'https://a.tile.openstreetmap.org' ||
+                 url.origin === 'https://b.tile.openstreetmap.org' ||
+                 url.origin === 'https://c.tile.openstreetmap.org',
+    new StaleWhileRevalidate({
+        cacheName: MAP_TILES_CACHE_NAME,
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 500, // Garde un bon nombre de tuiles
+                maxAgeSeconds: 7 * 24 * 60 * 60, // 7 jours
+                 purgeOnQuotaError: true,
+            }),
+        ],
+    })
+);
+
+// --- Mise en cache des Librairies externes (Leaflet CSS/JS depuis unpkg) ---
+// StratÃ©gie: Cache First - Ces fichiers ne changent pas souvent pour une version donnÃ©e.
+registerRoute(
+    ({ url }) => url.origin === 'https://unpkg.com',
+    new CacheFirst({
+        cacheName: `${CACHE_PREFIX}-external-libs-v1`,
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 10, // Peu de fichiers externes
+                maxAgeSeconds: 30 * 24 * 60 * 60, // 30 jours
+                 purgeOnQuotaError: true,
+            }),
+        ],
+    })
+);
+
+
+// --- Mise en cache des Appels API (Supabase) ---
+// StratÃ©gie: Network First - On veut les donnÃ©es fraÃ®ches si possible, sinon on prend le cache.
+registerRoute(
+    ({ url }) => url.origin === new URL(import.meta.env.VITE_SUPABASE_URL).origin &&
+                 url.pathname.startsWith('/rest/v1/'), // Cible les appels Ã  l'API REST Supabase
+    new NetworkFirst({
+        cacheName: API_CACHE_NAME,
+        networkTimeoutSeconds: 5, // DÃ©lai avant de tomber sur le cache (si rÃ©seau lent)
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 50, // Garde les 50 derniÃ¨res rÃ©ponses API
+                maxAgeSeconds: 1 * 24 * 60 * 60, // 1 jour (donnÃ©es peuvent changer)
+            }),
+        ],
+    })
+);
+
+
+// --- Gestion du Cycle de Vie du Service Worker ---
+
+// S'assure que le nouveau SW s'active dÃ¨s qu'il est installÃ©
+self.addEventListener('install', (event) => {
+    console.log('SW: Installation...');
+    // Force le SW en attente Ã  devenir le SW actif.
+    self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+    console.log('SW: Activation...');
+    // Prend le contrÃ´le des clients (onglets) immÃ©diatement.
+    event.waitUntil(self.clients.claim());
+
+    // Nettoyage des anciens caches (ceux qui ne correspondent pas aux noms actuels)
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName.startsWith(CACHE_PREFIX) &&
+                        cacheName !== CORE_CACHE_NAME &&
+                        cacheName !== ASSETS_CACHE_NAME &&
+                        cacheName !== API_CACHE_NAME &&
+                        cacheName !== MAP_TILES_CACHE_NAME /* ajoute d'autres caches ici */ ) {
+                        console.log('SW: Suppression ancien cache:', cacheName);
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+     console.log('SW: PrÃªt Ã  gÃ©rer les fetchs.');
+});
+
+self.addEventListener('fetch', (event) => {
+    // Laisse Workbox gÃ©rer les routes enregistrÃ©es
+    // console.log('SW: Fetching', event.request.url);
+});
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\service-worker.js ==========
+
+

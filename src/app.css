@@ -1,53 +1,290 @@
-/* Reset simple ou styles globaux */
-body {
-    font-family: sans-serif;
-    margin: 0;
-    background-color: #f4f4f4;
-    color: #333;
-    line-height: 1.6;
+/* src/app.css */
+
+/* 1. Importation des Polices Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap');
+
+/* 2. Définition des Variables CSS Globales */
+:root {
+  /* Palette Couleurs */
+  /* Primary Colors - Ocean Blue */
+  --ocean-blue: #3E8CAA;
+  --ocean-blue-light: #65A7C0;
+  --ocean-blue-dark: #2A6F8C;
+
+  /* Secondary Colors - Sandy Beige */
+  --sandy-beige: #E2D1B5;
+  --sandy-beige-light: #F0E6D6;
+  --sandy-beige-dark: #C9B596;
+
+  /* Accent Colors - Sunset Orange */
+  --sunset-orange: #E88C50;
+  --sunset-orange-light: #F2AA7A;
+  --sunset-orange-dark: #D06F35;
+
+  /* Neutral Colors (Mode Clair par défaut) */
+  --bg-primary: var(--soft-white); /* Fond principal */
+  --bg-secondary: var(--light-sand); /* Fond secondaire (cartes, etc.) */
+  --text-primary: var(--charcoal); /* Texte principal */
+  --text-secondary: var(--medium-gray); /* Texte secondaire */
+  --border-color: var(--sandy-beige-dark); /* Bordures */
+
+  /* Neutrals spécifiques */
+  --soft-white: #F8F9FA;
+  --light-sand: #F2EBE1;
+  --charcoal: #303841;
+  --medium-gray: #8A959E;
+
+  /* Espacement */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+
+  /* Rayon de Bordure */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Ombres */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* Typographie */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Open Sans', sans-serif;
 }
 
+/* 3. Styles Globaux de Base (Reset léger et application des variables) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* Inclusion padding/border dans la taille totale */
+}
+
+html {
+  /* Permet d'utiliser facilement rem pour le responsive font size si besoin */
+  font-size: 16px;
+}
+
+body {
+  margin: 0; /* Supprime marges par défaut */
+  font-family: var(--font-body); /* Police par défaut pour le corps */
+  font-size: 1rem; /* Taille de police de base (16px) */
+  line-height: 1.6; /* Hauteur de ligne */
+  color: var(--text-primary); /* Couleur texte principale */
+  background-color: var(--bg-primary); /* Couleur de fond principale */
+  -webkit-font-smoothing: antialiased; /* Meilleur rendu des polices */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Styles par défaut pour les liens */
 a {
-    color: #0077cc;
-    text-decoration: none;
+  color: var(--ocean-blue); /* Utilise la couleur primaire */
+  text-decoration: none; /* Pas de soulignement par défaut */
+  transition: color var(--transition-fast); /* Transition couleur au survol */
 }
 
 a:hover {
-    text-decoration: underline;
+  color: var(--ocean-blue-dark); /* Assombrit au survol */
+  text-decoration: underline; /* Souligne au survol */
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    display: block; /* Empêche les espaces sous les images */
+/* Styles par défaut pour les images */
+img, video, svg {
+  max-width: 100%; /* Assure la responsivité */
+  height: auto; /* Garde les proportions */
+  display: block; /* Évite les espaces indésirables en dessous */
 }
 
-/* Styles pour les listes */
+/* Styles pour les titres (exemple de base, peut être ajusté dans les composants) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading); /* Police pour les titres */
+  font-weight: 700; /* Poids par défaut (Playfair Display) */
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-md);
+  line-height: 1.2; /* Hauteur de ligne plus serrée pour les titres */
+}
+
+h1 { font-size: 2rem; } /* 32px */
+h2 { font-size: 1.5rem; } /* 24px */
+h3 { font-size: 1.25rem; } /* 20px */
+h4 { font-size: 1.125rem; } /* 18px */
+h5 { font-size: 1rem; } /* 16px */
+h6 { font-size: 0.875rem; } /* 14px */
+
+/* Paragraphes */
+p {
+  margin-bottom: var(--space-md);
+}
+
+/* Conteneur principal de contenu (ajusté de l'ancien 'main') */
+main {
+  display: block; /* Assure que c'est un block */
+  max-width: 1200px; /* Garde la largeur max */
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--space-lg) var(--space-md); /* Utilise les variables d'espacement */
+}
+
+
+/* --- Styles spécifiques de l'ancienne version (Commentés pour le moment) --- */
+
+/*
 .list-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
-    gap: 1.5rem;
-    padding: 1rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);  // Utilisation de la variable d'espacement
+    padding: var(--space-md) 0;
 }
 
-/* Un peu d'espace général */
-main {
-    padding: 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Style simple pour les boutons de retour/navigation */
 .back-button {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    margin-bottom: 1rem;
-    background-color: #eee;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-lg);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
     cursor: pointer;
     transition: background-color 0.2s;
 }
 .back-button:hover {
-    background-color: #ddd;
+    background-color: var(--sandy-beige); // Plus clair au survol
+}
+*/
+
+/* src/app.css (AJOUTER À LA FIN) */
+
+/* --- 4. Styles pour les Boutons --- */
+
+/* Style de base commun à tous les boutons */
+.btn {
+  display: inline-block; /* Comportement bloc mais en ligne */
+  padding: var(--space-sm) var(--space-lg); /* 8px 24px - Plus large que haut */
+  font-family: var(--font-body); /* Utilise la police du corps */
+  font-size: 1rem; /* 16px */
+  font-weight: 600; /* Un peu plus gras */
+  text-align: center;
+  text-decoration: none; /* Au cas où on utilise sur un <a> */
+  border: 1px solid transparent; /* Bordure transparente par défaut */
+  border-radius: var(--radius-md); /* Coins arrondis (8px) */
+  cursor: pointer;
+  transition: background-color var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal), transform var(--transition-fast);
+  user-select: none; /* Empêche la sélection de texte sur le bouton */
+  white-space: nowrap; /* Empêche le texte de passer à la ligne */
+}
+
+/* Style "Primary" (Bleu Océan) - Pour les actions principales */
+.btn-primary {
+  background-color: var(--ocean-blue);
+  color: white;
+  border-color: var(--ocean-blue);
+}
+
+.btn-primary:hover,
+.btn-primary:focus { /* Ajout :focus pour accessibilité */
+  background-color: var(--ocean-blue-dark);
+  border-color: var(--ocean-blue-dark);
+  color: white; /* S'assurer que la couleur reste blanche */
+  transform: translateY(-2px); /* Effet de soulèvement léger */
+  outline: none; /* On gère le focus avec les autres styles */
+}
+.btn-primary:active {
+    transform: translateY(0); /* Retour à la position initiale au clic */
+}
+
+
+/* Style "Secondary" (Contour Bleu Océan) - Pour actions secondaires */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--ocean-blue);
+  border-color: var(--ocean-blue);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: var(--ocean-blue-light); /* Fond très léger au survol */
+  color: white;
+  border-color: var(--ocean-blue);
+  transform: translateY(-2px);
+  outline: none;
+}
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+
+/* Style "Accent" (Orange Coucher de Soleil) - Pour actions mises en avant (ex: CTA) */
+.btn-accent {
+  background-color: var(--sunset-orange);
+  color: white;
+  border-color: var(--sunset-orange);
+}
+
+.btn-accent:hover,
+.btn-accent:focus {
+  background-color: var(--sunset-orange-dark);
+  border-color: var(--sunset-orange-dark);
+  color: white;
+  transform: translateY(-2px);
+  outline: none;
+}
+.btn-accent:active {
+    transform: translateY(0);
+}
+
+
+/* Style "Danger/Warning" (Optionnel - Rouge doux) - Pour actions de suppression/alerte */
+/* On utilise une nuance de l'orange foncé pour rester dans la palette */
+.btn-danger {
+    background-color: var(--sunset-orange-dark);
+    color: white;
+    border-color: var(--sunset-orange-dark);
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+    background-color: #c05a23; /* Version encore plus foncée de l'orange */
+    border-color: #c05a23;
+    color: white;
+    transform: translateY(-2px);
+    outline: none;
+}
+.btn-danger:active {
+    transform: translateY(0);
+}
+
+/* Style pour bouton "texte" (sans fond ni bordure) */
+.btn-text {
+    background-color: transparent;
+    color: var(--ocean-blue);
+    border: none;
+    padding: var(--space-sm); /* Moins de padding horizontal */
+}
+.btn-text:hover,
+.btn-text:focus {
+    background-color: rgba(62, 140, 170, 0.1); /* Léger fond bleu transparent */
+    color: var(--ocean-blue-dark);
+    outline: none;
+}
+
+
+/* Ajustements Taille (Optionnel) */
+.btn-sm {
+    font-size: 0.875rem; /* 14px */
+    padding: var(--space-xs) var(--space-md); /* 4px 16px */
+}
+
+.btn-lg {
+    font-size: 1.125rem; /* 18px */
+    padding: var(--space-md) var(--space-xl); /* 16px 32px */
 }

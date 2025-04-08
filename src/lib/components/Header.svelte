@@ -1,118 +1,135 @@
 <script>
-	import SideNav from './SideNav.svelte'; // Importe le nouveau composant
-
-	// Chemin vers ton logo dans le dossier static
-	const logoUrl = '/assets/images/logo.png'; // Ajuste si ton nom de fichier est différent
-
-	// État pour contrôler l'ouverture du menu latéral
-	let isMenuOpen = false;
-
-	function toggleMenu() {
-		isMenuOpen = !isMenuOpen;
+	// Importe les icônes nécessaires depuis lucide-svelte
+	import { Menu, Search } from 'lucide-svelte';
+	// Importe le store pour gérer l'état du menu latéral
+	import { isSideNavOpen } from '$lib/stores/navStore'; // Note: utilisation de $lib
+  
+	// Fonction pour ouvrir/fermer le menu latéral en modifiant le store
+	function toggleNav() {
+	  isSideNavOpen.update(value => !value); // Inverse la valeur actuelle (true -> false, false -> true)
 	}
-
-	function closeMenu() {
-		isMenuOpen = false;
+  
+	// TODO: Implémenter la fonction de recherche quand le bouton sera cliqué
+	function handleSearchClick() {
+	  console.log("Bouton Recherche cliqué - à implémenter");
+	  // Pourrait ouvrir un modal, naviguer vers /search, ou afficher un champ input
 	}
-</script>
-
-<header>
+  
+	// Optionnel: Chemin vers le logo si tu préfères garder une image
+	// const logoUrl = '/assets/images/logo.png';
+  </script>
+  
+  <header>
 	<div class="header-content">
-		<a href="/" class="logo-link">
-			<img src={logoUrl} alt="Logo Visit Agadir" class="logo" />
-			<h1>Visit Agadir</h1>
+	  <!-- Bouton Menu (Hamburger) -->
+	  <button class="menu-button" on:click={toggleNav} aria-label="Ouvrir ou fermer le menu">
+		<Menu size={24} />
+	  </button>
+  
+	  <!-- Logo (Texte) -->
+	  <div class="logo">
+		<!-- Si tu veux utiliser une image à la place : -->
+		<!-- <a href="/" aria-label="Accueil"> -->
+		<!--   <img src={logoUrl} alt="Logo Agadir Tourism" class="logo-img" /> -->
+		<!-- </a> -->
+		 <a href="/" class="logo-link">
+		  <h1>Agadir Tourism</h1>
 		</a>
-
-		<!-- Le bouton Hamburger -->
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<button class="menu-button" on:click={toggleMenu} aria-label="Ouvrir le menu">
-			<div class="hamburger-icon">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-		</button>
+	  </div>
+  
+	  <!-- Bouton Recherche -->
+	  <button class="search-button" on:click={handleSearchClick} aria-label="Rechercher">
+		<Search size={24} />
+	  </button>
 	</div>
-</header>
-
-<!-- Le menu latéral (SideNav) est maintenant contrôlé ici -->
-<!-- Il s'affichera par-dessus le contenu quand `isMenuOpen` est true -->
-<SideNav isOpen={isMenuOpen} {closeMenu} />
-
-<style>
+  </header>
+  
+  <!-- IMPORTANT: Le composant <SideNav> n'est PLUS ici ! -->
+  <!-- Il sera géré dans le fichier layout principal (ex: +layout.svelte) -->
+  
+  <style>
 	header {
-		background-color: #0077cc; /* Couleur thème */
-		color: white;
-		padding: 0.8rem 1rem;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		position: sticky; /* Reste visible en haut */
-		top: 0;
-		z-index: 900; /* Moins que le sidenav et l'overlay */
-		width: 100%;
-		box-sizing: border-box; /* Inclut padding dans la largeur */
+	  /* Utilise les nouvelles variables CSS */
+	  background-color: var(--ocean-blue);
+	  color: white;
+	  position: sticky; /* Reste en haut lors du scroll */
+	  top: 0;
+	  z-index: 100; /* Assure qu'il est au-dessus de la plupart du contenu */
+	  box-shadow: var(--shadow-md); /* Ombre définie dans app.css */
+	  padding: 0 var(--space-md); /* Espace à gauche/droite seulement */
 	}
-
+  
 	.header-content {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		max-width: 1200px;
-		margin: 0 auto;
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+	  /* Hauteur fixe pour le header, ajuster si besoin */
+	  height: 60px;
+	  /* Limite la largeur sur les grands écrans */
+	  max-width: 1200px;
+	  margin: 0 auto; /* Centre le contenu */
 	}
-
-	.logo-link {
-		display: flex;
-		align-items: center;
-		color: white;
-		text-decoration: none;
-	}
-
+  
 	.logo {
-		height: 40px; /* Ajuste la taille du logo */
-		margin-right: 0.8rem;
+	  /* Prend la place restante pour centrer le logo */
+	  flex-grow: 1;
+	  text-align: center;
 	}
-
-	h1 {
-		font-size: 1.5rem;
-		margin: 0;
-		white-space: nowrap; /* Empêche le titre de passer à la ligne */
+  
+	.logo-link {
+	  color: white;
+	  text-decoration: none;
+	  display: inline-block; /* Pour que le lien ne prenne pas toute la largeur */
 	}
-
-	/* Styles pour le bouton Hamburger */
-	.menu-button {
-		background: none;
-		border: none;
-		cursor: pointer;
-		padding: 10px; /* Zone de clic plus grande */
-		display: flex; /* Pour centrer l'icône */
-		align-items: center;
-		justify-content: center;
-		margin-left: 1rem; /* Espace par rapport au logo */
+  
+	.logo-link h1 {
+	  font-family: var(--font-heading); /* Police définie dans app.css */
+	  font-size: 1.5rem; /* 24px */
+	  font-weight: 700;
+	  margin: 0; /* Supprime marges par défaut du h1 */
+	  line-height: 1; /* Ajuste pour un meilleur alignement vertical */
 	}
-
-	.hamburger-icon {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-		width: 24px;
-		height: 18px; /* Ajusté pour 3 barres */
+  
+	/* Si tu utilises une image logo: */
+	/*
+	.logo-img {
+	  height: 40px; // Ajuster la taille
+	  display: block; // Assurer un bon alignement
 	}
-
-	.hamburger-icon span {
-		display: block;
-		width: 100%;
-		height: 3px; /* Épaisseur des barres */
-		background-color: white;
-		border-radius: 3px;
-		transition: all 0.3s ease-in-out; /* Pour une future animation de fermeture (croix) */
+	*/
+  
+	.menu-button,
+	.search-button {
+	  background: transparent;
+	  border: none;
+	  color: white;
+	  cursor: pointer;
+	  padding: var(--space-sm); /* Utilise variable d'espacement */
+	  border-radius: var(--radius-full); /* Rond */
+	  display: flex; /* Pour centrer l'icône */
+	  align-items: center;
+	  justify-content: center;
+	  transition: background-color var(--transition-normal); /* Transition définie dans app.css */
 	}
-
-
-
-	/* Responsive titre */
-	@media (max-width: 400px) {
-		h1 {
-			font-size: 1.3rem;
-		}
+  
+	.menu-button:hover,
+	.search-button:hover {
+	  background-color: rgba(255, 255, 255, 0.1); /* Léger fond au survol */
 	}
-</style>
+  
+	/* Ajustement pour petits écrans si le titre est trop long */
+	@media (max-width: 480px) {
+	  .logo-link h1 {
+		font-size: 1.25rem; /* 20px */
+	  }
+	   .header-content {
+		  height: 56px; /* Légèrement moins haut sur mobile */
+	   }
+	   /* Masquer le texte du logo si VRAIMENT nécessaire (préférer réduire la taille) */
+	   /*
+	   .logo-link h1 span {
+		  display: none; // Cache le texte, garde juste une icône si on en met une plus tard
+	   }
+	   */
+	  }
+	</style>

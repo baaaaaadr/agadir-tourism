@@ -1,167 +1,165 @@
 <script>
-	import { Home, Map as MapIcon, Calendar, Bus, Languages, Phone, Coins, Info, LifeBuoy } from 'lucide-svelte';
-	// Importe les icônes dont nous avons besoin depuis la bibliothèque
-
-
-	// Props reçues du composant parent (Header)
-	export let isOpen = false; // Indique si le menu est ouvert
-	export let closeMenu = () => {}; // Fonction pour fermer le menu
-
-	// Liste des liens de navigation MISE À JOUR avec les composants icônes
-	const navLinks = [
-    { href: '/', text: 'Accueil', icon: Home },
-    { href: '/map', text: 'Carte', icon: MapIcon },
-    { href: '/events', text: 'Événements', icon: Calendar },
-    { href: '/transport', text: 'Transport', icon: Bus },
-    // Peut-être regrouper les infos pratiques ici :
-    { href: '/phrasebook', text: 'Phrases', icon: Languages },
-    { href: '/currency', text: 'Monnaie', icon: Coins },
-    // NOUVELLE LIGNE CI-DESSOUS :
-    { href: '/conseils', text: 'Conseils', icon: LifeBuoy },
-    // FIN NOUVELLE LIGNE
-    { href: '/contacts', text: 'Contacts', icon: Phone },
-    // Fin groupe infos
-    { href: '/about', text: 'À Propos', icon: Info }
-];
-
-	// Ferme le menu quand on clique sur un lien (utile sur mobile)
-	function handleLinkClick() {
-		closeMenu();
+	// Importe les transitions Svelte
+	import { fly, fade } from 'svelte/transition';
+	// Importe le store (CORRIGÉ pour utiliser $lib)
+	import { isSideNavOpen } from '$lib/stores/navStore';
+  
+	// Importe les icônes nécessaires
+	import {
+	  Home, Map as MapIcon, /* Renommé car Map est aussi un composant */
+	  Coffee, Calendar, Bus, Book, DollarSign, Info as InfoIcon, /* Renommé car Info existe */
+	  Phone, Heart, X, Settings, /* Ajout de Settings pour 'Conseils' par exemple */
+	  Users, /* Pour 'About' ? */
+	  Search /* Si on met la recherche ici plus tard */
+	} from 'lucide-svelte';
+  
+	// Fonction pour fermer le menu en mettant le store à false
+	function closeNav() {
+	  isSideNavOpen.set(false);
 	}
-</script>
-
-<!-- Overlay semi-transparent qui apparaît derrière le menu -->
-{#if isOpen}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div class="overlay" on:click={closeMenu} />
-{/if}
-
-<!-- Le panneau latéral du menu -->
-<aside class="sidenav" class:open={isOpen}>
-	<div class="sidenav-header">
-		<span>Navigation</span>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<button class="close-button" on:click={closeMenu} title="Fermer le menu">×</button>
+  
+	// Définition des éléments du menu (adapter les icônes et labels si besoin)
+	// J'ai essayé de deviner les icônes, tu peux les changer
+	const navItems = [
+	  { path: '/', label: 'Accueil', icon: Home },
+	  { path: '/map', label: 'Carte', icon: MapIcon },
+	  // { path: '/places', label: 'Lieux', icon: MapPin }, // Ajoute si tu as une page liste /places
+	  // { path: '/restaurants', label: 'Restaurants', icon: Coffee }, // Ajoute si tu as une page liste /restaurants
+	  { path: '/events', label: 'Événements', icon: Calendar },
+	  { path: '/transport', label: 'Transport', icon: Bus },
+	  { path: '/phrasebook', label: 'Phrases Utiles', icon: Book },
+	  { path: '/currency', label: 'Monnaie', icon: DollarSign },
+	  { path: '/favorites', label: 'Favoris', icon: Heart }, // À créer
+	  { path: '/conseils', label: 'Conseils', icon: InfoIcon }, // Ou Settings?
+	  { path: '/contacts', label: 'Contacts Utiles', icon: Phone },
+	  { path: '/about', label: 'À Propos', icon: Users } // Ou InfoIcon si Conseils prend Settings?
+	];
+  
+	// Ajouter/Retirer des liens selon tes pages réelles
+  </script>
+  
+  <!-- Le composant SideNav n'est rendu que si $isSideNavOpen est true (géré dans +layout.svelte) -->
+  <!-- Donc, pas besoin de {#if} ici, mais on garde l'overlay et la nav -->
+  
+  <!-- Overlay pour fermer en cliquant à côté -->
+  <div
+	class="overlay"
+	on:click={closeNav}
+	transition:fade={{ duration: 200 }}
+	aria-hidden="true"
+  ></div>
+  
+  <!-- Conteneur du menu latéral -->
+  <nav
+	class="side-nav"
+	transition:fly={{ x: -300, duration: 300, opacity: 1 }}
+	aria-label="Menu principal"
+  >
+	<!-- Entête du menu -->
+	<div class="nav-header">
+	  <h2>Agadir Tourism</h2>
+	  <button class="close-button" on:click={closeNav} aria-label="Fermer le menu">
+		<X size={24} />
+	  </button>
 	</div>
-	<nav>
-		<ul>
-			{#each navLinks as link (link.href)}
-				<li>
-					<!-- MISE À JOUR ICI pour afficher l'icône -->
-					<a href={link.href} on:click={handleLinkClick}>
-						<svelte:component this={link.icon} size={20} strokeWidth={2} class="nav-icon" />
-						<span>{link.text}</span>
-					</a>
-				</li>
-			{/each}
-		</ul>
-	</nav>
-</aside>
-
-<style>
-	/* Styles existants (non modifiés ou légèrement ajustés) */
-	.sidenav {
-		position: fixed;
-		top: 0;
-		left: 0;
-		height: 100vh;
-		width: 280px;
-		max-width: 80%;
-		background-color: #fff;
-		box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
-		transform: translateX(-100%);
-		transition: transform 0.3s ease-out;
-		z-index: 1000;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.sidenav.open {
-		transform: translateX(0);
-	}
-
-	.sidenav-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 1rem 1.5rem;
-		border-bottom: 1px solid #eee;
-		background-color: #f8f9fa;
-	}
-
-	.sidenav-header span {
-		font-weight: bold;
-		color: #333;
-		font-size: 1.1rem;
-	}
-
-	.close-button {
-		background: none;
-		border: none;
-		font-size: 2rem;
-		color: #888;
-		cursor: pointer;
-		padding: 0 0.5rem;
-		line-height: 1;
-	}
-	.close-button:hover {
-		color: #333;
-	}
-
-	nav {
-		padding: 1rem 0;
-		flex-grow: 1;
-		overflow-y: auto;
-	}
-
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	/* Style des liens - AJUSTÉ pour l'icône */
-	li a {
-		display: flex; /* Utilise flexbox pour aligner icône et texte */
-		align-items: center; /* Centre verticalement */
-		gap: 0.8rem; /* Espace entre icône et texte */
-		padding: 0.8rem 1.5rem;
-		color: #333;
-		text-decoration: none;
-		font-size: 1rem;
-		transition: background-color 0.2s ease;
-		border-bottom: 1px solid #f5f5f5;
-	}
-
-	li a:hover {
-		background-color: #e9ecef;
-	}
-	li:last-child a {
-		border-bottom: none;
-	}
-
-	/* Style spécifique pour l'icône (optionnel, pour ajuster la couleur etc.) */
-	.nav-icon {
-		/* La couleur est héritée du lien 'a' par défaut (currentColor) */
-		/* Vous pourriez forcer une couleur si besoin: color: #555; */
-		flex-shrink: 0; /* Empêche l'icône de rétrécir si le texte est long */
-	}
-
-	/* Style de l'overlay */
+  
+	<!-- Liste des liens de navigation -->
+	<ul class="nav-links" role="menu">
+	  {#each navItems as { path, label, icon: Icon }}
+		<li role="none">
+		  <!-- Utilise on:click pour fermer le menu APRES la navigation pour mobile -->
+		  <a href={path} role="menuitem" on:click={closeNav}>
+			<Icon size={20} aria-hidden="true" />
+			<span>{label}</span>
+		  </a>
+		</li>
+	  {/each}
+	</ul>
+  </nav>
+  
+  
+  <style>
 	.overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-		z-index: 999;
-		opacity: 1;
-		transition: opacity 0.3s ease-out;
+	  position: fixed;
+	  inset: 0; /* Raccourci pour top, left, right, bottom = 0 */
+	  background-color: rgba(0, 0, 0, 0.5);
+	  z-index: 150; /* Doit être en dessous du side-nav mais au-dessus du reste */
 	}
-
-	.sidenav:not(.open) + .overlay {
-		opacity: 0;
-		pointer-events: none;
+  
+	.side-nav {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  bottom: 0;
+	  width: 280px; /* Largeur du menu */
+	  background-color: var(--bg-primary); /* Utilise variable CSS */
+	  box-shadow: var(--shadow-lg); /* Utilise variable CSS */
+	  z-index: 200; /* Au-dessus de l'overlay */
+	  overflow-y: auto; /* Permet le scroll si le contenu dépasse */
+	  display: flex;
+	  flex-direction: column;
 	}
-</style>
+  
+	.nav-header {
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+	  padding: var(--space-lg);
+	  background-color: var(--ocean-blue); /* Couleur primaire */
+	  color: white;
+	  flex-shrink: 0; /* Empêche l'entête de rétrécir */
+	}
+  
+	.nav-header h2 {
+	  font-family: var(--font-heading);
+	  font-size: 1.25rem; /* 20px */
+	  margin: 0;
+	}
+  
+	.close-button {
+	  background: transparent;
+	  border: none;
+	  color: white;
+	  cursor: pointer;
+	  padding: var(--space-xs);
+	  border-radius: var(--radius-full);
+	  transition: background-color var(--transition-normal);
+	  display: flex; /* Pour bien aligner l'icône X */
+	  align-items: center;
+	  justify-content: center;
+	}
+  
+	.close-button:hover {
+	  background-color: rgba(255, 255, 255, 0.1);
+	}
+  
+	.nav-links {
+	  list-style: none;
+	  padding: var(--space-md) 0; /* Espace en haut/bas de la liste */
+	  margin: 0;
+	  flex-grow: 1; /* Prend l'espace restant */
+	  overflow-y: auto; /* Scroll interne si besoin */
+	}
+  
+	.nav-links li a {
+	  display: flex;
+	  align-items: center;
+	  /* Padding vertical et horizontal */
+	  padding: var(--space-md) var(--space-lg);
+	  color: var(--text-primary); /* Utilise variable */
+	  text-decoration: none;
+	  transition: background-color var(--transition-normal), color var(--transition-normal);
+	  font-weight: 500; /* Texte légèrement plus gras */
+	}
+  
+	.nav-links li a:hover,
+	.nav-links li a:focus { /* Ajout focus pour accessibilité */
+	  background-color: var(--sandy-beige-light); /* Utilise variable */
+	  color: var(--ocean-blue); /* Change couleur texte au survol */
+	  outline: none; /* On gère le focus avec le fond */
+	}
+  
+	.nav-links li a span {
+	  margin-left: var(--space-md); /* Espace entre icône et texte */
+	}
+  </style>

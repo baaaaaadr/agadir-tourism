@@ -19,7 +19,6 @@
             <p>© {new Date().getFullYear()} Office du Tourisme Agadir (Maquette PWA). Tous droits réservés.</p>
         </div>
 
-        <!-- NOUVELLE SECTION : Icônes réseaux sociaux -->
         <div class="social-icons">
             {#each socialLinks as link (link.name)}
                 <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.ariaLabel} title={link.name}>
@@ -27,60 +26,61 @@
                 </a>
             {/each}
         </div>
-        <!-- FIN NOUVELLE SECTION -->
     </div>
 </footer>
 
 <style>
     footer {
-        padding: 2rem 1rem; /* Augmentation padding */
-        margin-top: 3rem; /* Augmentation marge */
-        background-color: #f8f9fa; /* Couleur un peu plus claire */
-        color: #6c757d;
-        font-size: 0.9em;
-        border-top: 1px solid #dee2e6; /* Ajout bordure haute */
+        /* Utilisation des variables pour padding, margin, couleur fond/texte, bordure */
+        padding: var(--space-xl) var(--space-md); /* 32px 16px */
+        margin-top: var(--space-xxl); /* 48px */
+        background-color: var(--bg-secondary); /* Fond secondaire (light-sand) */
+        color: var(--text-secondary); /* Texte secondaire (medium-gray) */
+        font-size: 0.9em; /* Garde la taille légèrement réduite */
+        border-top: 1px solid var(--border-color); /* Bordure avec variable (sandy-beige-dark) */
     }
 
     .footer-content {
-        max-width: 1100px; /* Limite largeur contenu */
-        margin: 0 auto; /* Centre le contenu */
+        max-width: 1100px;
+        margin: 0 auto;
         display: flex;
-        flex-direction: column; /* Par défaut sur mobile */
+        flex-direction: column;
         align-items: center;
-        justify-content: space-between; /* Espace entre copyright et icônes */
-        gap: 1.5rem; /* Espace entre les éléments */
+        justify-content: space-between;
+        gap: var(--space-lg); /* Utilise variable (24px) */
         text-align: center;
     }
 
     .copyright p {
-        margin: 0; /* Retire marge par défaut du paragraphe */
+        margin: 0;
     }
 
     .social-icons {
         display: flex;
-        gap: 1.2rem; /* Espace entre les icônes */
+        gap: var(--space-md); /* Utilise variable (16px) pour mobile */
         align-items: center;
     }
 
     .social-icons a {
-        color: #495057; /* Couleur icône */
-        transition: color 0.2s ease, transform 0.2s ease;
-        display: inline-block; /* Nécessaire pour transform */
+        color: var(--text-secondary); /* Utilise variable pour icônes par défaut */
+        /* Garde les transitions existantes */
+        transition: color var(--transition-normal), transform var(--transition-normal);
+        display: inline-block;
     }
 
     .social-icons a:hover {
-        color: var(--primary-color, #007bff); /* Couleur au survol */
-        transform: scale(1.1); /* Léger grossissement */
+        color: var(--ocean-blue); /* Utilise la couleur primaire au survol */
+        transform: scale(1.1);
     }
 
-    /* Responsive: Mettre copyright et icônes sur la même ligne sur écrans larges */
+    /* Responsive */
     @media (min-width: 768px) {
         .footer-content {
-            flex-direction: row; /* Passe en ligne */
-            text-align: left; /* Alignement texte à gauche */
+            flex-direction: row;
+            text-align: left;
         }
          .social-icons {
-            gap: 1.5rem; /* Augmente légèrement l'espace */
+            gap: var(--space-lg); /* Utilise variable (24px) sur desktop */
          }
     }
 </style>

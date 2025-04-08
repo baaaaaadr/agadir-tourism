@@ -1,46 +1,50 @@
 <script>
-    import Header from '$lib/components/Header.svelte';
-    import Footer from '$lib/components/Footer.svelte';
-    import ErrorMessage from '$lib/components/ErrorMessage.svelte';
-    import '../app.css'; // Importe les styles globaux
+	import Header from '$lib/components/Header.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import SideNav from '$lib/components/SideNav.svelte'; // <-- RÉ-AJOUTÉ
+	import ErrorMessage from '$lib/components/ErrorMessage.svelte';
+	import { isSideNavOpen } from '$lib/stores/navStore'; // <-- RÉ-AJOUTÉ
+	import '../app.css';
 
-    // Importe la fonction 'page' pour accéder aux données du layout ou de la page
-    import { page } from '$app/stores';
-
-    // Variable pour stocker une éventuelle erreur globale passée par +layout.js ou +page.js
-    $: error = $page.error;
+	import { page } from '$app/stores';
+	$: error = $page.error;
 
 </script>
 
+<!-- RÉ-AJOUTÉ : Affiche SideNav si le store est true -->
+{#if $isSideNavOpen}
+	<SideNav />
+{/if}
+
 <div class="app-container">
-    <Header />
+	<Header />
 
-    <main>
-        {#if error}
-            <!-- Affiche un message d'erreur s'il y en a un venant du chargement des données -->
-            <ErrorMessage message={error.message || 'Une erreur est survenue.'} />
-        {:else}
-            <!-- Affiche le contenu de la page actuelle -->
-            <slot />
-        {/if}
-    </main>
+	<main>
+		{#if error}
+			<ErrorMessage message={error.message || 'Une erreur est survenue.'} />
+		{:else}
+			<slot />
+		{/if}
+	</main>
 
-    <Footer />
+	<Footer />
 </div>
 
 <style>
-    .app-container {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
+	/* Styles existants */
+	.app-container {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		position: relative;
+	}
 
-    main {
-        flex: 1; /* Permet au contenu principal de prendre l'espace disponible */
-        padding: 1rem;
-        max-width: 1200px;
-        margin: 1rem auto; /* Centre sur les grands écrans */
-        width: 100%;
-        box-sizing: border-box;
-    }
+	main {
+		flex: 1;
+		padding: var(--space-lg) var(--space-md);
+		max-width: 1200px;
+		margin: var(--space-lg) auto;
+		width: 100%;
+		box-sizing: border-box;
+	}
 </style>
