@@ -7,7 +7,7 @@
     <meta name="description" content="Conseils pratiques pour votre séjour à Agadir : sécurité, santé, pourboires, marchandage, culture locale et plus." />
   </svelte:head>
   
-  <div class="conseils-page content-padding">
+  <div class="conseils-page">
     <h1>Conseils aux Voyageurs</h1>
     <p>Quelques recommandations pour profiter pleinement et sereinement de votre séjour à Agadir.</p>
   
@@ -85,14 +85,6 @@
       max-width: 850px;
       margin: 1rem auto;
       line-height: 1.7;
-    }
-  
-    /* Style pour le padding global si défini dans app.css */
-    .content-padding {
-        padding-left: var(--padding-global, 1rem);
-        padding-right: var(--padding-global, 1rem);
-        padding-top: 1rem;
-        padding-bottom: 1rem;
     }
   
     h1 {

@@ -7,7 +7,7 @@
     <meta name="description" content="Informations pratiques sur les bus, taxis, location de voiture et navette aéroport à Agadir." />
   </svelte:head>
   
-  <div class="transport-container content-padding">
+  <div class="transport-container">
     <h1>Se déplacer à Agadir</h1>
   
     <section>
@@ -97,13 +97,5 @@
     strong {
       font-weight: bold;
     }
-  
-    /* Style pour le padding global si défini dans app.css */
-    .content-padding {
-          padding-left: var(--padding-global, 1rem);
-          padding-right: var(--padding-global, 1rem);
-          padding-top: 1rem;
-          padding-bottom: 1rem;
-     }
   
   </style>

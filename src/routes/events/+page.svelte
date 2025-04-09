@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
     import ErrorMessage from '$lib/components/ErrorMessage.svelte'; // Assure-toi d'avoir ce composant ou adapte
     import { ExternalLink } from 'lucide-svelte'; // Icône pour les liens externes
@@ -10,31 +10,37 @@
 
     const defaultImage = '/assets/images/default-placeholder.jpg';
 
-    function formatEventDate(startDate, endDate) {
-        // ... (la fonction formatEventDate reste exactement la même) ...
-         if (!startDate) return "Date inconnue";
+    function formatEventDate(startDate: string | null | undefined, endDate: string | null | undefined) {
+        if (!startDate) return "Date inconnue";
 
         const start = new Date(startDate);
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute:'2-digit' };
-        const startFormatted = start.toLocaleDateString('fr-FR', options);
+        const dateOptions: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const timeOptions: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: '2-digit' };
+        const startFormatted = start.toLocaleDateString('fr-FR', dateOptions);
 
         if (!endDate) {
-            // Affichage si juste date de début
-             const startTime = start.toLocaleTimeString('fr-FR', { hour: 'numeric', minute:'2-digit' });
-             return `Le ${start.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} à ${startTime}`;
+            const startTime = start.toLocaleTimeString('fr-FR', timeOptions);
+            return `Le ${startFormatted} à ${startTime}`;
         }
 
         const end = new Date(endDate);
         if (start.toDateString() === end.toDateString()) {
-             const startTime = start.toLocaleTimeString('fr-FR', { hour: 'numeric', minute:'2-digit' });
-             const endTime = end.toLocaleTimeString('fr-FR', { hour: 'numeric', minute:'2-digit' });
-             return `Le ${start.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})} de ${startTime} à ${endTime}`;
+            const startTime = start.toLocaleTimeString('fr-FR', timeOptions);
+            const endTime = end.toLocaleTimeString('fr-FR', timeOptions);
+            return `Le ${startFormatted} de ${startTime} à ${endTime}`;
         } else {
-             const endFormatted = end.toLocaleDateString('fr-FR', options);
-             return `Du ${startFormatted} au ${endFormatted}`;
+            const endFormatted = end.toLocaleDateString('fr-FR', dateOptions);
+            return `Du ${startFormatted} au ${endFormatted}`;
         }
     }
 
+    function handleImageError(event: Event) {
+        const imgElement = event.target as HTMLImageElement;
+        if (imgElement) {
+            imgElement.onerror = null; // Évite boucle infinie si defaultImage est aussi cassé
+            imgElement.src = defaultImage;
+        }
+    }
 </script>
 
 <svelte:head>
@@ -43,7 +49,7 @@
 </svelte:head>
 
 <!-- Ajout de content-padding -->
-<div class="events-page content-padding">
+<div class="events-page">
     <h1>Événements à Venir à Agadir</h1>
 
     {#if loading}
@@ -59,7 +65,7 @@
                         alt="Image pour {event.name}"
                         class="event-image"
                         loading="lazy"
-                        onerror="this.onerror=null; this.src='{defaultImage}';"
+                        on:error={handleImageError}
                     />
                     <div class="event-details">
                         <h2>{event.name}</h2>
@@ -108,14 +114,6 @@
     .events-page {
         max-width: 950px;
         margin: 1rem auto;
-    }
-
-     /* Style pour le padding global */
-    .content-padding {
-        padding-left: var(--padding-global, 1rem);
-        padding-right: var(--padding-global, 1rem);
-        padding-top: 1rem;
-        padding-bottom: 1rem;
     }
 
     h1 {

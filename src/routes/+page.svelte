@@ -18,7 +18,7 @@
     <meta name="description" content="Votre guide officiel pour découvrir Agadir. Accès rapide à la carte, lieux, restaurants, événements, transport et informations utiles." />
   </svelte:head>
   
-  <div class="home-container content-padding">
+  <div class="home-container">
   
     <section class="welcome-section">
       <h1>Bienvenue à Agadir !</h1>
@@ -145,11 +145,5 @@
        .shortcut-label {
           font-size: 1.1rem;
        }
-    }
-  
-    /* Ajustement du padding global */
-    .content-padding {
-        padding-left: var(--padding-global, 1rem);
-        padding-right: var(--padding-global, 1rem);
     }
   </style>

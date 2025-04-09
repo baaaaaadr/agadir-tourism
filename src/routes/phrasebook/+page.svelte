@@ -54,7 +54,7 @@
         <meta name="description" content="Phrases utiles en français, anglais, arabe marocain (darija) et amazigh pour votre séjour à Agadir." />
     </svelte:head>
     
-    <div class="phrasebook-page content-padding"> <!-- Ajout de content-padding pour cohérence -->
+    <div class="phrasebook-page"> 
         <h1>Guide de Conversation</h1>
         <p>Quelques phrases pour vous aider à communiquer lors de votre visite.</p>
     
@@ -101,15 +101,7 @@
             max-width: 900px; /* Garde une largeur max */
             margin: 1rem auto;
         }
-    
-         /* Style pour le padding global si défini dans app.css */
-        .content-padding {
-            padding-left: var(--padding-global, 1rem);
-            padding-right: var(--padding-global, 1rem);
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-       }
-    
+
         h1 {
             color: var(--primary-color, #007bff); /* Utilise variable globale ou fallback */
             margin-top: 0;

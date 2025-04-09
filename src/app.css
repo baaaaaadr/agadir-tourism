@@ -135,35 +135,6 @@ main {
   padding: var(--space-lg) var(--space-md); /* Utilise les variables d'espacement */
 }
 
-
-/* --- Styles spécifiques de l'ancienne version (Commentés pour le moment) --- */
-
-/*
-.list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-lg);  // Utilisation de la variable d'espacement
-    padding: var(--space-md) 0;
-}
-
-.back-button {
-    display: inline-block;
-    padding: var(--space-sm) var(--space-md);
-    margin-bottom: var(--space-lg);
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    color: var(--text-primary);
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-.back-button:hover {
-    background-color: var(--sandy-beige); // Plus clair au survol
-}
-*/
-
-/* src/app.css (AJOUTER À LA FIN) */
-
 /* --- 4. Styles pour les Boutons --- */
 
 /* Style de base commun à tous les boutons */

@@ -1,24 +1,24 @@
-<script>
+<script lang="ts">
     import { onMount } from 'svelte';
 
     // Récupère la clé API depuis les variables d'environnement
     const apiKey = import.meta.env.VITE_EXCHANGERATE_API_KEY;
     const apiUrlBase = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/`; // Base de l'URL
 
-    let amount = 100; // Montant par défaut
-    let fromCurrency = 'EUR'; // Devise source par défaut
-    const toCurrency = 'MAD'; // Toujours convertir vers MAD
-    let rates = null; // Pour stocker les taux de change reçus
-    let convertedAmount = null;
-    let isLoading = true; // Commence en chargement
-    let error = null;
-    let lastUpdate = null;
+    let amount: number | null = 100; // Montant par défaut
+    let fromCurrency: string = 'EUR'; // Devise source par défaut
+    const toCurrency: string = 'MAD'; // Toujours convertir vers MAD
+    let rates: Record<string, number> | null = null; // Pour stocker les taux de change reçus
+    let convertedAmount: string | null = null;
+    let isLoading: boolean = true; // Commence en chargement
+    let error: string | null = null;
+    let lastUpdate: string | null = null;
 
     // Liste des devises courantes à proposer
-    const supportedCurrencies = ['EUR', 'USD', 'GBP', 'CAD', 'CHF']; // Tu peux en ajouter/retirer
+    const supportedCurrencies: string[] = ['EUR', 'USD', 'GBP', 'CAD', 'CHF']; // Tu peux en ajouter/retirer
 
     // Fonction pour récupérer les taux de change (basée sur fromCurrency)
-    async function fetchRates() {
+    async function fetchRates(): Promise<void> {
         isLoading = true;
         error = null;
         rates = null; // Réinitialise les taux avant de les chercher
@@ -58,7 +58,11 @@
             }
         } catch (err) {
             console.error("Erreur catch fetchRates:", err);
-            error = `Impossible de charger les taux: ${err.message}`;
+            if (err instanceof Error) {
+                error = `Impossible de charger les taux: ${err.message}`;
+            } else {
+                error = `Impossible de charger les taux: Erreur inconnue (${String(err)})`;
+            }
             rates = null;
         } finally {
             isLoading = false;
@@ -66,7 +70,7 @@
     }
 
     // Fonction pour calculer la conversion
-    function calculateConversion() {
+    function calculateConversion(): void {
         if (rates && amount !== null && fromCurrency) {
             const rateFrom = rates[fromCurrency]; // Taux de la devise source par rapport à l'EUR (base)
             const rateTo = rates[toCurrency];   // Taux du MAD par rapport à l'EUR (base)
@@ -74,7 +78,7 @@
             if (rateFrom && rateTo) {
                  // Conversion: Montant en EUR = amount / rateFrom (si from n'est pas EUR)
                  // Montant en MAD = Montant en EUR * rateTo
-                 const amountInBase = fromCurrency === 'EUR' ? parseFloat(amount) : parseFloat(amount) / rateFrom;
+                 const amountInBase = fromCurrency === 'EUR' ? parseFloat(String(amount)) : parseFloat(String(amount)) / rateFrom;
                  if (!isNaN(amountInBase)) { // Vérifie que le montant est un nombre valide
                     convertedAmount = (amountInBase * rateTo).toFixed(2); // Arrondi à 2 décimales
                  } else {
@@ -104,7 +108,7 @@
 </svelte:head>
 
 <!-- Ajout de content-padding pour cohérence globale -->
-<div class="currency-page content-padding">
+<div class="currency-page">
 
     <!-- SECTION: Convertisseur de Devises -->
     <section class="converter-section">
@@ -185,7 +189,6 @@
             </li>
             <li>
                 <strong>Bureaux de Change Agréés :</strong> Vous trouverez de nombreux bureaux de change indépendants en ville, notamment dans les zones touristiques (front de mer, centre-ville). Assurez-vous qu'ils sont agréés (affichent souvent un logo officiel). Leurs taux sont généralement compétitifs et leurs horaires plus étendus que les banques. Comparez les taux affichés avant de choisir.
-            </li>
              <li>
                 <strong>Distributeurs Automatiques de Billets (DAB / ATM) :</strong> C'est souvent l'option la plus simple. De nombreux distributeurs acceptent les cartes internationales (Visa, Mastercard). Ils vous donneront directement des Dirhams au taux de change de votre banque (vérifiez les frais éventuels appliqués par votre banque et par la banque locale). C'est une bonne option pour retirer de petites sommes au fur et à mesure.
             </li>
@@ -215,14 +218,6 @@
         margin: 1rem auto;
         line-height: 1.7;
     }
-
-     /* Style pour le padding global si défini dans app.css */
-    .content-padding {
-        padding-left: var(--padding-global, 1rem);
-        padding-right: var(--padding-global, 1rem);
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-   }
 
     /* Styles pour la section convertisseur */
     .converter-section {

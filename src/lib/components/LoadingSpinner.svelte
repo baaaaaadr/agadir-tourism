@@ -17,7 +17,7 @@
         width: 36px;
         height: 36px;
         border-radius: 50%;
-        border-left-color: #0077cc; /* Couleur thème */
+        border-left-color: var(--ocean-blue, #0077cc); 
         animation: spin 1s ease infinite;
         margin-bottom: 0.5rem;
     }
