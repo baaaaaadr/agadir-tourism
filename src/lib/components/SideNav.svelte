@@ -7,7 +7,7 @@
 	// Importe les icônes nécessaires
 	import {
 	  Home, Map as MapIcon, /* Renommé car Map est aussi un composant */
-	  Coffee, Calendar, Bus, Book, DollarSign, Info as InfoIcon, /* Renommé car Info existe */
+	  MapPin,Coffee, Calendar, Bus, Book, DollarSign, Info as InfoIcon, /* Renommé car Info existe */
 	  Phone, Heart, X, Settings, /* Ajout de Settings pour 'Conseils' par exemple */
 	  Users, /* Pour 'About' ? */
 	  Search /* Si on met la recherche ici plus tard */
@@ -23,13 +23,13 @@
 	const navItems = [
 	  { path: '/', label: 'Accueil', icon: Home },
 	  { path: '/map', label: 'Carte', icon: MapIcon },
-	  // { path: '/places', label: 'Lieux', icon: MapPin }, // Ajoute si tu as une page liste /places
-	  // { path: '/restaurants', label: 'Restaurants', icon: Coffee }, // Ajoute si tu as une page liste /restaurants
+	  { path: '/places', label: 'Lieux', icon: MapPin }, // Ajoute si tu as une page liste /places
+	  { path: '/restaurants', label: 'Restaurants', icon: Coffee }, // Ajoute si tu as une page liste /restaurants
 	  { path: '/events', label: 'Événements', icon: Calendar },
 	  { path: '/transport', label: 'Transport', icon: Bus },
 	  { path: '/phrasebook', label: 'Phrases Utiles', icon: Book },
 	  { path: '/currency', label: 'Monnaie', icon: DollarSign },
-	  { path: '/favorites', label: 'Favoris', icon: Heart }, // À créer
+	  { path: '/favorites', label: 'Mes Favoris', icon: Heart }, 
 	  { path: '/conseils', label: 'Conseils', icon: InfoIcon }, // Ou Settings?
 	  { path: '/contacts', label: 'Contacts Utiles', icon: Phone },
 	  { path: '/about', label: 'À Propos', icon: Users } // Ou InfoIcon si Conseils prend Settings?
