@@ -1,5 +1,5 @@
 <script>
-    // Pas de script spécifique nécessaire pour cette page statique pour l'instant
+    // No script needed
 </script>
 
 <svelte:head>
@@ -7,9 +7,9 @@
     <meta name="description" content="Numéros de téléphone importants et contacts d'urgence à Agadir." />
 </svelte:head>
 
-<div class="contacts-page">
+<div class="static-page-container contacts-page"> <!-- Add common container class -->
     <h1>Contacts d'Urgence à Agadir</h1>
-    <p>Voici quelques numéros utiles en cas de besoin pendant votre séjour à Agadir.</p>
+    <p class="intro-paragraph">Voici quelques numéros utiles en cas de besoin pendant votre séjour.</p>
 
     <ul class="contacts-list">
         <li>
@@ -34,14 +34,13 @@
             <span class="contact-name">Ambulance / SAMU</span>
             <span class="contact-number">
                  <a href="tel:150" title="Appeler une Ambulance">150</a>
-                 <!-- Note: Au Maroc, le 15 est souvent utilisé pour les urgences médicales via la Protection Civile -->
             </span>
         </li>
          <li>
             <span class="contact-name">Police Touristique Agadir</span>
             <span class="contact-number">
                 <a href="tel:+212528840912" title="Appeler la Police Touristique">05 28 84 09 12</a>
-                 (Numéro exemple, à vérifier)
+                 <span class="note">(Numéro exemple, à vérifier)</span>
             </span>
         </li>
          <li>
@@ -50,7 +49,7 @@
                 <a href="tel:160" title="Appeler les Renseignements">160</a>
             </span>
         </li>
-        <!-- Ajoutez d'autres contacts si nécessaire (Consulat, etc.) -->
+        <!-- Add more contacts if needed -->
     </ul>
 
     <p class="important-note">
@@ -59,35 +58,45 @@
 </div>
 
 <style>
-    .contacts-page {
-        background-color: #fff;
-        padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        max-width: 800px;
-        margin: 1rem auto;
+    /* Common static page styles */
+    .static-page-container {
+        max-width: 800px; /* Slightly narrower for contacts */
+        margin: 0 auto;
+        padding: var(--space-md) 0 var(--space-xxl);
     }
 
     h1 {
-        color: #d9534f; /* Couleur rouge pour l'urgence */
-        margin-top: 0;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid #f0ad4e; /* Orange */
-        padding-bottom: 0.5rem;
+        color: var(--sunset-orange-dark); /* Use accent color for urgency */
+        text-align: center;
+        margin-bottom: var(--space-lg);
+        border-bottom: 2px solid var(--sunset-orange); /* Accent border */
+        padding-bottom: var(--space-sm);
+    }
+
+     .intro-paragraph {
+        text-align: center;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-xl);
     }
 
     .contacts-list {
         list-style: none;
         padding: 0;
-        margin: 1.5rem 0;
+        margin: var(--space-xl) 0; /* More vertical margin */
+        background-color: var(--bg-secondary); /* Light background for list */
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        overflow: hidden; /* Clip borders */
     }
 
     .contacts-list li {
         display: flex;
+        flex-wrap: wrap; /* Allow wrapping on small screens */
         justify-content: space-between;
         align-items: center;
-        padding: 0.8rem 0;
-        border-bottom: 1px solid #eee;
+        gap: var(--space-md); /* Gap between name and number */
+        padding: var(--space-md) var(--space-lg); /* Padding inside items */
+        border-bottom: 1px solid var(--sandy-beige-light); /* Lighter separator */
     }
 
     .contacts-list li:last-child {
@@ -95,41 +104,54 @@
     }
 
     .contact-name {
-        font-weight: bold;
-        color: #333;
-        flex-basis: 60%; /* Donne plus de place au nom */
+        font-weight: 600; /* Bolder name */
+        color: var(--text-primary);
+        flex-basis: 50%; /* Give name more space initially */
+        flex-grow: 1;
+    }
+
+    .contact-number {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        flex-shrink: 0; /* Prevent number shrinking too much */
     }
 
     .contact-number a {
         font-size: 1.2em;
-        font-weight: bold;
-        color: #0077cc;
+        font-weight: 700;
+        color: var(--ocean-blue);
         text-decoration: none;
-        background-color: #e7f3fe;
-        padding: 0.3rem 0.8rem;
-        border-radius: 4px;
+        background-color: var(--ocean-blue-light);
+        color: white;
+        padding: var(--space-xs) var(--space-md);
+        border-radius: var(--radius-sm);
         transition: background-color 0.2s;
+        white-space: nowrap; /* Prevent number wrapping */
     }
 
     .contact-number a:hover {
-        background-color: #cce5ff;
+        background-color: var(--ocean-blue-dark);
         text-decoration: none;
     }
 
-     .contact-number span { /* Pour le texte à côté du numéro */
+     .contact-number .note {
         font-size: 0.8em;
-        color: #666;
-        margin-left: 5px;
+        color: var(--text-secondary);
+        font-style: italic;
      }
 
 
     .important-note {
-        margin-top: 2rem;
+        margin-top: var(--space-xl);
         font-size: 0.9em;
-        color: #555;
-        background-color: #f9f9f9;
-        border-left: 4px solid #f0ad4e;
-        padding: 1rem;
-        border-radius: 4px;
+        color: var(--text-secondary);
+        background-color: var(--sandy-beige-light);
+        border-left: 4px solid var(--sunset-orange); /* Match H1 border color */
+        padding: var(--space-md);
+        border-radius: var(--radius-sm);
     }
+
+     /* Remove potential conflicts */
+     .contacts-page {}
 </style>

@@ -1,182 +1,185 @@
 <script>
-    // Exemple de données de phrases (MODIFIÉ: tachelhit -> amazigh)
-    const categories = [
+    // Keep your existing categories array
+     const categories = [
         {
             name: "Salutations & Essentiels",
             phrases: [
-                { fr: "Bonjour", en: "Hello / Good morning", darija: "Salam / Sbâh lkhir", amazigh: "Azul / Fulkin" }, // Exemples actualisés
-                { fr: "Bonsoir", en: "Good evening", darija: "Msa lkhir", amazigh: "Azul / Tidggʷatin" }, // Exemples actualisés
-                { fr: "Au revoir", en: "Goodbye", darija: "Bslama", amazigh: "Ar timlilit" }, // Exemple actualisé
-                { fr: "Oui", en: "Yes", darija: "Wakha / Iyyeh", amazigh: "Wah / Yan" }, // Exemple actualisé
-                { fr: "Non", en: "No", darija: "La", amazigh: "Oho" }, // Inchangé
-                { fr: "S'il vous plaît", en: "Please", darija: "Afak", amazigh: "Ɛafak / Iɣ D ak iɛjb" }, // Exemple actualisé
-                { fr: "Merci (beaucoup)", en: "Thank you (very much)", darija: "Shukran (bzaf)", amazigh: "Shukran / Tanmirt (bahra)" }, // Exemple actualisé
-                { fr: "Excusez-moi / Pardon", en: "Excuse me / Sorry", darija: "Smah liya", amazigh: "Surf iyi" }, // Exemple actualisé
-                { fr: "Comment ça va ?", en: "How are you?", darija: "Labas?", amazigh: "Manzaakin? / Mamec tkkit?" }, // Exemple actualisé
-                { fr: "Je ne comprends pas", en: "I don't understand", darija: "Ma fhemtch", amazigh: "Ur fhimeɣ" }, // Exemple actualisé
-                { fr: "Parlez-vous anglais/français ?", en: "Do you speak English/French?", darija: "Wach kat hdar b lognlizia/françia?", amazigh: "Is tsawalt s Tngliziyt/Tfransist?" }, // Exemple actualisé
+                 { fr: "Bonjour", en: "Hello / Good morning", darija: "Salam / Sbâh lkhir", amazigh: "Azul / Fulkin" },
+                 { fr: "Bonsoir", en: "Good evening", darija: "Msa lkhir", amazigh: "Azul / Tidggʷatin" },
+                 { fr: "Au revoir", en: "Goodbye", darija: "Bslama", amazigh: "Ar timlilit" },
+                 { fr: "Oui", en: "Yes", darija: "Wakha / Iyyeh", amazigh: "Wah / Yan" },
+                 { fr: "Non", en: "No", darija: "La", amazigh: "Oho" },
+                 { fr: "S'il vous plaît", en: "Please", darija: "Afak", amazigh: "Ɛafak / Iɣ D ak iɛjb" },
+                 { fr: "Merci (beaucoup)", en: "Thank you (very much)", darija: "Shukran (bzaf)", amazigh: "Shukran / Tanmirt (bahra)" },
+                 { fr: "Excusez-moi / Pardon", en: "Excuse me / Sorry", darija: "Smah liya", amazigh: "Surf iyi" },
+                 { fr: "Comment ça va ?", en: "How are you?", darija: "Labas?", amazigh: "Manzaakin? / Mamec tkkit?" },
+                 { fr: "Je ne comprends pas", en: "I don't understand", darija: "Ma fhemtch", amazigh: "Ur fhimeɣ" },
+                 { fr: "Parlez-vous anglais/français ?", en: "Do you speak English/French?", darija: "Wach kat hdar b lognlizia/franҫia?", amazigh: "Is tsawalt s Tngliziyt/Tfransist?" },
             ]
         },
         {
             name: "Au Restaurant / Café",
             phrases: [
-                { fr: "Une table pour deux, svp", en: "A table for two, please", darija: "Wahd tabla dyal jouj, afak", amazigh: "Yan tabla n sin, ɛafak" },
-                { fr: "Le menu, svp", en: "The menu, please", darija: "Lmenu, afak", amazigh: "Lmenu, ɛafak" },
-                { fr: "L'addition, svp", en: "The bill, please", darija: "Lhssab, afak", amazigh: "Lḥsab, ɛafak" },
-                { fr: "De l'eau, svp", en: "Water, please", darija: "Lma, afak", amazigh: "Aman, ɛafak" }, // Modifié
-                { fr: "Thé à la menthe", en: "Mint tea", darija: "Atay b neanaa", amazigh: "Atay s nnaɛnaɛ" }, // Modifié
-                { fr: "Café", en: "Coffee", darija: "Qahwa", amazigh: "Lqhwa" }, // Modifié
-                { fr: "C'était délicieux !", en: "It was delicious!", darija: "Kan ldid / Kan zwin!", amazigh: "Ifulki / Yexla !" }, // Modifié
+                 { fr: "Une table pour deux, svp", en: "A table for two, please", darija: "Wahd tabla dyal jouj, afak", amazigh: "Yan tabla n sin, ɛafak" },
+                 { fr: "Le menu, svp", en: "The menu, please", darija: "Lmenu, afak", amazigh: "Lmenu, ɛafak" },
+                 { fr: "L'addition, svp", en: "The bill, please", darija: "Lhssab, afak", amazigh: "Lḥsab, ɛafak" },
+                 { fr: "De l'eau, svp", en: "Water, please", darija: "Lma, afak", amazigh: "Aman, ɛafak" },
+                 { fr: "Thé à la menthe", en: "Mint tea", darija: "Atay b neanaa", amazigh: "Atay s nnaɛnaɛ" },
+                 { fr: "Café", en: "Coffee", darija: "Qahwa", amazigh: "Lqhwa" },
+                 { fr: "C'était délicieux !", en: "It was delicious!", darija: "Kan ldid / Kan zwin!", amazigh: "Ifulki / Yexla !" },
             ]
         },
          {
             name: "Directions",
             phrases: [
-                { fr: "Où est... ?", en: "Where is...?", darija: "Fin kayna... ?", amazigh: "Mani illa...?" }, // Inchangé
-                { fr: "À gauche", en: "Left", darija: "Ala lissr", amazigh: "Ɣer uzelmaḍ" }, // Modifié
-                { fr: "À droite", en: "Right", darija: "Ala limn", amazigh: "Ɣer ufusi" }, // Modifié
-                { fr: "Tout droit", en: "Straight ahead", darija: "Nishan", amazigh: "Garas garas / Nishan" }, // Modifié
-                { fr: "La plage", en: "The beach", darija: "Lbhar / La plage", amazigh: "La plage / Ifri" }, // Modifié
-                { fr: "Le souk", en: "The souk/market", darija: "Souk", amazigh: "Souk" }, // Inchangé
+                 { fr: "Où est... ?", en: "Where is...?", darija: "Fin kayna... ?", amazigh: "Mani illa...?" },
+                 { fr: "À gauche", en: "Left", darija: "Ala lissr", amazigh: "Ẓer uzelmaḍ" },
+                 { fr: "À droite", en: "Right", darija: "Ala limn", amazigh: "Ẓer ufusi" },
+                 { fr: "Tout droit", en: "Straight ahead", darija: "Nishan", amazigh: "Garas garas / Nishan" },
+                 { fr: "La plage", en: "The beach", darija: "Lbhar / La plage", amazigh: "La plage / Ifri" },
+                 { fr: "Le souk", en: "The souk/market", darija: "Souk", amazigh: "Souk" },
             ]
         },
-        // Ajoute d'autres catégories (Shopping, Transport...)
     ];
-    
-    // Note: Les traductions en Darija et Amazigh sont des exemples et
-    // peuvent varier (dialectes, prononciation). La vérification par des locaux est idéale.
-    // J'ai essayé de mettre des traductions Amazigh plus plausibles mais elles restent à vérifier.
-    </script>
-    
-    <svelte:head>
-        <!-- MODIFIÉ: Tachelhit -> Amazigh -->
-        <title>Guide de Conversation - Visit Agadir</title>
-        <meta name="description" content="Phrases utiles en français, anglais, arabe marocain (darija) et amazigh pour votre séjour à Agadir." />
-    </svelte:head>
-    
-    <div class="phrasebook-page"> 
-        <h1>Guide de Conversation</h1>
-        <p>Quelques phrases pour vous aider à communiquer lors de votre visite.</p>
-    
-        {#each categories as category (category.name)}
-            <section class="category-section">
-                <h2>{category.name}</h2>
-                <!-- NOUVEAU: Conteneur pour le défilement horizontal -->
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Français / English</th>
-                                <th>Darija (Arabe Marocain)</th>
-                                <!-- MODIFIÉ: Tachelhit -> Amazigh -->
-                                <th>Amazigh</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {#each category.phrases as phrase}
-                                <tr>
-                                    <td>{phrase.fr}<br><small>{phrase.en}</small></td>
-                                    <td>{phrase.darija}</td>
-                                    <!-- MODIFIÉ: Utilise la clé 'amazigh' -->
-                                    <td>{phrase.amazigh || 'N/A'}</td>
-                                </tr>
-                            {/each}
-                        </tbody>
-                    </table>
-                </div> <!-- FIN: Conteneur pour le défilement -->
-            </section>
-        {/each}
-    
-        <p class="important-note">
-            <strong>Note :</strong> La prononciation peut varier. Écouter les locaux est la meilleure façon d'apprendre ! Les transcriptions en Darija et Amazigh sont simplifiées et données à titre indicatif.
-        </p>
-    </div>
-    
-    <style>
-        .phrasebook-page {
-            /*background-color: #fff; Supprimé pour potentiellement hériter du fond global */
-            /* padding: 1.5rem; Supprimé car géré par content-padding */
-            /*border-radius: 8px; Optionnel */
-            /*box-shadow: 0 2px 10px rgba(0,0,0,0.1); Optionnel */
-            max-width: 900px; /* Garde une largeur max */
-            margin: 1rem auto;
-        }
+</script>
 
-        h1 {
-            color: var(--primary-color, #007bff); /* Utilise variable globale ou fallback */
-            margin-top: 0;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--primary-color, #007bff);
-            padding-bottom: 0.5rem;
-        }
-    
-        .category-section {
-            margin-top: 2rem;
-            margin-bottom: 2rem; /* Ajout d'espace entre les sections */
-        }
-    
-        h2 {
-            color: var(--secondary-color, #555); /* Utilise variable globale ou fallback */
-            margin-bottom: 1rem;
-        }
-    
-        /* NOUVEAU: Style pour le conteneur du tableau */
-        .table-container {
-            width: 100%;
-            overflow-x: auto; /* Ajoute une barre de défilement HORIZONTALE si nécessaire */
-            -webkit-overflow-scrolling: touch; /* Améliore le défilement sur iOS */
-        }
-    
-        table {
-            width: 100%;
-            min-width: 500px; /* Force une largeur minimale pour que le scroll apparaisse plus tôt si besoin */
-            border-collapse: collapse;
-            margin-top: 0.5rem;
-            font-size: 0.95rem;
-        }
-    
-        th, td {
-            border: 1px solid #ddd;
-            padding: 0.8rem;
-            text-align: left;
-            vertical-align: top;
-            white-space: nowrap; /* Empêche le texte de passer à la ligne trop vite, forçant le scroll */
-        }
-    
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-            white-space: normal; /* Permet aux titres de colonnes de passer à la ligne */
-        }
-    
-         /* Permet au contenu des cellules Français/Anglais de passer à la ligne */
-        td:first-child {
-            white-space: normal;
-        }
-    
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-    
-        td small {
-            display: block;
-            color: #666;
-            font-size: 0.9em;
-            margin-top: 0.2rem;
-        }
-    
-         td:nth-child(2), td:nth-child(3) { /* Darija & Amazigh */
-            font-style: italic;
-            color: #333;
-         }
-    
-        .important-note {
-            margin-top: 2rem;
-            font-size: 0.9em;
-            color: #555;
-            background-color: #f9f9f9;
-            border-left: 4px solid var(--primary-color, #007bff);
-            padding: 1rem;
-            border-radius: 4px;
-        }
-    </style>
+<svelte:head>
+    <title>Guide de Conversation - Visit Agadir</title>
+    <meta name="description" content="Phrases utiles en français, anglais, arabe marocain (darija) et amazigh pour votre séjour à Agadir." />
+</svelte:head>
+
+<div class="static-page-container phrasebook-page"> <!-- Add common container class -->
+    <h1>Guide de Conversation</h1>
+    <p class="intro-paragraph">Quelques phrases pour vous aider à communiquer lors de votre visite.</p>
+
+    {#each categories as category (category.name)}
+        <section class="category-section">
+            <h2>{category.name}</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Français / English</th>
+                            <th>Darija (Arabe Marocain)</th>
+                            <th>Amazigh</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#each category.phrases as phrase}
+                            <tr>
+                                <td>{phrase.fr}<br><small>{phrase.en}</small></td>
+                                <td>{phrase.darija}</td>
+                                <td>{phrase.amazigh || 'N/A'}</td>
+                            </tr>
+                        {/each}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    {/each}
+
+    <p class="important-note">
+        <strong>Note :</strong> La prononciation peut varier. Écouter les locaux est la meilleure façon d'apprendre ! Les transcriptions en Darija et Amazigh sont simplifiées et données à titre indicatif.
+    </p>
+</div>
+
+<style>
+    /* Common static page styles */
+    .static-page-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: var(--space-md) 0 var(--space-xxl);
+    }
+     h1 {
+        color: var(--ocean-blue-dark);
+        text-align: center;
+        margin-bottom: var(--space-lg);
+    }
+     .intro-paragraph {
+        text-align: center;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-xl);
+    }
+
+    /* Section styling */
+    .category-section {
+        margin-bottom: var(--space-xl);
+    }
+    h2 {
+        color: var(--ocean-blue);
+        margin-bottom: var(--space-md);
+        font-size: 1.5rem;
+        padding-bottom: var(--space-sm);
+        border-bottom: 1px solid var(--sandy-beige-dark);
+    }
+
+    /* Table styling */
+    .table-container {
+        width: 100%;
+        overflow-x: auto; /* Keep horizontal scroll */
+        -webkit-overflow-scrolling: touch;
+        border: 1px solid var(--border-color); /* Add border around container */
+        border-radius: var(--radius-md); /* Round corners of container */
+         background-color: var(--bg-primary); /* Ensure background */
+    }
+
+    table {
+        width: 100%;
+        min-width: 550px; /* Ensure minimum width for scroll */
+        border-collapse: collapse;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+    }
+
+    th, td {
+        border: 1px solid var(--sandy-beige-dark); /* Use theme border color */
+        padding: var(--space-sm) var(--space-md); /* Use theme spacing */
+        text-align: left;
+        vertical-align: top;
+        white-space: nowrap;
+    }
+
+    th {
+        background-color: var(--sandy-beige-light); /* Use theme color */
+        font-weight: 600; /* Slightly bolder */
+        white-space: normal;
+         color: var(--ocean-blue-dark); /* Header text color */
+         position: sticky; /* Make header sticky within scroll container if desired */
+         top: 0;
+         z-index: 1;
+    }
+
+    /* Allow first column content to wrap */
+    td:first-child { white-space: normal; }
+
+    tr:nth-child(even) td { /* Use td selector for specificity */
+        background-color: var(--bg-secondary); /* Stripe color */
+    }
+    tr:hover td { /* Hover effect */
+         background-color: var(--sandy-beige-light);
+    }
+
+    td small { /* English text */
+        display: block;
+        color: var(--text-secondary);
+        font-size: 0.9em;
+        margin-top: var(--space-xs);
+    }
+
+     td:nth-child(2), td:nth-child(3) { /* Darija & Amazigh */
+        font-style: italic;
+     }
+
+    /* Note styling */
+    .important-note {
+        margin-top: var(--space-xl);
+        font-size: 0.9em;
+        color: var(--text-secondary);
+        background-color: var(--sandy-beige-light);
+        border-left: 4px solid var(--ocean-blue);
+        padding: var(--space-md);
+        border-radius: var(--radius-sm);
+    }
+    /* Remove potential conflicts */
+    .phrasebook-page { }
+</style>

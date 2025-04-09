@@ -1,104 +1,80 @@
 <script lang="ts">
+    // --- KEEP YOUR EXISTING SCRIPT BLOCK ---
     import { onMount } from 'svelte';
+    import { browser } from '$app/environment'; // Needed if not already imported
 
-    // Récupère la clé API depuis les variables d'environnement
     const apiKey = import.meta.env.VITE_EXCHANGERATE_API_KEY;
-    const apiUrlBase = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/`; // Base de l'URL
+    const apiUrlBase = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/`;
 
-    let amount: number | null = 100; // Montant par défaut
-    let fromCurrency: string = 'EUR'; // Devise source par défaut
-    const toCurrency: string = 'MAD'; // Toujours convertir vers MAD
-    let rates: Record<string, number> | null = null; // Pour stocker les taux de change reçus
+    let amount: number | null = 100;
+    let fromCurrency: string = 'EUR';
+    const toCurrency: string = 'MAD';
+    let rates: Record<string, number> | null = null;
     let convertedAmount: string | null = null;
-    let isLoading: boolean = true; // Commence en chargement
+    let isLoading: boolean = true;
     let error: string | null = null;
     let lastUpdate: string | null = null;
 
-    // Liste des devises courantes à proposer
-    const supportedCurrencies: string[] = ['EUR', 'USD', 'GBP', 'CAD', 'CHF']; // Tu peux en ajouter/retirer
+    const supportedCurrencies: string[] = ['EUR', 'USD', 'GBP', 'CAD', 'CHF'];
 
-    // Fonction pour récupérer les taux de change (basée sur fromCurrency)
     async function fetchRates(): Promise<void> {
-        isLoading = true;
-        error = null;
-        rates = null; // Réinitialise les taux avant de les chercher
-        convertedAmount = null; // Réinitialise le montant converti
+         if (!browser) { isLoading = false; return; } // Don't fetch on server
 
-        if (!apiKey) {
-            error = "Clé API manquante. Vérifiez la configuration (.env)";
-            isLoading = false;
-            console.error("Clé API non trouvée dans .env");
-            return;
-        }
+         isLoading = true;
+         error = null;
+         rates = null;
+         convertedAmount = null;
 
-        // Utilise la devise "from" comme base pour minimiser les appels si elle change souvent,
-        // mais pour cette API, utiliser une base fixe (EUR ou USD) est souvent plus simple.
-        // Restons sur EUR comme base pour l'instant, car l'API gratuite le gère bien.
-        const apiUrl = `${apiUrlBase}EUR`;
-        console.log("Tentative de fetch vers :", apiUrl);
+         if (!apiKey) {
+             error = "Clé API manquante. Vérifiez la configuration (.env)";
+             isLoading = false;
+             console.error("Clé API non trouvée dans .env");
+             return;
+         }
 
-        try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                console.error("Erreur réponse API:", response.status, errorData);
-                throw new Error(`Erreur API (${response.status}): ${errorData['error-type'] || response.statusText || 'Erreur inconnue'}`);
-            }
-            const data = await response.json();
-            console.log("Données API reçues:", data);
+         const apiUrl = `${apiUrlBase}EUR`; // Using EUR as base
 
-            if (data.result === 'success') {
-                rates = data.conversion_rates;
-                lastUpdate = new Date(data.time_last_update_utc).toLocaleString('fr-FR');
-                // Appel initial pour calculer avec les valeurs par défaut
-                calculateConversion();
-            } else {
-                console.error("Erreur dans les données API:", data['error-type']);
-                throw new Error(data['error-type'] || 'Erreur lors de la récupération des taux.');
-            }
-        } catch (err) {
-            console.error("Erreur catch fetchRates:", err);
-            if (err instanceof Error) {
-                error = `Impossible de charger les taux: ${err.message}`;
-            } else {
-                error = `Impossible de charger les taux: Erreur inconnue (${String(err)})`;
-            }
-            rates = null;
-        } finally {
-            isLoading = false;
-        }
-    }
+         try {
+             const response = await fetch(apiUrl);
+             if (!response.ok) {
+                 const errorData = await response.json().catch(() => ({}));
+                 throw new Error(`Erreur API (${response.status}): ${errorData['error-type'] || response.statusText || 'Erreur inconnue'}`);
+             }
+             const data = await response.json();
 
-    // Fonction pour calculer la conversion
+             if (data.result === 'success') {
+                 rates = data.conversion_rates;
+                 lastUpdate = new Date(data.time_last_update_utc).toLocaleString('fr-FR', { dateStyle: 'medium', timeStyle: 'short'});
+                 calculateConversion();
+             } else {
+                 throw new Error(data['error-type'] || 'Erreur lors de la récupération des taux.');
+             }
+         } catch (err) {
+             if (err instanceof Error) { error = `Impossible de charger les taux: ${err.message}`; }
+             else { error = `Impossible de charger les taux: Erreur inconnue (${String(err)})`; }
+             rates = null;
+         } finally {
+             isLoading = false;
+         }
+     }
+
     function calculateConversion(): void {
-        if (rates && amount !== null && fromCurrency) {
-            const rateFrom = rates[fromCurrency]; // Taux de la devise source par rapport à l'EUR (base)
-            const rateTo = rates[toCurrency];   // Taux du MAD par rapport à l'EUR (base)
+         if (rates && amount !== null && fromCurrency) {
+             const rateFrom = rates[fromCurrency];
+             const rateTo = rates[toCurrency];
 
-            if (rateFrom && rateTo) {
-                 // Conversion: Montant en EUR = amount / rateFrom (si from n'est pas EUR)
-                 // Montant en MAD = Montant en EUR * rateTo
-                 const amountInBase = fromCurrency === 'EUR' ? parseFloat(String(amount)) : parseFloat(String(amount)) / rateFrom;
-                 if (!isNaN(amountInBase)) { // Vérifie que le montant est un nombre valide
-                    convertedAmount = (amountInBase * rateTo).toFixed(2); // Arrondi à 2 décimales
-                 } else {
-                    convertedAmount = 'N/A'; // Montant invalide
-                 }
-            } else {
-                convertedAmount = 'N/A'; // Taux non trouvé
-                console.warn(`Taux non trouvé pour ${fromCurrency} ou ${toCurrency}`);
-            }
-        } else {
-            convertedAmount = null; // Pas assez d'infos pour calculer
-        }
-    }
+             if (rateFrom && rateTo) {
+                  const amountInBase = fromCurrency === 'EUR' ? parseFloat(String(amount)) : parseFloat(String(amount)) / rateFrom;
+                  if (!isNaN(amountInBase)) {
+                     convertedAmount = (amountInBase * rateTo).toFixed(2);
+                  } else { convertedAmount = 'N/A'; }
+             } else { convertedAmount = 'N/A'; }
+         } else { convertedAmount = null; }
+     }
 
-    // Récupère les taux au chargement du composant (DÉCOMMENTÉ)
     onMount(fetchRates);
 
-    // Recalcule quand le montant ou la devise source change (DÉCOMMENTÉ)
-    $: if (amount !== null && fromCurrency && rates && !isLoading) calculateConversion();
-    // Ajout de !isLoading pour éviter calcul pendant chargement initial
+    $: if (browser && amount !== null && fromCurrency && rates && !isLoading) calculateConversion();
 
 </script>
 
@@ -107,23 +83,23 @@
     <meta name="description" content="Informations sur le Dirham marocain (MAD), taux de change, convertisseur de devises et où changer de l'argent à Agadir." />
 </svelte:head>
 
-<!-- Ajout de content-padding pour cohérence globale -->
-<div class="currency-page">
+<div class="static-page-container currency-page"> <!-- Add common container class -->
+
+    <h1>Monnaie Marocaine & Change</h1>
 
     <!-- SECTION: Convertisseur de Devises -->
-    <section class="converter-section">
+    <section class="converter-section content-section"> <!-- Add content-section class -->
         <h2>Convertisseur Rapide (vers MAD)</h2>
 
-        {#if isLoading && !rates} <!-- Modifié pour afficher chargement seulement au début -->
-            <p class="loading-message">Chargement des taux de change...</p>
+        {#if isLoading && !rates}
+            <div class="loading-message">Chargement des taux de change...</div>
         {:else if error}
-            <p class="error-message">{error}</p>
+            <div class="error-message">{error}</div>
         {:else if rates}
             <div class="converter-form">
                 <div class="input-group">
                     <label for="amount">Montant :</label>
-                    <!-- Utilisation de type="text" et inputmode="decimal" pour meilleure compatibilité mobile -->
-                    <input type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" id="amount" bind:value={amount} placeholder="Entrez un montant">
+                    <input type="text" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" id="amount" bind:value={amount} placeholder="Montant">
                 </div>
                 <div class="input-group">
                     <label for="fromCurrency">De :</label>
@@ -135,23 +111,20 @@
                 </div>
                 <div class="result-group">
                     <span>≈</span>
-                    <span class="converted-value">{convertedAmount ?? (isLoading ? '...' : 'N/A')}</span> <!-- Affiche ... si recalcul en cours -->
+                    <span class="converted-value">{convertedAmount ?? (isLoading ? '...' : 'N/A')}</span>
                     <span>{toCurrency}</span>
                 </div>
             </div>
             {#if lastUpdate}
-                 <p class="update-info">Taux mis à jour le : {lastUpdate} (Source: ExchangeRate-API)</p>
+                 <p class="update-info">Taux indicatifs mis à jour le : {lastUpdate} (Source: ExchangeRate-API)</p>
             {/if}
         {:else}
-             <p class="error-message">Impossible d'afficher le convertisseur.</p>
+             <div class="error-message">Impossible d'afficher le convertisseur.</div>
         {/if}
     </section>
     <!-- FIN SECTION Convertisseur -->
 
-    <!-- Contenu statique existant commence ici -->
-    <h1>Monnaie Marocaine (Dirham - MAD)</h1>
-
-    <section>
+    <section class="content-section"> <!-- Add content-section class -->
         <h2>Le Dirham Marocain (MAD)</h2>
         <p>
             La monnaie officielle du Maroc est le <strong>Dirham marocain</strong>, souvent abrégé en <strong>MAD</strong> ou <strong>Dh</strong>. Un Dirham est divisé en 100 centimes.
@@ -159,156 +132,205 @@
         <p>
             Vous trouverez des pièces de 1, 5, 10, 20, 50 centimes et de 1, 2, 5, 10 Dirhams. Les billets les plus courants sont ceux de 20, 50, 100 et 200 Dirhams.
         </p>
-        <p>
+        <p class="important-note" style="margin-top: var(--space-sm);"> <!-- Style inline for margin adjustment -->
             <strong>Important :</strong> Le Dirham marocain est une monnaie non convertible en dehors du Maroc. Il est illégal d'importer ou d'exporter des Dirhams en grande quantité. Vous devrez donc changer votre argent à votre arrivée et rechanger les Dirhams restants (sur présentation du bordereau de change initial) avant votre départ.
         </p>
     </section>
 
-    <section>
-        <h2>Taux de Change Indicatifs (Variables)</h2>
-        <p>
-            Les taux de change varient constamment. Pour une conversion précise, utilisez le convertisseur ci-dessus. Les chiffres ci-dessous sont de moins en moins pertinents mais peuvent donner un ordre d'idée historique.
-        </p>
-        <!-- La liste statique est moins utile maintenant, mais on la laisse pour l'instant -->
-        <ul class="rates-list">
-            <li><strong>1 Euro (EUR)</strong> ≈ 10.8 - 11.0 MAD</li>
-            <li><strong>1 Dollar US (USD)</strong> ≈ 9.8 - 10.2 MAD</li>
-            <li><strong>1 Livre Sterling (GBP)</strong> ≈ 12.3 - 12.7 MAD</li>
-        </ul>
-    </section>
+    <!-- Removed static rates list as converter is primary -->
 
-    <section>
+    <section class="content-section"> <!-- Add content-section class -->
         <h2>Où Changer de l'Argent à Agadir ?</h2>
         <p>Plusieurs options s'offrent à vous pour changer vos devises en Dirhams :</p>
         <ul>
             <li>
-                <strong>Aéroport d'Agadir Al Massira :</strong> Des bureaux de change sont disponibles à l'aéroport, pratiques à l'arrivée mais les taux peuvent être légèrement moins favorables.
+                <strong>Aéroport d'Agadir Al Massira :</strong> Bureaux de change disponibles à l'arrivée (taux parfois moins favorables).
             </li>
             <li>
-                <strong>Banques :</strong> Les principales banques marocaines (Attijariwafa Bank, BMCE Bank of Africa, Banque Populaire, CIH Bank, etc.) ont des agences dans toute la ville et offrent généralement des taux de change officiels et fiables. Elles peuvent avoir des horaires d'ouverture limités (fermées le week-end après-midi, par exemple).
+                <strong>Banques :</strong> Agences en ville (Attijariwafa, BMCE, Banque Populaire...) offrant des taux officiels (horaires limités).
             </li>
             <li>
-                <strong>Bureaux de Change Agréés :</strong> Vous trouverez de nombreux bureaux de change indépendants en ville, notamment dans les zones touristiques (front de mer, centre-ville). Assurez-vous qu'ils sont agréés (affichent souvent un logo officiel). Leurs taux sont généralement compétitifs et leurs horaires plus étendus que les banques. Comparez les taux affichés avant de choisir.
+                <strong>Bureaux de Change Agréés :</strong> Nombreux en zones touristiques, taux compétitifs et horaires étendus. Comparez les taux affichés.
+             </li>
              <li>
-                <strong>Distributeurs Automatiques de Billets (DAB / ATM) :</strong> C'est souvent l'option la plus simple. De nombreux distributeurs acceptent les cartes internationales (Visa, Mastercard). Ils vous donneront directement des Dirhams au taux de change de votre banque (vérifiez les frais éventuels appliqués par votre banque et par la banque locale). C'est une bonne option pour retirer de petites sommes au fur et à mesure.
+                <strong>Distributeurs Automatiques (DAB / ATM) :</strong> Option simple avec cartes internationales (Visa, Mastercard). Vérifiez les frais de votre banque.
             </li>
             <li>
-                <strong>Hôtels :</strong> Certains grands hôtels proposent un service de change, mais les taux sont souvent moins avantageux qu'en banque ou dans les bureaux de change. À utiliser en dépannage.
+                <strong>Hôtels :</strong> Service de change souvent disponible, mais taux généralement moins avantageux.
             </li>
         </ul>
     </section>
 
-     <section>
+     <section class="content-section"> <!-- Add content-section class -->
         <h2>Conseils Pratiques</h2>
         <ul>
-            <li><strong>Comparez les taux :</strong> Surtout pour de grosses sommes, une petite différence de taux peut compter. Le convertisseur ci-dessus utilise des taux interbancaires, les taux réels dans les bureaux peuvent légèrement différer (commission).</li>
-            <li><strong>Gardez le bordereau :</strong> Conservez le reçu de change. Il vous sera demandé si vous souhaitez rechanger vos Dirhams restants avant de partir.</li>
-            <li><strong>Pas de change "au noir" :</strong> Évitez les personnes proposant du change dans la rue, c'est illégal et risqué.</li>
-            <li><strong>Ayez un peu de liquide :</strong> Bien que les cartes soient acceptées dans de nombreux hôtels, restaurants et boutiques modernes, il est toujours utile d'avoir de l'argent liquide pour les petits commerces, les souks, les taxis, etc.</li>
-             <li><strong>Prévenez votre banque :</strong> Informez votre banque de votre voyage au Maroc pour éviter que vos cartes ne soient bloquées par mesure de sécurité.</li>
+            <li><strong>Comparez les taux :</strong> Surtout pour de grosses sommes. Les taux dans les bureaux peuvent légèrement différer des taux interbancaires (commissions).</li>
+            <li><strong>Gardez le bordereau :</strong> Conservez le reçu de change pour pouvoir rechanger vos Dirhams restants au départ.</li>
+            <li><strong>Pas de change "au noir" :</strong> Évitez le change illégal dans la rue.</li>
+            <li><strong>Ayez du liquide :</strong> Utile pour petits commerces, souks, taxis, etc., même si les cartes sont de plus en plus acceptées.</li>
+             <li><strong>Prévenez votre banque :</strong> Informez votre banque de votre voyage pour éviter le blocage de vos cartes.</li>
         </ul>
     </section>
 
 </div>
 
 <style>
-    /* Styles existants (adaptés si nécessaire) */
-    .currency-page {
+    /* Common static page styles */
+    .static-page-container {
         max-width: 850px;
-        margin: 1rem auto;
-        line-height: 1.7;
+        margin: 0 auto;
+        padding: var(--space-md) 0 var(--space-xxl);
+         line-height: 1.7;
     }
-
-    /* Styles pour la section convertisseur */
-    .converter-section {
-        background-color: #eef8ff; /* Fond bleu très clair */
-        padding: 1.5rem;
-        border-radius: 8px;
-        margin-bottom: 2.5rem; /* Espace avant le contenu statique */
-        border: 1px solid #bde0fe;
-    }
-
-    .converter-section h2 {
-        margin-top: 0;
-        margin-bottom: 1.5rem;
-        color: var(--primary-color, #007bff);
+    h1 {
+        color: var(--ocean-blue-dark);
         text-align: center;
-        font-size: 1.6rem;
+        margin-bottom: var(--space-xl);
+    }
+
+    /* Common section style - BUT WE WILL REMOVE BG for most sections on THIS page */
+    .content-section {
+        margin-bottom: var(--space-xl);
+        /* Remove background/padding/border by default for this page, apply ONLY to converter */
+        /* background-color: var(--bg-secondary); */
+        /* padding: var(--space-lg); */
+        /* border-radius: var(--radius-md); */
+        /* border: 1px solid var(--sandy-beige-light); */
+    }
+     .content-section h2 { /* Styles for H2 inside sections */
+        color: var(--ocean-blue);
+        margin-top: 0;
+        margin-bottom: var(--space-md);
+        font-size: 1.4rem;
+        padding-bottom: var(--space-sm);
+        border-bottom: 1px solid var(--sandy-beige-dark);
+    }
+
+    p { /* Default paragraph */
+        margin-bottom: var(--space-md);
+        color: var(--text-primary);
+    }
+    strong { font-weight: 600; color: inherit; }
+
+     ul {
+         margin-left: 0;
+         padding-left: var(--space-lg);
+         list-style: disc;
+         margin-bottom: 0;
+     }
+     li { margin-bottom: var(--space-md); }
+     li strong { font-weight: 600; }
+
+     .important-note {
+         font-size: 0.9em;
+         color: var(--text-secondary);
+         background-color: var(--sandy-beige-light);
+         border-left: 4px solid var(--ocean-blue);
+         padding: var(--space-md);
+         border-radius: var(--radius-sm);
+         margin-top: var(--space-lg); /* Added margin-top */
+     }
+
+    /* --- Converter specific styles --- */
+    .converter-section {
+        /* Apply the section styling ONLY to the converter */
+         padding: var(--space-lg);
+         border-radius: var(--radius-md);
+         background-color: var(--bg-secondary); /* Use standard secondary background */
+         border: 1px solid var(--border-color); /* Use standard border */
+    }
+    .converter-section h2 {
+         color: var(--ocean-blue-dark);
+         text-align: center;
+         border: none;
+         font-size: 1.6rem;
+         margin-bottom: var(--space-xl); /* More space below title */
     }
 
     .converter-form {
         display: flex;
-        flex-wrap: wrap; /* Permet de passer à la ligne sur petits écrans */
-        align-items: center;
-        justify-content: center; /* Centre les éléments */
-        gap: 1rem; /* Espace entre les groupes */
-        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        align-items: flex-end; /* Align items bottom for better label alignment */
+        justify-content: center;
+        gap: var(--space-lg);
+        margin-bottom: var(--space-md);
     }
 
-    .input-group, .result-group {
+    .input-group {
         display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        flex-direction: column; /* Stack label and input */
+        gap: var(--space-xs); /* Small gap between label and input */
     }
-
-    .input-group label {
+     .input-group label {
         font-weight: 500;
-        color: #333;
+        color: var(--text-primary);
+        font-size: 0.9rem; /* Smaller label */
+        text-align: left; /* Align label text left */
+        width: 100%; /* Ensure label takes width */
     }
-
-    /* Style pour l'input montant */
-    .input-group input[type="text"] {
-         padding: 0.6rem 0.8rem;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        font-size: 1rem;
-        min-width: 80px;
-        /* Pour l'alignement du texte à droite si besoin */
-        /* text-align: right; */
+    .input-group input[type="text"], .input-group select {
+         padding: var(--space-sm) var(--space-md);
+         border: 1px solid var(--sandy-beige-dark);
+         border-radius: var(--radius-sm);
+         font-size: 1rem;
+         /* Set a consistent width */
+         width: 150px;
+         background-color: var(--bg-primary);
+         color: var(--text-primary);
+         box-sizing: border-box; /* Include padding/border in width */
     }
-
-    /* Style pour le select devise */
-    .input-group select {
-        padding: 0.6rem 0.8rem;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        font-size: 1rem;
-        min-width: 80px; /* Largeur minimale */
-    }
-
 
     .result-group {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: var(--primary-color, #007bff);
+         display: flex;
+         align-items: center; /* Center items vertically */
+         gap: var(--space-sm);
+         padding-bottom: calc(var(--space-sm) + 1px); /* Align bottom roughly with inputs */
     }
-
+     .result-group span:first-child { /* The ≈ symbol */
+         font-size: 1.5rem; /* Make symbol larger */
+         color: var(--text-secondary);
+         padding-right: var(--space-xs);
+     }
     .result-group .converted-value {
-        background-color: #fff;
-        padding: 0.4rem 0.8rem;
-        border-radius: 4px;
-        border: 1px solid #ced4da;
-        min-width: 100px; /* Largeur minimale pour l'affichage */
-        display: inline-block; /* Pour appliquer padding/border */
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--ocean-blue-dark);
+        background-color: var(--bg-primary);
+        padding: calc(var(--space-sm) + 2px) var(--space-md); /* Match input height better */
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--sandy-beige-dark);
+        min-width: 150px; /* Match input width */
+        display: inline-block;
         text-align: right;
+        box-sizing: border-box;
     }
+     .result-group span:last-child { /* The "MAD" text */
+         font-size: 1rem;
+         font-weight: 500;
+         color: var(--text-secondary);
+     }
 
     .update-info {
         font-size: 0.85rem;
-        color: #6c757d;
+        color: var(--text-secondary); /* Make slightly darker for better contrast */
         text-align: center;
-        margin-top: 1rem;
+        margin-top: var(--space-lg);
+        margin-bottom: 0;
+        width: 100%; /* Ensure it takes full width in flex */
     }
 
+     /* Loading / Error messages - keep as is, they are standard */
      .loading-message, .error-message {
         text-align: center;
-        padding: 1rem;
-        border-radius: 4px;
+        padding: var(--space-md);
+        border-radius: var(--radius-sm);
+        margin: var(--space-md) auto;
+        max-width: 90%;
      }
      .loading-message {
-         color: #004085;
-         background-color: #cce5ff;
-         border: 1px solid #b8daff;
+         color: var(--ocean-blue-dark);
+         background-color: var(--ocean-blue-light);
+         border: 1px solid var(--ocean-blue);
      }
      .error-message {
         color: #721c24;
@@ -317,65 +339,6 @@
         font-weight: 500;
      }
 
-    /* Styles pour le contenu statique */
-    h1 {
-        color: var(--secondary-color, #333);
-        margin-top: 0;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        border-bottom: 2px solid var(--secondary-color, #ccc);
-        padding-bottom: 0.5rem;
-    }
-
-    section {
-        margin-bottom: 2.5rem;
-    }
-
-    h2 { /* Style par défaut pour les titres H2 des sections statiques */
-        color: var(--primary-color, #007bff);
-        margin-top: 0;
-        margin-bottom: 1rem;
-        font-size: 1.4rem;
-    }
-
-    p {
-        margin-bottom: 1rem;
-        color: #333;
-    }
-    strong {
-         font-weight: bold;
-         color: inherit;
-    }
-
-    ul {
-        margin-left: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    li {
-        margin-bottom: 0.7rem;
-    }
-
-    .rates-list {
-        list-style: none;
-        padding-left: 0;
-        opacity: 0.7;
-    }
-     .rates-list li {
-         background-color: #f8f9fa;
-         padding: 0.5rem 1rem;
-         border-left: 3px solid #6c757d;
-         margin-bottom: 0.5rem;
-     }
-     .rates-list strong {
-         color: #343a40;
-     }
-
-    /* Pour la section Conseils */
-    section:last-child ul {
-        list-style-type: '💡 ';
-    }
-     section:last-child li {
-         margin-bottom: 0.8rem;
-     }
-
+     /* Remove potential conflicts */
+     .currency-page {}
 </style>

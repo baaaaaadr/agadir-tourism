@@ -80,25 +80,27 @@
   
   <style>
 	.overlay {
-	  position: fixed;
-	  inset: 0; /* Raccourci pour top, left, right, bottom = 0 */
-	  background-color: rgba(0, 0, 0, 0.5);
-	  z-index: 150; /* Doit être en dessous du side-nav mais au-dessus du reste */
-	}
-  
-	.side-nav {
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  bottom: 0;
-	  width: 280px; /* Largeur du menu */
-	  background-color: var(--bg-primary); /* Utilise variable CSS */
-	  box-shadow: var(--shadow-lg); /* Utilise variable CSS */
-	  z-index: 200; /* Au-dessus de l'overlay */
-	  overflow-y: auto; /* Permet le scroll si le contenu dépasse */
-	  display: flex;
-	  flex-direction: column;
-	}
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* CHANGE THIS Z-INDEX */
+  z-index: 1050; /* <-- Increase this value (e.g., from 150) */
+}
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background-color: var(--bg-primary);
+  box-shadow: var(--shadow-lg);
+  /* CHANGE THIS Z-INDEX */
+  z-index: 1100; /* <-- Increase this value (e.g., from 200) */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
   
 	.nav-header {
 	  display: flex;
