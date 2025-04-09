@@ -1,5 +1,5 @@
 ﻿Structure du dossier pour le volume Acer
-Le numéro de série du volume est 00000007 7498:EC45
+Le numéro de série du volume est 0000007F 7498:EC45
 C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 │   app.css
 │   app.d.ts
@@ -24,6 +24,7 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 │   └───stores
 │           favoritesStore.js
 │           navStore.js
+│           themeStore.js
 │           
 └───routes
     │   +layout.svelte
@@ -117,18 +118,40 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 ========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Footer.svelte ==========
 
 <script>
-    // Import des icÃ´nes de rÃ©seaux sociaux depuis lucide-svelte
-    import { Facebook, Instagram, Twitter, Youtube, Linkedin } from 'lucide-svelte';
+    import { browser } from '$app/environment'; // To check for window.matchMedia
+    import { themeStore } from '$lib/stores/themeStore.js'; // Import theme store
+    import { Facebook, Instagram, Twitter, Youtube, Linkedin, Sun, Moon } from 'lucide-svelte'; // Added Sun, Moon icons
 
-    // Liste des rÃ©seaux sociaux (tu adapteras les liens '#' par les vrais URLs)
+    // Social Links (as before)
     const socialLinks = [
         { name: 'Facebook', href: '#', icon: Facebook, ariaLabel: 'Suivez-nous sur Facebook' },
         { name: 'Instagram', href: '#', icon: Instagram, ariaLabel: 'Suivez-nous sur Instagram' },
         { name: 'Twitter', href: '#', icon: Twitter, ariaLabel: 'Suivez-nous sur Twitter (X)' },
         { name: 'YouTube', href: '#', icon: Youtube, ariaLabel: 'Suivez-nous sur YouTube' },
-        // Tu peux ajouter/supprimer des rÃ©seaux ici
-        // { name: 'LinkedIn', href: '#', icon: Linkedin, ariaLabel: 'Suivez-nous sur LinkedIn' },
     ];
+
+    // --- Theme Toggle Logic ---
+    let isCurrentlyDark = false; // Reactive variable to show the correct icon
+
+    // Function to determine the effective theme (resolves 'system')
+    function getEffectiveTheme(themeValue) {
+        if (themeValue === 'system') {
+            if (browser) {
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            return 'light'; // Default assumption for SSR or if matchMedia fails
+        }
+        return themeValue; // 'light' or 'dark'
+    }
+
+    // Reactive statement to update the icon based on the effective theme
+    $: isCurrentlyDark = getEffectiveTheme($themeStore) === 'dark';
+
+    function handleThemeToggle() {
+        themeStore.toggle();
+    }
+    // --- End Theme Toggle Logic ---
+
 </script>
 
 <footer>
@@ -137,35 +160,53 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
             <p>Â© {new Date().getFullYear()} Office du Tourisme Agadir (Maquette PWA). Tous droits rÃ©servÃ©s.</p>
         </div>
 
-        <div class="social-icons">
-            {#each socialLinks as link (link.name)}
-                <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.ariaLabel} title={link.name}>
-                    <svelte:component this={link.icon} size={24} strokeWidth={1.5} />
-                </a>
-            {/each}
+        <div class="footer-controls"> <!-- Wrapper for social + theme -->
+            <!-- Social Icons -->
+            <div class="social-icons">
+                {#each socialLinks as link (link.name)}
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.ariaLabel} title={link.name} class="social-link">
+                        <svelte:component this={link.icon} size={22} strokeWidth={1.5} />
+                    </a>
+                {/each}
+            </div>
+
+            <!-- Theme Toggle Button -->
+            <button
+                class="theme-toggle-button"
+                on:click={handleThemeToggle}
+                aria-label={isCurrentlyDark ? 'Passer au thÃ¨me clair' : 'Passer au thÃ¨me sombre'}
+                title={isCurrentlyDark ? 'Passer au thÃ¨me clair' : 'Passer au thÃ¨me sombre'}
+            >
+                {#if isCurrentlyDark}
+                    <Sun size={20} />
+                {:else}
+                    <Moon size={20} />
+                {/if}
+            </button>
         </div>
+
     </div>
 </footer>
 
 <style>
     footer {
-        /* Utilisation des variables pour padding, margin, couleur fond/texte, bordure */
-        padding: var(--space-xl) var(--space-md); /* 32px 16px */
-        margin-top: var(--space-xxl); /* 48px */
-        background-color: var(--bg-secondary); /* Fond secondaire (light-sand) */
-        color: var(--text-secondary); /* Texte secondaire (medium-gray) */
-        font-size: 0.9em; /* Garde la taille lÃ©gÃ¨rement rÃ©duite */
-        border-top: 1px solid var(--border-color); /* Bordure avec variable (sandy-beige-dark) */
+        padding: var(--space-lg) var(--space-md); /* Adjusted padding */
+        margin-top: var(--space-xxl);
+        background-color: var(--bg-secondary);
+        color: var(--text-secondary);
+        font-size: 0.9em;
+        border-top: 1px solid var(--border-color);
+        transition: background-color var(--transition-normal), border-color var(--transition-normal); /* Add transition */
     }
 
     .footer-content {
         max-width: 1100px;
         margin: 0 auto;
         display: flex;
-        flex-direction: column;
+        flex-direction: column; /* Stack copyright and controls on mobile */
         align-items: center;
         justify-content: space-between;
-        gap: var(--space-lg); /* Utilise variable (24px) */
+        gap: var(--space-md); /* Reduced gap for mobile */
         text-align: center;
     }
 
@@ -173,32 +214,69 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
         margin: 0;
     }
 
+    /* New wrapper for controls */
+    .footer-controls {
+        display: flex;
+        align-items: center;
+        gap: var(--space-lg); /* Space between social icons and theme toggle */
+    }
+
     .social-icons {
         display: flex;
-        gap: var(--space-md); /* Utilise variable (16px) pour mobile */
+        gap: var(--space-md);
         align-items: center;
     }
 
-    .social-icons a {
-        color: var(--text-secondary); /* Utilise variable pour icÃ´nes par dÃ©faut */
-        /* Garde les transitions existantes */
+    .social-link { /* Renamed class for clarity */
+        color: var(--text-secondary);
         transition: color var(--transition-normal), transform var(--transition-normal);
         display: inline-block;
     }
 
-    .social-icons a:hover {
-        color: var(--ocean-blue); /* Utilise la couleur primaire au survol */
+    .social-link:hover {
+        color: var(--ocean-blue); /* Use primary color on hover */
+        transform: scale(1.15); /* Slightly larger scale */
+    }
+
+    /* Theme Toggle Button Styles */
+    .theme-toggle-button {
+        background: none;
+        border: 1px solid var(--border-color); /* Subtle border */
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: var(--space-sm); /* Make it a bit larger */
+        border-radius: var(--radius-full); /* Keep it round */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color var(--transition-normal), color var(--transition-normal), border-color var(--transition-normal), transform var(--transition-fast);
+    }
+
+    .theme-toggle-button:hover {
+        background-color: var(--sandy-beige-light); /* Use theme color */
+        color: var(--text-primary);
+        border-color: var(--sandy-beige-dark);
         transform: scale(1.1);
     }
+     /* Specific hover for dark mode */
+     :global([data-theme="dark"]) .theme-toggle-button:hover {
+         background-color: var(--sandy-beige-dark); /* Darker hover */
+         border-color: var(--sandy-beige-light);
+     }
+
 
     /* Responsive */
     @media (min-width: 768px) {
         .footer-content {
-            flex-direction: row;
+            flex-direction: row; /* Side-by-side layout on larger screens */
             text-align: left;
+            gap: var(--space-lg);
         }
+         .footer-controls {
+             gap: var(--space-xl); /* More space on desktop */
+         }
          .social-icons {
-            gap: var(--space-lg); /* Utilise variable (24px) sur desktop */
+            gap: var(--space-lg);
          }
     }
 </style>
@@ -1474,6 +1552,133 @@ import { writable } from 'svelte/store';
 export const isSideNavOpen = writable(false); // Par dÃ©faut, le menu est fermÃ©
 
 ========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\navStore.js ==========
+
+
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\themeStore.js ==========
+
+// src/lib/stores/themeStore.js
+import { writable } from 'svelte/store';
+import { browser } from '$app/environment';
+
+// Type definition for theme values
+/** @typedef {'light' | 'dark' | 'system'} Theme */
+
+const STORAGE_KEY = 'agadir-pwa-theme';
+
+/**
+ * Gets the initial theme value to be used by the store.
+ * Checks localStorage first, then defaults to 'system'.
+ * 'system' allows CSS media queries to handle the initial state.
+ * @returns {Theme}
+ */
+function getInitialTheme() {
+    if (!browser) {
+        return 'system'; // Default to system for SSR, CSS will handle based on media query initially
+    }
+
+    // 1. Check localStorage for a user preference ('light', 'dark', or 'system')
+    const storedTheme = localStorage.getItem(STORAGE_KEY);
+    if (storedTheme && (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system')) {
+        // console.log('Theme loaded from localStorage:', storedTheme);
+        return storedTheme;
+    }
+
+    // 2. If no valid theme in storage, default to 'system'
+    // console.log('No valid theme in localStorage, defaulting to system.');
+    return 'system';
+}
+
+// --- Store Creation ---
+const initialTheme = getInitialTheme();
+const theme = writable(initialTheme); // Initialize with 'light', 'dark', or 'system'
+
+// --- Store Actions ---
+
+/**
+ * Sets the theme explicitly and updates localStorage.
+ * @param {Theme} newTheme
+ */
+function setTheme(newTheme) {
+    if (newTheme === 'light' || newTheme === 'dark' || newTheme === 'system') {
+        theme.set(newTheme);
+        // console.log('Theme set to:', newTheme);
+    } else {
+        console.warn('Invalid theme value provided:', newTheme);
+    }
+}
+
+/**
+ * Toggles between light and dark themes.
+ * If current theme is 'system', it checks the actual system preference
+ * to decide whether to switch to light or dark, saving the explicit choice.
+ */
+function toggleTheme() {
+    theme.update(currentTheme => {
+        let actualCurrentTheme = currentTheme;
+
+        // Resolve 'system' to actual theme based on media query *before* toggling
+        if (currentTheme === 'system' && browser) {
+            actualCurrentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        // Toggle between light and dark, overriding 'system'
+        const newTheme = actualCurrentTheme === 'dark' ? 'light' : 'dark';
+        // console.log('Theme toggled to:', newTheme);
+        return newTheme; // Explicitly return 'light' or 'dark'
+    });
+}
+
+// --- Persistence ---
+// Subscribe to theme changes to save to localStorage
+if (browser) {
+    theme.subscribe(value => {
+        try {
+            // Always save the current value ('light', 'dark', or 'system')
+            localStorage.setItem(STORAGE_KEY, value);
+            // console.log('Theme saved to localStorage:', value);
+        } catch (error) {
+            console.error('Failed to save theme to localStorage:', error);
+        }
+    });
+}
+
+
+// --- Export Store and Actions ---
+export const themeStore = {
+    subscribe: theme.subscribe,
+    set: setTheme,
+    toggle: toggleTheme,
+};
+
+// --- Helper to apply theme attribute (can be called from layout) ---
+/**
+ * Applies the correct data-theme attribute to the document element based on the store value.
+ * Handles the 'system' theme case by removing the attribute.
+ * @param {Theme} currentThemeValue - The value from the themeStore ('light', 'dark', or 'system').
+ */
+export function applyTheme(currentThemeValue) {
+    if (!browser) return;
+
+    const root = document.documentElement;
+
+    if (currentThemeValue === 'system') {
+        // If system, let the CSS media query handle it by *removing* the attribute
+        root.removeAttribute('data-theme');
+        // console.log('Applying theme: system (attribute removed)');
+    } else {
+        // If light or dark, set the attribute explicitly
+        root.setAttribute('data-theme', currentThemeValue);
+        // console.log(`Applying theme attribute: data-theme="${currentThemeValue}"`);
+    }
+}
+
+// --- Initialize theme attribute on first client-side load ---
+// This ensures the attribute matches the initial store state
+if (browser) {
+    applyTheme(initialTheme);
+}
+
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\themeStore.js ==========
 
 
 ========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\index.js ==========
@@ -3705,17 +3910,27 @@ export async function load({ url }) {
 <script>
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import SideNav from '$lib/components/SideNav.svelte'; // <-- RÃ‰-AJOUTÃ‰
+	import SideNav from '$lib/components/SideNav.svelte';
 	import ErrorMessage from '$lib/components/ErrorMessage.svelte';
-	import { isSideNavOpen } from '$lib/stores/navStore'; // <-- RÃ‰-AJOUTÃ‰
+	import { isSideNavOpen } from '$lib/stores/navStore';
+    // --- Theme Imports ---
+	import { themeStore, applyTheme } from '$lib/stores/themeStore.js'; // Import store and helper
+    // --- End Theme Imports ---
 	import '../app.css';
 
 	import { page } from '$app/stores';
 	$: error = $page.error;
 
+    // --- Theme Subscription ---
+    // Use $: to reactively call applyTheme whenever the store value changes
+    $: if ($themeStore) { // Ensure $themeStore is accessed to trigger reactivity
+        applyTheme($themeStore);
+    }
+    // --- End Theme Subscription ---
+
 </script>
 
-<!-- RÃ‰-AJOUTÃ‰ : Affiche SideNav si le store est true -->
+<!-- RÃƒâ€°-AJOUTÃƒâ€° : Affiche SideNav si le store est true -->
 {#if $isSideNavOpen}
 	<SideNav />
 {/if}
@@ -3745,12 +3960,24 @@ export async function load({ url }) {
 
 	main {
 		flex: 1;
-		padding: var(--space-lg) var(--space-md);
+		/* padding: var(--space-lg) var(--space-md); - Padding now applied via .static-page-container or component-specific */
+        padding-top: var(--space-lg);
+        padding-bottom: var(--space-xl);
 		max-width: 1200px;
-		margin: var(--space-lg) auto;
-		width: 100%;
+		margin-left: auto; /* Center content */
+        margin-right: auto;
+        width: 100%; /* Ensure it takes width for centering */
 		box-sizing: border-box;
+        padding-left: var(--space-md); /* Add horizontal padding here */
+        padding-right: var(--space-md);
 	}
+     /* Optional: Ensure container takes full width */
+     /* @media (min-width: 1200px) {
+        main {
+             padding-left: 0;
+             padding-right: 0;
+        }
+     } */
 </style>
 
 ========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+layout.svelte ==========
@@ -4044,9 +4271,9 @@ export async function load() {
 /* 1. Importation des Polices Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap');
 
-/* 2. DÃ©finition des Variables CSS Globales */
+/* 2a. DÃ©finition des Variables CSS Globales (Light Theme - Default) */
 :root {
-  /* Palette Couleurs */
+  /* --- Palette Couleurs (Light) --- */
   /* Primary Colors - Ocean Blue */
   --ocean-blue: #3E8CAA;
   --ocean-blue-light: #65A7C0;
@@ -4069,12 +4296,13 @@ export async function load() {
   --text-secondary: var(--medium-gray); /* Texte secondaire */
   --border-color: var(--sandy-beige-dark); /* Bordures */
 
-  /* Neutrals spÃ©cifiques */
+  /* Neutrals spÃ©cifiques (Light) */
   --soft-white: #F8F9FA;
   --light-sand: #F2EBE1;
   --charcoal: #303841;
   --medium-gray: #8A959E;
 
+  /* --- Layout & Effects (Common) --- */
   /* Espacement */
   --space-xs: 4px;
   --space-sm: 8px;
@@ -4089,7 +4317,7 @@ export async function load() {
   --radius-lg: 16px;
   --radius-full: 9999px;
 
-  /* Ombres */
+  /* Ombres (Light Theme values) */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -4099,9 +4327,75 @@ export async function load() {
   --transition-normal: 250ms ease;
   --transition-slow: 350ms ease;
 
-  /* Typographie */
+  /* --- Typographie (Common) --- */
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Open Sans', sans-serif;
+}
+
+/* 2b. Dark Theme Variable Overrides (Activated by data-theme='dark') */
+:root[data-theme='dark'] {
+  /* --- Palette Couleurs (Dark) --- */
+  --ocean-blue: #4A9BC1;
+  --ocean-blue-light: #7BB8D3;
+  --ocean-blue-dark: #3E8CAA;
+
+  --sandy-beige: #5C5140;
+  --sandy-beige-light: #756751;
+  --sandy-beige-dark: #473E31;
+
+  --sunset-orange: #F29860;
+  --sunset-orange-light: #F7B88F;
+  --sunset-orange-dark: #E88C50;
+
+  /* Neutral Colors (Dark Mode) */
+  --bg-primary: #212529;
+  --bg-secondary: #343A40;
+  --text-primary: #F8F9FA;
+  --text-secondary: #ADB5BD;
+  --border-color: #495057;
+
+  /* Neutrals spÃ©cifiques (Dark) */
+  --soft-white: #dee2e6;
+  --light-sand: #495057;
+  --charcoal: #e9ecef;
+  --medium-gray: #ced4da;
+
+  /* Ombres (Dark Theme values) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* 2c. Automatic System Preference (Optional Default) */
+@media (prefers-color-scheme: dark) {
+    /* Apply dark vars ONLY if NO theme is explicitly set to light */
+    :root:not([data-theme='light']) {
+        /* --- Palette Couleurs (Dark) --- */
+        --ocean-blue: #4A9BC1;
+        --ocean-blue-light: #7BB8D3;
+        --ocean-blue-dark: #3E8CAA;
+        --sandy-beige: #5C5140;
+        --sandy-beige-light: #756751;
+        --sandy-beige-dark: #473E31;
+        --sunset-orange: #F29860;
+        --sunset-orange-light: #F7B88F;
+        --sunset-orange-dark: #E88C50;
+        /* Neutral Colors (Dark Mode) */
+        --bg-primary: #212529;
+        --bg-secondary: #343A40;
+        --text-primary: #F8F9FA;
+        --text-secondary: #ADB5BD;
+        --border-color: #495057;
+        /* Neutrals spÃ©cifiques (Dark) */
+        --soft-white: #dee2e6;
+        --light-sand: #495057;
+        --charcoal: #e9ecef;
+        --medium-gray: #ced4da;
+        /* Ombres (Dark Theme values) */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.15);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.25);
+    }
 }
 
 /* 3. Styles Globaux de Base (Reset lÃ©ger et application des variables) */

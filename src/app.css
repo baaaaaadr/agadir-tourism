@@ -3,9 +3,9 @@
 /* 1. Importation des Polices Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap');
 
-/* 2. Définition des Variables CSS Globales */
+/* 2a. Définition des Variables CSS Globales (Light Theme - Default) */
 :root {
-  /* Palette Couleurs */
+  /* --- Palette Couleurs (Light) --- */
   /* Primary Colors - Ocean Blue */
   --ocean-blue: #3E8CAA;
   --ocean-blue-light: #65A7C0;
@@ -28,12 +28,13 @@
   --text-secondary: var(--medium-gray); /* Texte secondaire */
   --border-color: var(--sandy-beige-dark); /* Bordures */
 
-  /* Neutrals spécifiques */
+  /* Neutrals spécifiques (Light) */
   --soft-white: #F8F9FA;
   --light-sand: #F2EBE1;
   --charcoal: #303841;
   --medium-gray: #8A959E;
 
+  /* --- Layout & Effects (Common) --- */
   /* Espacement */
   --space-xs: 4px;
   --space-sm: 8px;
@@ -48,7 +49,7 @@
   --radius-lg: 16px;
   --radius-full: 9999px;
 
-  /* Ombres */
+  /* Ombres (Light Theme values) */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -58,9 +59,75 @@
   --transition-normal: 250ms ease;
   --transition-slow: 350ms ease;
 
-  /* Typographie */
+  /* --- Typographie (Common) --- */
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Open Sans', sans-serif;
+}
+
+/* 2b. Dark Theme Variable Overrides (Activated by data-theme='dark') */
+:root[data-theme='dark'] {
+  /* --- Palette Couleurs (Dark) --- */
+  --ocean-blue: #4A9BC1;
+  --ocean-blue-light: #7BB8D3;
+  --ocean-blue-dark: #3E8CAA;
+
+  --sandy-beige: #5C5140;
+  --sandy-beige-light: #756751;
+  --sandy-beige-dark: #473E31;
+
+  --sunset-orange: #F29860;
+  --sunset-orange-light: #F7B88F;
+  --sunset-orange-dark: #E88C50;
+
+  /* Neutral Colors (Dark Mode) */
+  --bg-primary: #212529;
+  --bg-secondary: #343A40;
+  --text-primary: #F8F9FA;
+  --text-secondary: #ADB5BD;
+  --border-color: #495057;
+
+  /* Neutrals spécifiques (Dark) */
+  --soft-white: #dee2e6;
+  --light-sand: #495057;
+  --charcoal: #e9ecef;
+  --medium-gray: #ced4da;
+
+  /* Ombres (Dark Theme values) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* 2c. Automatic System Preference (Optional Default) */
+@media (prefers-color-scheme: dark) {
+    /* Apply dark vars ONLY if NO theme is explicitly set to light */
+    :root:not([data-theme='light']) {
+        /* --- Palette Couleurs (Dark) --- */
+        --ocean-blue: #4A9BC1;
+        --ocean-blue-light: #7BB8D3;
+        --ocean-blue-dark: #3E8CAA;
+        --sandy-beige: #5C5140;
+        --sandy-beige-light: #756751;
+        --sandy-beige-dark: #473E31;
+        --sunset-orange: #F29860;
+        --sunset-orange-light: #F7B88F;
+        --sunset-orange-dark: #E88C50;
+        /* Neutral Colors (Dark Mode) */
+        --bg-primary: #212529;
+        --bg-secondary: #343A40;
+        --text-primary: #F8F9FA;
+        --text-secondary: #ADB5BD;
+        --border-color: #495057;
+        /* Neutrals spécifiques (Dark) */
+        --soft-white: #dee2e6;
+        --light-sand: #495057;
+        --charcoal: #e9ecef;
+        --medium-gray: #ced4da;
+        /* Ombres (Dark Theme values) */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.15);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.25);
+    }
 }
 
 /* 3. Styles Globaux de Base (Reset léger et application des variables) */
