@@ -66,7 +66,7 @@
         text-decoration: none;
         color: inherit;
         display: block;
-        border-radius: var(--radius-lg); /* Slightly larger radius */
+        border-radius: var(--radius-lg);
         overflow: hidden;
         position: relative;
         background-color: var(--bg-secondary);
@@ -81,13 +81,12 @@
         border-color: var(--ocean-blue-light);
     }
     .card {
-        overflow: hidden;
         display: flex;
         flex-direction: column;
         height: 100%;
     }
 
-    /* --- Favorite Button Styles (Identical to PlaceCard) --- */
+    /* --- Favorite Button Styles --- */
     .favorite-button {
         position: absolute;
         top: var(--space-sm);
@@ -113,14 +112,13 @@
     }
 
     :global([data-theme="dark"]) .favorite-button {
-         background-color: rgba(50, 50, 50, 0.75);
-         color: var(--text-secondary);
+        background-color: rgba(50, 50, 50, 0.75);
+        color: var(--text-secondary);
     }
     :global([data-theme="dark"]) .favorite-button:hover {
         background-color: rgba(70, 70, 70, 0.95);
-         color: var(--sunset-orange-light);
+        color: var(--sunset-orange-light);
     }
-    /* --- End Favorite Button Styles --- */
 
     /* --- Card Image --- */
     .card-image {
@@ -138,6 +136,7 @@
         display: flex;
         flex-direction: column;
     }
+
     h3 {
         margin-top: 0;
         margin-bottom: var(--space-sm);
@@ -145,41 +144,44 @@
         color: var(--ocean-blue-dark);
         line-height: 1.3;
     }
+
     .badges {
-        margin-bottom: var(--space-md); /* More space below badges */
-        display: flex; /* Align badges horizontally */
-        flex-wrap: wrap; /* Allow wrapping */
-        gap: var(--space-sm); /* Gap between badges */
+        margin-bottom: var(--space-md);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
     }
+
     .category-badge {
         display: inline-block;
         padding: 0.25em 0.7em;
         border-radius: var(--radius-sm);
         font-size: 0.75rem;
         font-weight: 500;
-        /* Remove margin-right/bottom, use gap */
     }
-     .category-badge.cuisine {
+
+    .category-badge.cuisine {
         background-color: var(--sandy-beige);
         color: var(--text-primary);
     }
-     .category-badge.price {
+
+    .category-badge.price {
         background-color: var(--ocean-blue-light);
         color: var(--ocean-blue-dark);
-        font-weight: 600; /* Make price slightly bolder */
+        font-weight: 600;
     }
 
     :global([data-theme="dark"]) .category-badge.cuisine {
         background-color: var(--sandy-beige-dark);
         color: var(--text-primary);
     }
-     :global([data-theme="dark"]) .category-badge.price {
-        background-color: var(--ocean-blue); /* Adjust dark theme price bg */
-        color: white; /* Make price text white in dark mode */
+
+    :global([data-theme="dark"]) .category-badge.price {
+        background-color: var(--ocean-blue);
+        color: white;
     }
 
-
-    p { /* Description */
+    p {
         font-size: 0.9rem;
         color: var(--text-secondary);
         margin-bottom: 0;

@@ -34,8 +34,7 @@
       <div class="hero-text">
           <h1>Bienvenue à Agadir !</h1>
           <p>Votre application pour explorer la perle du Souss.</p>
-          <!-- Optional Call-to-Action Button -->
-          <!-- <a href="/map" class="btn btn-accent btn-lg">Explorer la Carte</a> -->
+          <a href="/map" class="btn btn-accent btn-lg" style="margin-top: var(--space-md);">Explorer la Carte</a>
       </div>
   </section>
 
@@ -100,9 +99,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Cover the area */
-      z-index: 1; /* Behind the text */
-      filter: brightness(0.6) contrast(0.9); /* Darken image slightly for text readability */
+      object-fit: cover;
+      z-index: 1;
+      filter: brightness(0.6) contrast(1) saturate(1.1);
   }
 
   .hero-text {
@@ -114,17 +113,17 @@
   }
 
   .hero-text h1 {
-      font-size: 2.5rem; /* Larger title */
+      font-size: 2.5rem;
       margin-bottom: var(--space-sm);
       font-weight: 700;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Text shadow for readability */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   }
 
   .hero-text p {
     font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-    margin-bottom: var(--space-lg); /* Space before optional button */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--space-lg);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
   }
 
   /* Adjust hero size on larger screens */
@@ -154,11 +153,11 @@
 
   .shortcuts-grid {
     display: grid;
-    /* Start with 2 columns on small screens */
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg); /* 24px gap */
-    max-width: 900px; /* Limit width */
-    margin: 0 auto; /* Center grid */
+    gap: var(--space-lg);
+    padding: 0 var(--space-md);
+    max-width: 900px;
+    margin: 0 auto;
   }
 
   /* Style the shortcut links as cards */
@@ -167,38 +166,42 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--space-lg); /* 24px padding */
-    background-color: var(--bg-secondary); /* light-sand */
-    border: 1px solid var(--border-color); /* sandy-beige-dark */
-    border-radius: var(--radius-md); /* 8px */
+    padding: var(--space-lg);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
     text-decoration: none;
-    color: var(--text-primary); /* charcoal */
+    color: var(--text-primary);
     text-align: center;
     transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
-    min-height: 140px; /* Ensure cards have a decent height */
+    min-height: 150px;
     box-shadow: var(--shadow-sm);
   }
 
   .shortcut-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg); /* Larger shadow on hover */
-    border-color: var(--ocean-blue-light); /* Highlight border */
+    box-shadow: var(--shadow-lg);
+    border-color: var(--ocean-blue-light);
+    background-color: var(--sandy-beige-light);
   }
 
   .shortcut-icon {
-  margin-bottom: var(--space-md); /* Space between icon and label */
-  color: var(--ocean-blue); /* Use theme color for icon */
-  /* size={40} and strokeWidth={1.5} are set directly on the component */
-  /* Remove font-size and line-height specific to emojis */
-  display: flex; /* Center icon if needed, though size prop usually handles it */
-  align-items: center;
-  justify-content: center;
-}
+    margin-bottom: var(--space-md);
+    color: var(--ocean-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-normal);
+  }
+
+  .shortcut-card:hover .shortcut-icon {
+    transform: scale(1.1);
+  }
 
   .shortcut-label {
-    font-size: 1rem;
-    font-weight: 600; /* Make label slightly bolder */
-    color: var(--ocean-blue-dark); /* Use primary color for label */
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ocean-blue-dark);
   }
 
   /* Responsive: 3 columns on medium screens and up */

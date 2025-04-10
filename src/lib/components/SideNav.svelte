@@ -57,7 +57,10 @@
   >
 	<!-- Entête du menu -->
 	<div class="nav-header">
-	  <h2>Agadir Tourism</h2>
+	  <div class="brand">
+	    <img src="/assets/images/xplore-agadir-icon.png" alt="Xplore Agadir" class="nav-logo" />
+	    <h2>Xplore Agadir</h2>
+	  </div>
 	  <button class="close-button" on:click={closeNav} aria-label="Fermer le menu">
 		<X size={24} />
 	  </button>
@@ -106,33 +109,41 @@
 	  display: flex;
 	  align-items: center;
 	  justify-content: space-between;
-	  padding: var(--space-lg);
-	  background-color: var(--ocean-blue); /* Couleur primaire */
+	  padding: var(--space-md);
+	  background-color: var(--ocean-blue);
 	  color: white;
-	  flex-shrink: 0; /* Empêche l'entête de rétrécir */
 	}
-  
+
+	.brand {
+	  display: flex;
+	  align-items: center;
+	  gap: var(--space-sm);
+	}
+
+	.nav-logo {
+	  width: 32px;
+	  height: 32px;
+	  object-fit: contain;
+	}
+
 	.nav-header h2 {
-	  font-family: var(--font-heading);
-	  font-size: 1.25rem; /* 20px */
+	  font-size: 1.25rem;
+	  font-weight: 600;
 	  margin: 0;
+	  color: white;
 	}
-  
+
 	.close-button {
-	  background: transparent;
+	  background: none;
 	  border: none;
 	  color: white;
-	  cursor: pointer;
 	  padding: var(--space-xs);
-	  border-radius: var(--radius-full);
-	  transition: background-color var(--transition-normal);
-	  display: flex; /* Pour bien aligner l'icône X */
-	  align-items: center;
-	  justify-content: center;
+	  cursor: pointer;
+	  transition: opacity var(--transition-fast);
 	}
-  
+
 	.close-button:hover {
-	  background-color: rgba(255, 255, 255, 0.1);
+	  opacity: 0.8;
 	}
   
 	.nav-links {

@@ -1,6 +1,6 @@
-﻿Structure du dossier
-Le numéro de série du volume est 0000009E 9690:CFCF
-H:\MY APPS\AGADIR TOURISM\SRC
+﻿Structure du dossier pour le volume Acer
+Le numéro de série du volume est 000000B5 7498:EC45
+C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 │   app.css
 │   app.d.ts
 │   app.html
@@ -85,7 +85,7 @@ H:\MY APPS\AGADIR TOURISM\SRC
 ==================== CONTENU DES FICHIERS ====================
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\components\ErrorMessage.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\ErrorMessage.svelte ==========
 
 <script>
     export let message = "Une erreur s'est produite.";
@@ -112,10 +112,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\ErrorMessage.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\ErrorMessage.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\components\Footer.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Footer.svelte ==========
 
 <script>
     import { browser } from '$app/environment'; // To check for window.matchMedia
@@ -312,10 +312,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\Footer.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Footer.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\components\Header.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Header.svelte ==========
 
 <script>
     import { goto } from '$app/navigation'; // Import navigation function
@@ -564,10 +564,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
 
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\Header.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Header.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\components\LoadingSpinner.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\LoadingSpinner.svelte ==========
 
 <div class="spinner-container">
     <div class="spinner"></div>
@@ -598,10 +598,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\LoadingSpinner.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\LoadingSpinner.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\components\Map.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Map.svelte ==========
 
 <script>
     import { browser } from '$app/environment';
@@ -778,10 +778,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
     :global(.leaflet-container a.leaflet-popup-close-button) { color: #555 !important; padding: 6px 6px 0 0 !important; }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\Map.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Map.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\components\PlaceCard.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\PlaceCard.svelte ==========
 
 <script>
     import { favoritesStore } from '$lib/stores/favoritesStore'; // Import the store
@@ -789,7 +789,7 @@ H:\MY APPS\AGADIR TOURISM\SRC
 
     export let place;
 
-    // Chemin vers l'image par dÃƒÂ©faut
+    // Chemin vers l'image par dÃƒfaut
     const defaultImage = '/assets/images/default-placeholder.jpg';
 
     // Reactive declaration to check if this place is a favorite
@@ -846,26 +846,22 @@ H:\MY APPS\AGADIR TOURISM\SRC
         text-decoration: none;
         color: inherit;
         display: block;
-        border-radius: var(--radius-lg); /* Slightly larger radius for a softer look */
+        border-radius: var(--radius-lg);
         overflow: hidden;
-        position: relative; /* Needed for absolute positioning of the button */
+        position: relative;
         background-color: var(--bg-secondary);
-        border: 1px solid transparent; /* Start with transparent border */
+        border: 1px solid transparent;
         transition: transform var(--transition-normal) ease-in-out,
                     box-shadow var(--transition-normal) ease-in-out,
-                    border-color var(--transition-normal) ease-in-out; /* Add border-color transition */
+                    border-color var(--transition-normal) ease-in-out;
     }
     .card-link:hover {
         transform: translateY(-5px);
         box-shadow: var(--shadow-lg);
-        border-color: var(--ocean-blue-light); /* Highlight with subtle blue border on hover */
+        border-color: var(--ocean-blue-light);
     }
 
     .card {
-        /* background-color: var(--bg-secondary); - Removed, handled by card-link */
-        /* border-radius: var(--radius-lg); - Removed, handled by card-link */
-        /* box-shadow: var(--shadow-md); - Base shadow is on card-link, hover enhances it */
-        overflow: hidden;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -876,7 +872,7 @@ H:\MY APPS\AGADIR TOURISM\SRC
         position: absolute;
         top: var(--space-sm);
         right: var(--space-sm);
-        background-color: rgba(255, 255, 255, 0.75); /* Slightly less transparent */
+        background-color: rgba(255, 255, 255, 0.75);
         border: none;
         border-radius: var(--radius-full);
         padding: var(--space-xs);
@@ -886,39 +882,38 @@ H:\MY APPS\AGADIR TOURISM\SRC
         align-items: center;
         justify-content: center;
         color: var(--text-secondary);
-        transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast); /* Added transform */
-        backdrop-filter: blur(3px); /* Slightly stronger blur */
+        transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+        backdrop-filter: blur(3px);
     }
 
     .favorite-button:hover {
         background-color: rgba(255, 255, 255, 0.95);
         color: var(--sunset-orange-dark);
-        transform: scale(1.1); /* Add subtle scale on hover */
+        transform: scale(1.1);
     }
 
     :global([data-theme="dark"]) .favorite-button {
-         background-color: rgba(50, 50, 50, 0.75); /* Darker background for dark mode */
-         color: var(--text-secondary);
+        background-color: rgba(50, 50, 50, 0.75);
+        color: var(--text-secondary);
     }
     :global([data-theme="dark"]) .favorite-button:hover {
         background-color: rgba(70, 70, 70, 0.95);
-         color: var(--sunset-orange-light); /* Lighter orange for dark mode hover */
+        color: var(--sunset-orange-light);
     }
 
 
     /* --- Card Image --- */
     .card-image {
         width: 100%;
-        height: 180px; /* Keep height consistent */
+        height: 180px;
         object-fit: cover;
-        display: block; /* Ensure no extra space */
-        /* Subtle inner shadow to lift image from background */
+        display: block;
         box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
     }
 
     /* --- Card Content --- */
     .card-content {
-        padding: var(--space-md) var(--space-lg); /* More horizontal padding */
+        padding: var(--space-md) var(--space-lg);
         flex-grow: 1;
         display: flex;
         flex-direction: column;
@@ -927,21 +922,21 @@ H:\MY APPS\AGADIR TOURISM\SRC
     h3 {
         margin-top: 0;
         margin-bottom: var(--space-sm);
-        font-size: 1.15rem; /* Slightly smaller title */
+        font-size: 1.15rem;
         color: var(--ocean-blue-dark);
         line-height: 1.3;
     }
 
     .category-badge {
         display: inline-block;
-        background-color: var(--sandy-beige); /* Slightly darker beige */
-        color: var(--text-primary); /* Better contrast */
-        padding: 0.25em 0.7em; /* Adjust padding */
+        background-color: var(--sandy-beige);
+        color: var(--text-primary);
+        padding: 0.25em 0.7em;
         border-radius: var(--radius-sm);
-        font-size: 0.75rem; /* Smaller badge text */
+        font-size: 0.75rem;
         font-weight: 500;
-        margin-bottom: var(--space-md); /* More space below badge */
-        align-self: flex-start; /* Prevent badge stretching */
+        margin-bottom: var(--space-md);
+        align-self: flex-start;
     }
 
     :global([data-theme="dark"]) .category-badge {
@@ -949,20 +944,19 @@ H:\MY APPS\AGADIR TOURISM\SRC
         color: var(--text-primary);
     }
 
-
     p {
-        font-size: 0.9rem; /* Slightly smaller description */
+        font-size: 0.9rem;
         color: var(--text-secondary);
         margin-bottom: 0;
         line-height: 1.5;
-        flex-grow: 1; /* Allow description to push content down if needed */
+        flex-grow: 1;
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\PlaceCard.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\PlaceCard.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\components\RestaurantCard.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\RestaurantCard.svelte ==========
 
 <script>
     import { favoritesStore } from '$lib/stores/favoritesStore'; // Import the store
@@ -1032,7 +1026,7 @@ H:\MY APPS\AGADIR TOURISM\SRC
         text-decoration: none;
         color: inherit;
         display: block;
-        border-radius: var(--radius-lg); /* Slightly larger radius */
+        border-radius: var(--radius-lg);
         overflow: hidden;
         position: relative;
         background-color: var(--bg-secondary);
@@ -1047,13 +1041,12 @@ H:\MY APPS\AGADIR TOURISM\SRC
         border-color: var(--ocean-blue-light);
     }
     .card {
-        overflow: hidden;
         display: flex;
         flex-direction: column;
         height: 100%;
     }
 
-    /* --- Favorite Button Styles (Identical to PlaceCard) --- */
+    /* --- Favorite Button Styles --- */
     .favorite-button {
         position: absolute;
         top: var(--space-sm);
@@ -1079,14 +1072,13 @@ H:\MY APPS\AGADIR TOURISM\SRC
     }
 
     :global([data-theme="dark"]) .favorite-button {
-         background-color: rgba(50, 50, 50, 0.75);
-         color: var(--text-secondary);
+        background-color: rgba(50, 50, 50, 0.75);
+        color: var(--text-secondary);
     }
     :global([data-theme="dark"]) .favorite-button:hover {
         background-color: rgba(70, 70, 70, 0.95);
-         color: var(--sunset-orange-light);
+        color: var(--sunset-orange-light);
     }
-    /* --- End Favorite Button Styles --- */
 
     /* --- Card Image --- */
     .card-image {
@@ -1104,6 +1096,7 @@ H:\MY APPS\AGADIR TOURISM\SRC
         display: flex;
         flex-direction: column;
     }
+
     h3 {
         margin-top: 0;
         margin-bottom: var(--space-sm);
@@ -1111,41 +1104,44 @@ H:\MY APPS\AGADIR TOURISM\SRC
         color: var(--ocean-blue-dark);
         line-height: 1.3;
     }
+
     .badges {
-        margin-bottom: var(--space-md); /* More space below badges */
-        display: flex; /* Align badges horizontally */
-        flex-wrap: wrap; /* Allow wrapping */
-        gap: var(--space-sm); /* Gap between badges */
+        margin-bottom: var(--space-md);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
     }
+
     .category-badge {
         display: inline-block;
         padding: 0.25em 0.7em;
         border-radius: var(--radius-sm);
         font-size: 0.75rem;
         font-weight: 500;
-        /* Remove margin-right/bottom, use gap */
     }
-     .category-badge.cuisine {
+
+    .category-badge.cuisine {
         background-color: var(--sandy-beige);
         color: var(--text-primary);
     }
-     .category-badge.price {
+
+    .category-badge.price {
         background-color: var(--ocean-blue-light);
         color: var(--ocean-blue-dark);
-        font-weight: 600; /* Make price slightly bolder */
+        font-weight: 600;
     }
 
     :global([data-theme="dark"]) .category-badge.cuisine {
         background-color: var(--sandy-beige-dark);
         color: var(--text-primary);
     }
-     :global([data-theme="dark"]) .category-badge.price {
-        background-color: var(--ocean-blue); /* Adjust dark theme price bg */
-        color: white; /* Make price text white in dark mode */
+
+    :global([data-theme="dark"]) .category-badge.price {
+        background-color: var(--ocean-blue);
+        color: white;
     }
 
-
-    p { /* Description */
+    p {
         font-size: 0.9rem;
         color: var(--text-secondary);
         margin-bottom: 0;
@@ -1154,10 +1150,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\RestaurantCard.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\RestaurantCard.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\components\SideNav.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\SideNav.svelte ==========
 
 <script>
 	// Importe les transitions Svelte
@@ -1218,7 +1214,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
   >
 	<!-- EntÃªte du menu -->
 	<div class="nav-header">
-	  <h2>Agadir Tourism</h2>
+	  <div class="brand">
+	    <img src="/assets/images/xplore-agadir-icon.png" alt="Xplore Agadir" class="nav-logo" />
+	    <h2>Xplore Agadir</h2>
+	  </div>
 	  <button class="close-button" on:click={closeNav} aria-label="Fermer le menu">
 		<X size={24} />
 	  </button>
@@ -1267,33 +1266,41 @@ H:\MY APPS\AGADIR TOURISM\SRC
 	  display: flex;
 	  align-items: center;
 	  justify-content: space-between;
-	  padding: var(--space-lg);
-	  background-color: var(--ocean-blue); /* Couleur primaire */
+	  padding: var(--space-md);
+	  background-color: var(--ocean-blue);
 	  color: white;
-	  flex-shrink: 0; /* EmpÃªche l'entÃªte de rÃ©trÃ©cir */
 	}
-  
+
+	.brand {
+	  display: flex;
+	  align-items: center;
+	  gap: var(--space-sm);
+	}
+
+	.nav-logo {
+	  width: 32px;
+	  height: 32px;
+	  object-fit: contain;
+	}
+
 	.nav-header h2 {
-	  font-family: var(--font-heading);
-	  font-size: 1.25rem; /* 20px */
+	  font-size: 1.25rem;
+	  font-weight: 600;
 	  margin: 0;
+	  color: white;
 	}
-  
+
 	.close-button {
-	  background: transparent;
+	  background: none;
 	  border: none;
 	  color: white;
-	  cursor: pointer;
 	  padding: var(--space-xs);
-	  border-radius: var(--radius-full);
-	  transition: background-color var(--transition-normal);
-	  display: flex; /* Pour bien aligner l'icÃ´ne X */
-	  align-items: center;
-	  justify-content: center;
+	  cursor: pointer;
+	  transition: opacity var(--transition-fast);
 	}
-  
+
 	.close-button:hover {
-	  background-color: rgba(255, 255, 255, 0.1);
+	  opacity: 0.8;
 	}
   
 	.nav-links {
@@ -1327,10 +1334,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
 	}
   </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\SideNav.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\SideNav.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\components\WeatherWidget.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\WeatherWidget.svelte ==========
 
 <script>
     import { browser } from '$app/environment';
@@ -1523,10 +1530,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\WeatherWidget.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\WeatherWidget.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\stores\favoritesStore.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\favoritesStore.js ==========
 
 // src/lib/stores/favoritesStore.js
 import { writable } from 'svelte/store';
@@ -1643,10 +1650,10 @@ export const favoritesStore = {
 // but remember it needs the current store value passed to it to be reactive.
 // Example of reactive check in component: $: isFav = $favoritesStore.some(f => f.id === itemId && f.type === itemType)
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\stores\favoritesStore.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\favoritesStore.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\stores\navStore.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\navStore.js ==========
 
 // src/lib/stores/navStore.js
 import { writable } from 'svelte/store';
@@ -1657,10 +1664,10 @@ import { writable } from 'svelte/store';
  */
 export const isSideNavOpen = writable(false); // Par dÃ©faut, le menu est fermÃ©
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\stores\navStore.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\navStore.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\stores\themeStore.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\themeStore.js ==========
 
 // src/lib/stores/themeStore.js
 import { writable } from 'svelte/store';
@@ -1784,18 +1791,18 @@ if (browser) {
     applyTheme(initialTheme);
 }
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\stores\themeStore.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\themeStore.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\index.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\index.js ==========
 
 // place files you want to import through the `$lib` alias in this folder.
 
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\index.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\index.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\lib\supabaseClient.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\supabaseClient.js ==========
 
 import { createClient } from '@supabase/supabase-js';
 
@@ -1824,10 +1831,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 // La sÃ©curitÃ© repose ENTIÃˆREMENT sur les Row Level Security (RLS) Policies
 // que tu as dÃ©finies dans Supabase. Assure-toi qu'elles sont correctes !
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\supabaseClient.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\supabaseClient.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\about\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\about\+page.svelte ==========
 
 <script>
     // Pas de script nÃƒÂ©cessaire pour une page statique
@@ -1936,10 +1943,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
      }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\about\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\about\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\conseils\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\conseils\+page.svelte ==========
 
 <script>
   // No script needed
@@ -2111,10 +2118,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
    .conseils-page { }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\conseils\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\conseils\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\contacts\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\contacts\+page.svelte ==========
 
 <script>
     // No script needed
@@ -2274,10 +2281,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
      .contacts-page {}
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\contacts\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\contacts\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\currency\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\currency\+page.svelte ==========
 
 <script lang="ts">
     // --- KEEP YOUR EXISTING SCRIPT BLOCK ---
@@ -2624,10 +2631,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
      .currency-page {}
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\currency\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\currency\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\events\+page.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.js ==========
 
 import { supabase } from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit';
@@ -2668,16 +2675,17 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\events\+page.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\events\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.svelte ==========
 
 <script lang="ts">
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
     import ErrorMessage from '$lib/components/ErrorMessage.svelte';
     import { ExternalLink, MapPin } from 'lucide-svelte'; // Added MapPin icon
     import { navigating } from '$app/stores'; // For loading state
+    import { fly } from 'svelte/transition';
 
     export let data;
     $: events = data?.events || [];
@@ -2744,8 +2752,8 @@ export async function load() {
     {:else if events.length > 0}
          <p>Restez informÃ© des activitÃ©s et manifestations prÃ©vues Ã  Agadir.</p>
         <ul class="events-list">
-            {#each events as event (event.id)}
-                <li class="event-card">
+            {#each events as event, index (event.id)}
+                <li class="event-card" in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
                     <img
                         src={event.image_url || defaultImage}
                         alt="Image pour {event.name}"
@@ -2805,27 +2813,18 @@ export async function load() {
         max-width: 950px; /* Slightly wider max-width for events */
         margin: 0 auto;
     }
+
     h1 {
         color: var(--ocean-blue-dark);
         text-align: center;
         margin-bottom: var(--space-lg);
     }
-     p { /* Default paragraph style for intro text */
-         text-align: center;
-         color: var(--text-secondary);
-         margin-bottom: var(--space-xl);
-     }
-     /* Shared 'no results' style */
-     .no-results {
-        text-align: center;
-        font-style: italic;
-        color: var(--text-secondary);
-        margin-top: var(--space-xl);
-        padding: var(--space-xl);
-        background-color: var(--sandy-beige-light);
-        border-radius: var(--radius-md);
-     }
 
+    p {
+        text-align: center;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-xl);
+    }
 
     /* --- Event List & Card --- */
     .events-list {
@@ -2835,6 +2834,7 @@ export async function load() {
         display: flex;
         flex-direction: column;
         gap: var(--space-xl); /* Space between cards */
+        transition: opacity 0.3s ease-in-out;
     }
 
     .event-card {
@@ -2961,12 +2961,23 @@ export async function load() {
          }
     }
 
+    /* --- No Results --- */
+    .no-results {
+        text-align: center;
+        font-style: italic;
+        color: var(--text-secondary);
+        margin-top: var(--space-lg);
+        padding: var(--space-xl);
+        background-color: var(--sandy-beige-light);
+        border-radius: var(--radius-md);
+        transition: opacity 0.3s ease-in-out;
+    }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\events\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\favorites\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\favorites\+page.svelte ==========
 
 <script>
     import { onMount } from 'svelte';
@@ -2977,6 +2988,7 @@ export async function load() {
     import RestaurantCard from '$lib/components/RestaurantCard.svelte';
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
     import ErrorMessage from '$lib/components/ErrorMessage.svelte';
+    import { fly } from 'svelte/transition';
 
     let favoriteDetails = [];
     let isLoading = true;
@@ -3083,11 +3095,15 @@ export async function load() {
     {:else if favoriteDetails.length > 0}
          <p>Retrouvez ici les lieux et restaurants que vous avez ajoutÃ©s Ã  vos favoris.</p>
         <div class="favorites-grid">
-            {#each favoriteDetails as item (item.type + '-' + item.id)}
+            {#each favoriteDetails as item, index (item.type + '-' + item.id)}
                 {#if item.type === 'place'}
-                    <PlaceCard place={item} />
+                    <div in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
+                        <PlaceCard place={item} />
+                    </div>
                 {:else if item.type === 'restaurant'}
-                    <RestaurantCard restaurant={item} />
+                    <div in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
+                        <RestaurantCard restaurant={item} />
+                    </div>
                 {/if}
             {/each}
         </div>
@@ -3109,24 +3125,30 @@ export async function load() {
     h1 {
         color: var(--ocean-blue-dark);
         text-align: center;
-        margin-bottom: var(--space-lg);
+        margin-bottom: var(--space-xl);
     }
 
     .favorites-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
-        gap: var(--space-lg); /* Spacing between cards */
-        margin-top: var(--space-lg);
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: var(--space-lg);
+        margin-top: var(--space-xl);
+        transition: opacity 0.3s ease-in-out;
     }
 
     .no-favorites {
         text-align: center;
         font-style: italic;
         color: var(--text-secondary);
-        margin-top: var(--space-xl);
+        margin-top: var(--space-xxl);
         padding: var(--space-xl);
         background-color: var(--sandy-beige-light);
         border-radius: var(--radius-md);
+        border: 1px dashed var(--sandy-beige-dark);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        transition: opacity 0.3s ease-in-out;
     }
 
      /* Ensure cards take full width within the grid cell */
@@ -3135,10 +3157,10 @@ export async function load() {
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\favorites\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\favorites\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\map\+page.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.js ==========
 
 import { supabase } from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit';
@@ -3174,14 +3196,16 @@ export async function load() {
                 lon: p.longitude,
                 // Texte simple pour le popup, lien vers la page dÃ©tail
                 popupText: `<b>${p.name}</b><br>${p.category || ''}<br><a href="/places/${p.id}">Voir dÃ©tails</a>`,
-                type: 'place' // Pour diffÃ©rencier si besoin (couleur marqueur...)
+                type: 'place',
+                category: p.category || null
             })),
             ...(restaurants || []).map(r => ({
-                 id: `resto-${r.id}`,
+                id: `resto-${r.id}`,
                 lat: r.latitude,
                 lon: r.longitude,
                 popupText: `<b>${r.name}</b><br>${r.cuisine_type || ''}<br><a href="/restaurants/${r.id}">Voir dÃ©tails</a>`,
-                type: 'restaurant'
+                type: 'restaurant',
+                cuisine: r.cuisine_type || null
             }))
         ];
 
@@ -3195,84 +3219,366 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\map\+page.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\map\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.svelte ==========
 
 <script>
-    import { browser } from '$app/environment';
-    import { onMount } from 'svelte';
-    import Map from '$lib/components/Map.svelte';
-    import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
+	import Map from '$lib/components/Map.svelte';
+	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
-    export let data; // ReÃ§oit les donnÃ©es de +page.js
-    $: markers = data?.markers || [];
+	export let data; // Receives data from +page.js
 
-    // Centre initial de la carte (Agadir)
-    let mapCenter = [30.4202, -9.5982];
-    let mapZoom = 13; // Zoom un peu plus large pour voir plusieurs marqueurs
+	// --- State Variables ---
+	let allMarkers = []; // Holds the original full list of markers
+	let filteredMarkers = []; // Holds the markers to be displayed on the map
+	let uniquePlaceCategories = [];
+	let uniqueRestaurantCuisines = [];
+	let selectedPlaceCategories = []; // Bound to checkboxes
+	let selectedRestaurantCuisines = []; // Bound to checkboxes
+	let filtersOpen = false; // Filters start closed by default
 
+	// Flags to control initial loading state for filters
+	let categoriesDerived = false;
+	let cuisinesDerived = false;
+
+	// Map settings (as before)
+	let mapCenter = [30.4202, -9.5982];
+	let mapZoom = 13;
+
+	// --- Derive Filters and Initialize ---
+	// Use a reactive statement to process data once it's available
+	$: if (data?.markers && data.markers.length > 0 && !categoriesDerived && !cuisinesDerived) {
+		allMarkers = data.markers;
+
+		// Extract unique place categories (handle null/undefined/empty strings)
+		const placeCats = new Set(
+			allMarkers
+				.filter((m) => m.type === 'place' && m.category)
+				.map((m) => m.category.trim())
+				.filter(Boolean) // Remove empty strings after trimming
+		);
+		uniquePlaceCategories = [...placeCats].sort();
+		selectedPlaceCategories = [...uniquePlaceCategories]; // Select all initially
+		categoriesDerived = true; // Mark as derived
+
+		// Extract unique restaurant cuisines (handle null/undefined/empty strings)
+		const restaurantCuis = new Set(
+			allMarkers
+				.filter((m) => m.type === 'restaurant' && m.cuisine)
+				.map((m) => m.cuisine.trim())
+				.filter(Boolean) // Remove empty strings after trimming
+		);
+		uniqueRestaurantCuisines = [...restaurantCuis].sort();
+		selectedRestaurantCuisines = [...uniqueRestaurantCuisines]; // Select all initially
+		cuisinesDerived = true; // Mark as derived
+
+		// Trigger initial filtering calculation
+		filterMapMarkers();
+		console.log('Filters derived:', { uniquePlaceCategories, uniqueRestaurantCuisines });
+	}
+
+	// --- Filtering Logic ---
+	// Reactive statement recalculates filteredMarkers whenever selections change
+	$: filterMapMarkers(selectedPlaceCategories, selectedRestaurantCuisines, allMarkers);
+
+	function filterMapMarkers() {
+		// Ensure allMarkers is populated before filtering
+		if (!allMarkers || allMarkers.length === 0) {
+			filteredMarkers = [];
+			return;
+		}
+
+		filteredMarkers = allMarkers.filter((marker) => {
+			if (marker.type === 'place') {
+				// Include place if its category is selected OR if it has no category (treat uncategorized as always visible when any filter is on)
+				return selectedPlaceCategories.includes(marker.category) || !marker.category;
+			} else if (marker.type === 'restaurant') {
+				// Include restaurant if its cuisine is selected OR if it has no cuisine
+				return selectedRestaurantCuisines.includes(marker.cuisine) || !marker.cuisine;
+			}
+			return false; // Should not happen if type is always place/restaurant
+		});
+	}
+
+	// Helper functions for Select All/None (Optional but useful)
+	function selectAllCategories() {
+		selectedPlaceCategories = [...uniquePlaceCategories];
+	}
+	function selectNoneCategories() {
+		selectedPlaceCategories = [];
+	}
+	function selectAllCuisines() {
+		selectedRestaurantCuisines = [...uniqueRestaurantCuisines];
+	}
+	function selectNoneCuisines() {
+		selectedRestaurantCuisines = [];
+	}
 </script>
 
 <svelte:head>
-    <title>Carte d'Agadir - Visit Agadir</title>
-    <meta name="description" content="Explorez les points d'intÃ©rÃªt et restaurants d'Agadir sur la carte interactive." />
+	<title>Carte Interactive d'Agadir - Visit Agadir</title>
+	<meta
+		name="description"
+		content="Explorez les points d'intÃ©rÃªt et restaurants d'Agadir sur la carte interactive."
+	/>
 </svelte:head>
 
 <section class="map-page-section">
-    <h1>Carte Interactive d'Agadir</h1>
-    <p>DÃ©couvrez les lieux et restaurants directement sur la carte.</p>
+	<h1>Carte Interactive d'Agadir</h1>
+	<p>DÃ©couvrez les lieux et restaurants directement sur la carte.</p>
 
-    {#if browser}
-        {#if markers.length > 0}
-            <Map markers={markers} center={mapCenter} zoom={mapZoom} mapId="main-map" />
-        {:else if data}
-             <!-- Si data est chargÃ© mais markers est vide -->
-             <p>Aucun point d'intÃ©rÃªt avec coordonnÃ©es trouvÃ© Ã  afficher sur la carte.</p>
-        {:else}
-             <!-- Si data n'est pas encore chargÃ© (initialement) -->
-            <LoadingSpinner />
-        {/if}
-    {:else}
-        <!-- Placeholder pendant le rendu serveur -->
-         <div style="height: 500px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
-             Carte en cours de chargement...
-         </div>
-    {/if}
+	<!-- Collapsible Filters Section -->
+	{#if categoriesDerived || cuisinesDerived}
+		<details class="filters-details" bind:open={filtersOpen}>
+			<summary class="filters-summary">
+				Afficher/Masquer les Filtres
+				<span class="filters-toggle-icon">{#if filtersOpen}â–²{:else}â–¼{/if}</span>
+			</summary>
 
+			<div class="filters-container">
+				<!-- Place Category Filters -->
+				{#if uniquePlaceCategories.length > 0}
+					<fieldset class="filter-group">
+						<legend>Lieux par CatÃ©gorie</legend>
+						<div class="filter-controls">
+							<button on:click={selectAllCategories} class="btn btn-secondary btn-sm">Tout</button>
+							<button on:click={selectNoneCategories} class="btn btn-secondary btn-sm">Aucun</button>
+						</div>
+						<div class="checkbox-list">
+							{#each uniquePlaceCategories as category (category)}
+								<label>
+									<input type="checkbox" bind:group={selectedPlaceCategories} value={category} />
+									{category}
+								</label>
+							{/each}
+						</div>
+					</fieldset>
+				{/if}
+
+				<!-- Restaurant Cuisine Filters -->
+				{#if uniqueRestaurantCuisines.length > 0}
+					<fieldset class="filter-group">
+						<legend>Restaurants par Cuisine</legend>
+						<div class="filter-controls">
+							<button on:click={selectAllCuisines} class="btn btn-secondary btn-sm">Tout</button>
+							<button on:click={selectNoneCuisines} class="btn btn-secondary btn-sm">Aucun</button>
+						</div>
+						<div class="checkbox-list">
+							{#each uniqueRestaurantCuisines as cuisine (cuisine)}
+								<label>
+									<input type="checkbox" bind:group={selectedRestaurantCuisines} value={cuisine} />
+									{cuisine}
+								</label>
+							{/each}
+						</div>
+					</fieldset>
+				{/if}
+			</div>
+			<!-- END of filters-container div -->
+		</details>
+		<!-- End details -->
+	{:else if data?.markers}
+		<!-- Optional: Show a message if deriving filters hasn't completed but data is there -->
+		<!-- <p>Chargement des filtres...</p> -->
+	{/if}
+	<!-- End Filters Section -->
+
+	<!-- Map Rendering Section -->
+	{#if browser}
+		<!-- Render map using filteredMarkers -->
+		<Map markers={filteredMarkers} center={mapCenter} zoom={mapZoom} mapId="main-map" />
+
+		<!-- Message if filters result in no markers shown -->
+		{#if (categoriesDerived || cuisinesDerived) && filteredMarkers.length === 0 && allMarkers.length > 0}
+			<p class="no-results-message">
+				Aucun marqueur ne correspond aux filtres sÃ©lectionnÃ©s. Essayez d'Ã©largir votre sÃ©lection.
+			</p>
+		{:else if !data?.markers || allMarkers.length === 0}
+			<!-- Message if no markers loaded initially -->
+			<p>Aucun point d'intÃ©rÃªt avec coordonnÃ©es trouvÃ© Ã  afficher sur la carte.</p>
+		{/if}
+
+		<!-- Loading Spinner (Handles initial data load before filters are derived) -->
+		{#if !categoriesDerived && !cuisinesDerived && !data?.error}
+			<LoadingSpinner />
+		{/if}
+
+	{:else}
+		<!-- Placeholder during server-side rendering -->
+		<div
+			style="height: 500px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 8px;"
+		>
+			Carte en cours de chargement...
+		</div>
+	{/if}
+	<!-- End Map Rendering Section -->
 </section>
 
 <style>
-    .map-page-section {
-        background-color: #fff;
-        padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+	.map-page-section {
+		/* background-color: #fff; */ /* Removed, inherits from layout */
+		/* padding: 1.5rem; */ /* Removed, inherits from layout */
+		/* border-radius: 8px; */ /* Removed */
+		/* box-shadow: 0 2px 10px rgba(0,0,0,0.1); */ /* Removed */
+        max-width: 100%; /* Ensure section takes available width */
+	}
+
+	h1 {
+		margin-top: 0;
+		color: var(--ocean-blue-dark); /* Use theme color */
+		text-align: center; /* Center title */
+		margin-bottom: var(--space-sm); /* Reduce space below H1 */
+	}
+	p {
+		/* Default paragraph for intro text */
+		margin-bottom: var(--space-lg); /* More space below intro */
+		color: var(--text-secondary); /* Use theme color */
+		text-align: center; /* Center intro text */
+	}
+
+	/* --- Collapsible Filter Styles --- */
+	.filters-details {
+		border: 1px solid var(--border-color);
+		border-radius: var(--radius-md);
+		margin-bottom: var(--space-lg); /* Space below the whole filters section */
+		background-color: var(--bg-secondary); /* Light background for the whole block */
+        overflow: hidden; /* Ensure children stay within rounded corners */
+	}
+
+	.filters-summary {
+		padding: var(--space-md);
+		cursor: pointer;
+		font-weight: 600;
+		color: var(--ocean-blue-dark);
+		list-style: none; /* Remove default marker/arrow */
+		display: flex;
+		justify-content: space-between; /* Push icon to the right */
+		align-items: center;
+		transition: background-color var(--transition-fast);
+	}
+    .filters-summary:hover {
+         background-color: var(--sandy-beige-light); /* Subtle hover on summary */
     }
 
-    h1 {
-        margin-top: 0;
-        color: #0077cc;
-    }
-    p {
-        margin-bottom: 1.5rem;
-        color: #555;
+	/* Remove default marker in Webkit */
+	.filters-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.filters-toggle-icon {
+		font-size: 0.8em;
+		display: inline-block;
+		margin-left: var(--space-sm);
+		transition: transform var(--transition-fast);
+	}
+    /* Rotate icon when open (optional) */
+	/* .filters-details[open] .filters-toggle-icon {
+        transform: rotate(180deg);
+    } */
+
+	/* Style for the container *inside* details */
+	.filters-container {
+		padding: var(--space-lg); /* Add padding when open */
+		border-top: 1px solid var(--border-color); /* Separator line */
+        /* margin-bottom: 0; REMOVED - padding is enough */
+	}
+
+    /* Remove outer border/padding from groups inside */
+	.filters-details .filter-group {
+		border: none;
+		padding: 0;
+		margin-bottom: var(--space-lg); /* Space between filter groups */
+	}
+    .filters-details .filter-group:last-child {
+        margin-bottom: 0; /* No margin on last group inside */
     }
 
-    /* Assure-toi que le composant Map a une hauteur dÃ©finie */
-    /* Le style est peut-Ãªtre DANS le composant Map.svelte, sinon ajoute-le ici */
-     /* :global(.leaflet-container) {
-         height: 500px;
-         border-radius: 8px;
-         border: 1px solid #ccc;
-     } */
+	.filter-group legend {
+		font-size: 1.1rem;
+		font-weight: 600;
+		color: var(--ocean-blue-dark);
+		padding-bottom: var(--space-xs); /* Space below legend */
+        margin-bottom: var(--space-sm); /* More space before checkboxes */
+        border-bottom: 1px solid var(--sandy-beige-dark); /* Underline legend */
+        width: 100%; /* Make underline span full width */
+	}
+
+	.filter-controls {
+		margin-bottom: var(--space-md); /* Space below buttons */
+		display: flex;
+        flex-wrap: wrap; /* Allow buttons to wrap */
+		gap: var(--space-sm);
+	}
+
+	.checkbox-list {
+		display: grid;
+		/* Responsive columns for checkboxes */
+		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+		gap: var(--space-sm) var(--space-md); /* Row and column gap */
+        max-height: 200px; /* Limit height and allow scroll if many items */
+        overflow-y: auto;
+        padding-right: var(--space-sm); /* Padding for scrollbar */
+	}
+
+	.checkbox-list label {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm); /* Increased gap */
+		color: var(--text-primary);
+		cursor: pointer;
+        font-size: 0.9rem; /* Slightly smaller text */
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflow */
+        text-overflow: ellipsis; /* Add ellipsis if text too long */
+	}
+     .checkbox-list label:hover {
+         color: var(--ocean-blue); /* Highlight on hover */
+     }
+
+	.checkbox-list input[type='checkbox'] {
+		margin: 0;
+        width: 1em; /* Consistent size */
+        height: 1em;
+        cursor: pointer;
+        accent-color: var(--ocean-blue); /* Color the checkmark */
+        flex-shrink: 0; /* Prevent checkbox shrinking */
+	}
+    /* --- End Filter Styles --- */
+
+
+	/* --- Map Container Styling --- */
+	/* Target the Map component specifically using its mapId prop if needed,
+       or style the container generated by Leaflet more globally */
+	:global(#main-map.map-container-style) {
+		/* Ensure height is defined via the global rules in Map.svelte or here */
+		/* height: 500px; */ /* Already defined in Map.svelte global rule */
+		border-radius: var(--radius-md);
+		border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        margin-top: var(--space-lg); /* Space between filters/title and map */
+	}
+
+    /* Message when filters hide all markers */
+    .no-results-message {
+        text-align: center;
+        font-style: italic;
+        color: var(--text-secondary);
+        margin-top: var(--space-lg);
+        padding: var(--space-lg);
+        background-color: var(--sandy-beige-light);
+        border-radius: var(--radius-md);
+    }
+
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\map\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\phrasebook\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\phrasebook\+page.svelte ==========
 
 <script>
     // Keep your existing categories array
@@ -3460,22 +3766,22 @@ export async function load() {
     .phrasebook-page { }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\phrasebook\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\phrasebook\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\places\[id]\+page.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.js ==========
 
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\places\[id]\+page.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\places\[id]\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.svelte ==========
 
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\places\[id]\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\places\+page.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\+page.js ==========
 
 // src/routes/places/+page.js
 import { supabase } from '$lib/supabaseClient';
@@ -3504,15 +3810,16 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\places\+page.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\+page.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\places\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\+page.svelte ==========
 
 <script>
     import PlaceCard from '$lib/components/PlaceCard.svelte';
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
     import { navigating } from '$app/stores'; // Import navigating store
+    import { fade, fly } from 'svelte/transition';
 
     export let data; // Receives data from +page.js
     $: places = data?.places || [];
@@ -3530,8 +3837,10 @@ export async function load() {
     {#if places.length > 0}
         <p>Explorez les diffÃ©rents points d'intÃ©rÃªt d'Agadir et ses environs.</p>
         <div class="cards-grid">
-            {#each places as place (place.id)}
-                <PlaceCard {place} />
+            {#each places as place, index (place.id)}
+                <div in:fade="{{ duration: 500, delay: index * 100 }}">
+                    <PlaceCard {place} />
+                </div>
             {/each}
         </div>
     {:else if !data || ($navigating && $navigating.to?.route.id === '/places')}
@@ -3569,7 +3878,7 @@ export async function load() {
         gap: var(--space-lg);
     }
 
-     .no-results {
+    .no-results {
         text-align: center;
         font-style: italic;
         color: var(--text-secondary);
@@ -3577,30 +3886,30 @@ export async function load() {
         padding: var(--space-xl);
         background-color: var(--sandy-beige-light);
         border-radius: var(--radius-md);
-     }
+    }
 
-      /* Ensure cards take full width within the grid cell */
+    /* Ensure cards take full width within the grid cell */
     :global(.cards-grid .card-link) {
          width: 100%;
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\places\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\[id]\+page.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.js ==========
 
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\[id]\+page.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\[id]\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.svelte ==========
 
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\[id]\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\+page.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\+page.js ==========
 
 // src/routes/restaurants/+page.js
 import { supabase } from '$lib/supabaseClient';
@@ -3629,15 +3938,16 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\+page.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\+page.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\+page.svelte ==========
 
 <script>
     import RestaurantCard from '$lib/components/RestaurantCard.svelte';
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
     import { navigating } from '$app/stores'; // Import navigating store
+    import { fade, fly } from 'svelte/transition';
 
     export let data; // Receives data from +page.js
     $: restaurants = data?.restaurants || [];
@@ -3653,24 +3963,25 @@ export async function load() {
     <h1>OÃ¹ Manger Ã  Agadir</h1>
 
     {#if restaurants.length > 0}
-         <p>DÃ©couvrez une sÃ©lection de restaurants pour savourer la cuisine locale et internationale.</p>
+        <p>DÃ©couvrez une sÃ©lection de restaurants pour savourer la cuisine locale et internationale.</p>
         <div class="cards-grid">
-            {#each restaurants as restaurant (restaurant.id)}
-                <RestaurantCard {restaurant} />
+            {#each restaurants as restaurant, index (restaurant.id)}
+                <div in:fade="{{ duration: 500, delay: index * 100 }}">
+                    <RestaurantCard {restaurant} />
+                </div>
             {/each}
         </div>
-     {:else if !data || ($navigating && $navigating.to?.route.id === '/restaurants')}
-         <!-- Show loading spinner initially or during navigation to this specific page -->
-         <!-- Check $navigating.to existence before accessing properties -->
-         <LoadingSpinner />
+    {:else if !data || ($navigating && $navigating.to?.route.id === '/restaurants')}
+        <!-- Show loading spinner initially or during navigation to this specific page -->
+        <!-- Check $navigating.to existence before accessing properties -->
+        <LoadingSpinner />
     {:else}
-         <p class="no-results">Aucun restaurant trouvÃ© pour le moment.</p>
-     {/if}
+        <p class="no-results">Aucun restaurant trouvÃ© pour le moment.</p>
+    {/if}
 
 </div>
 
 <style>
-    /* Styles identical to the /places list page */
     .list-page-container {
         max-width: 1200px;
         margin: 0 auto;
@@ -3682,7 +3993,7 @@ export async function load() {
         margin-bottom: var(--space-lg);
     }
 
-     p {
+    p {
         text-align: center;
         color: var(--text-secondary);
         margin-bottom: var(--space-xl);
@@ -3690,30 +4001,31 @@ export async function load() {
 
     .cards-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: var(--space-lg);
+        margin-top: var(--space-lg);
     }
 
-     .no-results {
+    .no-results {
         text-align: center;
         font-style: italic;
         color: var(--text-secondary);
-        margin-top: var(--space-xl);
+        margin-top: var(--space-lg);
         padding: var(--space-xl);
         background-color: var(--sandy-beige-light);
         border-radius: var(--radius-md);
-     }
+    }
 
-     /* Ensure cards take full width within the grid cell */
+    /* Ensure cards take full width within the grid cell */
     :global(.cards-grid .card-link) {
-         width: 100%;
+        width: 100%;
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\search\+page.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\search\+page.js ==========
 
 // src/routes/search/+page.js
 import { supabase } from '$lib/supabaseClient';
@@ -3780,10 +4092,10 @@ export async function load({ url }) {
     }
 }
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\search\+page.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\search\+page.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\search\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\search\+page.svelte ==========
 
 <script>
     import PlaceCard from '$lib/components/PlaceCard.svelte';
@@ -3791,6 +4103,7 @@ export async function load({ url }) {
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
     import ErrorMessage from '$lib/components/ErrorMessage.svelte';
     import { navigating } from '$app/stores';
+    import { fly } from 'svelte/transition';
 
     export let data; // From +page.js
 
@@ -3828,11 +4141,15 @@ export async function load({ url }) {
     {:else if results && results.length > 0}
         <p>{results.length} rÃ©sultat(s) trouvÃ©(s).</p>
         <div class="results-grid">
-            {#each results as item (item.type + '-' + item.id)}
+            {#each results as item, index (item.type + '-' + item.id)}
                 {#if item.type === 'place'}
-                    <PlaceCard place={item} />
+                    <div in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
+                        <PlaceCard place={item} />
+                    </div>
                 {:else if item.type === 'restaurant'}
-                    <RestaurantCard restaurant={item} />
+                    <div in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
+                        <RestaurantCard restaurant={item} />
+                    </div>
                 {/if}
             {/each}
         </div>
@@ -3890,10 +4207,10 @@ export async function load({ url }) {
     }
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\search\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\search\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\transport\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\transport\+page.svelte ==========
 
 <script>
   // No script needed
@@ -4006,10 +4323,10 @@ export async function load({ url }) {
    .transport-page {}
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\transport\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\transport\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\+layout.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+layout.svelte ==========
 
 <script>
 	import Header from '$lib/components/Header.svelte';
@@ -4084,10 +4401,10 @@ export async function load({ url }) {
      } */
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\+layout.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+layout.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\+page.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.js ==========
 
 import { supabase } from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit'; // Pour gÃ©rer les erreurs de chargement
@@ -4131,10 +4448,10 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\+page.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.js ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\routes\+page.svelte ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.svelte ==========
 
 <script>
   import WeatherWidget from '$lib/components/WeatherWidget.svelte';
@@ -4172,8 +4489,7 @@ export async function load() {
       <div class="hero-text">
           <h1>Bienvenue Ã  Agadir !</h1>
           <p>Votre application pour explorer la perle du Souss.</p>
-          <!-- Optional Call-to-Action Button -->
-          <!-- <a href="/map" class="btn btn-accent btn-lg">Explorer la Carte</a> -->
+          <a href="/map" class="btn btn-accent btn-lg" style="margin-top: var(--space-md);">Explorer la Carte</a>
       </div>
   </section>
 
@@ -4238,9 +4554,9 @@ export async function load() {
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Cover the area */
-      z-index: 1; /* Behind the text */
-      filter: brightness(0.6) contrast(0.9); /* Darken image slightly for text readability */
+      object-fit: cover;
+      z-index: 1;
+      filter: brightness(0.6) contrast(1) saturate(1.1);
   }
 
   .hero-text {
@@ -4252,17 +4568,17 @@ export async function load() {
   }
 
   .hero-text h1 {
-      font-size: 2.5rem; /* Larger title */
+      font-size: 2.5rem;
       margin-bottom: var(--space-sm);
       font-weight: 700;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Text shadow for readability */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   }
 
   .hero-text p {
     font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-    margin-bottom: var(--space-lg); /* Space before optional button */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--space-lg);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
   }
 
   /* Adjust hero size on larger screens */
@@ -4292,11 +4608,11 @@ export async function load() {
 
   .shortcuts-grid {
     display: grid;
-    /* Start with 2 columns on small screens */
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg); /* 24px gap */
-    max-width: 900px; /* Limit width */
-    margin: 0 auto; /* Center grid */
+    gap: var(--space-lg);
+    padding: 0 var(--space-md);
+    max-width: 900px;
+    margin: 0 auto;
   }
 
   /* Style the shortcut links as cards */
@@ -4305,38 +4621,42 @@ export async function load() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--space-lg); /* 24px padding */
-    background-color: var(--bg-secondary); /* light-sand */
-    border: 1px solid var(--border-color); /* sandy-beige-dark */
-    border-radius: var(--radius-md); /* 8px */
+    padding: var(--space-lg);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
     text-decoration: none;
-    color: var(--text-primary); /* charcoal */
+    color: var(--text-primary);
     text-align: center;
     transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
-    min-height: 140px; /* Ensure cards have a decent height */
+    min-height: 150px;
     box-shadow: var(--shadow-sm);
   }
 
   .shortcut-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg); /* Larger shadow on hover */
-    border-color: var(--ocean-blue-light); /* Highlight border */
+    box-shadow: var(--shadow-lg);
+    border-color: var(--ocean-blue-light);
+    background-color: var(--sandy-beige-light);
   }
 
   .shortcut-icon {
-  margin-bottom: var(--space-md); /* Space between icon and label */
-  color: var(--ocean-blue); /* Use theme color for icon */
-  /* size={40} and strokeWidth={1.5} are set directly on the component */
-  /* Remove font-size and line-height specific to emojis */
-  display: flex; /* Center icon if needed, though size prop usually handles it */
-  align-items: center;
-  justify-content: center;
-}
+    margin-bottom: var(--space-md);
+    color: var(--ocean-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-normal);
+  }
+
+  .shortcut-card:hover .shortcut-icon {
+    transform: scale(1.1);
+  }
 
   .shortcut-label {
-    font-size: 1rem;
-    font-weight: 600; /* Make label slightly bolder */
-    color: var(--ocean-blue-dark); /* Use primary color for label */
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ocean-blue-dark);
   }
 
   /* Responsive: 3 columns on medium screens and up */
@@ -4370,10 +4690,10 @@ export async function load() {
 
 </style>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\+page.svelte ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.svelte ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\app.css ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.css ==========
 
 /* src/app.css */
 
@@ -4704,10 +5024,10 @@ main {
     padding: var(--space-md) var(--space-xl); /* 16px 32px */
 }
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\app.css ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.css ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\app.html ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.html ==========
 
 <!doctype html>
 <html lang="fr">
@@ -4736,10 +5056,10 @@ main {
 	</body>
 </html>
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\app.html ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.html ==========
 
 
-========== FICHIER: H:\my apps\agadir tourism\src\service-worker.js ==========
+========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\service-worker.js ==========
 
 /// <reference types="@sveltejs/kit" />
 import { build, files, version } from '$service-worker';
@@ -4888,6 +5208,6 @@ self.addEventListener('fetch', (event) => {
     // console.log('SW: Fetching', event.request.url);
 });
 
-========== FIN FICHIER: H:\my apps\agadir tourism\src\service-worker.js ==========
+========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\service-worker.js ==========
 
 

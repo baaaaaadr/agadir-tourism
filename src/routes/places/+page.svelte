@@ -2,6 +2,7 @@
     import PlaceCard from '$lib/components/PlaceCard.svelte';
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
     import { navigating } from '$app/stores'; // Import navigating store
+    import { fade, fly } from 'svelte/transition';
 
     export let data; // Receives data from +page.js
     $: places = data?.places || [];
@@ -19,8 +20,10 @@
     {#if places.length > 0}
         <p>Explorez les différents points d'intérêt d'Agadir et ses environs.</p>
         <div class="cards-grid">
-            {#each places as place (place.id)}
-                <PlaceCard {place} />
+            {#each places as place, index (place.id)}
+                <div in:fade="{{ duration: 500, delay: index * 100 }}">
+                    <PlaceCard {place} />
+                </div>
             {/each}
         </div>
     {:else if !data || ($navigating && $navigating.to?.route.id === '/places')}
@@ -58,7 +61,7 @@
         gap: var(--space-lg);
     }
 
-     .no-results {
+    .no-results {
         text-align: center;
         font-style: italic;
         color: var(--text-secondary);
@@ -66,9 +69,9 @@
         padding: var(--space-xl);
         background-color: var(--sandy-beige-light);
         border-radius: var(--radius-md);
-     }
+    }
 
-      /* Ensure cards take full width within the grid cell */
+    /* Ensure cards take full width within the grid cell */
     :global(.cards-grid .card-link) {
          width: 100%;
     }

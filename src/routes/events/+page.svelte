@@ -3,6 +3,7 @@
     import ErrorMessage from '$lib/components/ErrorMessage.svelte';
     import { ExternalLink, MapPin } from 'lucide-svelte'; // Added MapPin icon
     import { navigating } from '$app/stores'; // For loading state
+    import { fly } from 'svelte/transition';
 
     export let data;
     $: events = data?.events || [];
@@ -69,8 +70,8 @@
     {:else if events.length > 0}
          <p>Restez informé des activités et manifestations prévues à Agadir.</p>
         <ul class="events-list">
-            {#each events as event (event.id)}
-                <li class="event-card">
+            {#each events as event, index (event.id)}
+                <li class="event-card" in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
                     <img
                         src={event.image_url || defaultImage}
                         alt="Image pour {event.name}"
@@ -130,27 +131,18 @@
         max-width: 950px; /* Slightly wider max-width for events */
         margin: 0 auto;
     }
+
     h1 {
         color: var(--ocean-blue-dark);
         text-align: center;
         margin-bottom: var(--space-lg);
     }
-     p { /* Default paragraph style for intro text */
-         text-align: center;
-         color: var(--text-secondary);
-         margin-bottom: var(--space-xl);
-     }
-     /* Shared 'no results' style */
-     .no-results {
-        text-align: center;
-        font-style: italic;
-        color: var(--text-secondary);
-        margin-top: var(--space-xl);
-        padding: var(--space-xl);
-        background-color: var(--sandy-beige-light);
-        border-radius: var(--radius-md);
-     }
 
+    p {
+        text-align: center;
+        color: var(--text-secondary);
+        margin-bottom: var(--space-xl);
+    }
 
     /* --- Event List & Card --- */
     .events-list {
@@ -160,6 +152,7 @@
         display: flex;
         flex-direction: column;
         gap: var(--space-xl); /* Space between cards */
+        transition: opacity 0.3s ease-in-out;
     }
 
     .event-card {
@@ -286,4 +279,15 @@
          }
     }
 
+    /* --- No Results --- */
+    .no-results {
+        text-align: center;
+        font-style: italic;
+        color: var(--text-secondary);
+        margin-top: var(--space-lg);
+        padding: var(--space-xl);
+        background-color: var(--sandy-beige-light);
+        border-radius: var(--radius-md);
+        transition: opacity 0.3s ease-in-out;
+    }
 </style>

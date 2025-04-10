@@ -4,7 +4,7 @@
 
     export let place;
 
-    // Chemin vers l'image par dÃ©faut
+    // Chemin vers l'image par dÃfaut
     const defaultImage = '/assets/images/default-placeholder.jpg';
 
     // Reactive declaration to check if this place is a favorite
@@ -61,26 +61,22 @@
         text-decoration: none;
         color: inherit;
         display: block;
-        border-radius: var(--radius-lg); /* Slightly larger radius for a softer look */
+        border-radius: var(--radius-lg);
         overflow: hidden;
-        position: relative; /* Needed for absolute positioning of the button */
+        position: relative;
         background-color: var(--bg-secondary);
-        border: 1px solid transparent; /* Start with transparent border */
+        border: 1px solid transparent;
         transition: transform var(--transition-normal) ease-in-out,
                     box-shadow var(--transition-normal) ease-in-out,
-                    border-color var(--transition-normal) ease-in-out; /* Add border-color transition */
+                    border-color var(--transition-normal) ease-in-out;
     }
     .card-link:hover {
         transform: translateY(-5px);
         box-shadow: var(--shadow-lg);
-        border-color: var(--ocean-blue-light); /* Highlight with subtle blue border on hover */
+        border-color: var(--ocean-blue-light);
     }
 
     .card {
-        /* background-color: var(--bg-secondary); - Removed, handled by card-link */
-        /* border-radius: var(--radius-lg); - Removed, handled by card-link */
-        /* box-shadow: var(--shadow-md); - Base shadow is on card-link, hover enhances it */
-        overflow: hidden;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -91,7 +87,7 @@
         position: absolute;
         top: var(--space-sm);
         right: var(--space-sm);
-        background-color: rgba(255, 255, 255, 0.75); /* Slightly less transparent */
+        background-color: rgba(255, 255, 255, 0.75);
         border: none;
         border-radius: var(--radius-full);
         padding: var(--space-xs);
@@ -101,39 +97,38 @@
         align-items: center;
         justify-content: center;
         color: var(--text-secondary);
-        transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast); /* Added transform */
-        backdrop-filter: blur(3px); /* Slightly stronger blur */
+        transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+        backdrop-filter: blur(3px);
     }
 
     .favorite-button:hover {
         background-color: rgba(255, 255, 255, 0.95);
         color: var(--sunset-orange-dark);
-        transform: scale(1.1); /* Add subtle scale on hover */
+        transform: scale(1.1);
     }
 
     :global([data-theme="dark"]) .favorite-button {
-         background-color: rgba(50, 50, 50, 0.75); /* Darker background for dark mode */
-         color: var(--text-secondary);
+        background-color: rgba(50, 50, 50, 0.75);
+        color: var(--text-secondary);
     }
     :global([data-theme="dark"]) .favorite-button:hover {
         background-color: rgba(70, 70, 70, 0.95);
-         color: var(--sunset-orange-light); /* Lighter orange for dark mode hover */
+        color: var(--sunset-orange-light);
     }
 
 
     /* --- Card Image --- */
     .card-image {
         width: 100%;
-        height: 180px; /* Keep height consistent */
+        height: 180px;
         object-fit: cover;
-        display: block; /* Ensure no extra space */
-        /* Subtle inner shadow to lift image from background */
+        display: block;
         box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
     }
 
     /* --- Card Content --- */
     .card-content {
-        padding: var(--space-md) var(--space-lg); /* More horizontal padding */
+        padding: var(--space-md) var(--space-lg);
         flex-grow: 1;
         display: flex;
         flex-direction: column;
@@ -142,21 +137,21 @@
     h3 {
         margin-top: 0;
         margin-bottom: var(--space-sm);
-        font-size: 1.15rem; /* Slightly smaller title */
+        font-size: 1.15rem;
         color: var(--ocean-blue-dark);
         line-height: 1.3;
     }
 
     .category-badge {
         display: inline-block;
-        background-color: var(--sandy-beige); /* Slightly darker beige */
-        color: var(--text-primary); /* Better contrast */
-        padding: 0.25em 0.7em; /* Adjust padding */
+        background-color: var(--sandy-beige);
+        color: var(--text-primary);
+        padding: 0.25em 0.7em;
         border-radius: var(--radius-sm);
-        font-size: 0.75rem; /* Smaller badge text */
+        font-size: 0.75rem;
         font-weight: 500;
-        margin-bottom: var(--space-md); /* More space below badge */
-        align-self: flex-start; /* Prevent badge stretching */
+        margin-bottom: var(--space-md);
+        align-self: flex-start;
     }
 
     :global([data-theme="dark"]) .category-badge {
@@ -164,12 +159,11 @@
         color: var(--text-primary);
     }
 
-
     p {
-        font-size: 0.9rem; /* Slightly smaller description */
+        font-size: 0.9rem;
         color: var(--text-secondary);
         margin-bottom: 0;
         line-height: 1.5;
-        flex-grow: 1; /* Allow description to push content down if needed */
+        flex-grow: 1;
     }
 </style>

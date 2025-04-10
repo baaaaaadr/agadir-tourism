@@ -4,6 +4,7 @@
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
     import ErrorMessage from '$lib/components/ErrorMessage.svelte';
     import { navigating } from '$app/stores';
+    import { fly } from 'svelte/transition';
 
     export let data; // From +page.js
 
@@ -41,11 +42,15 @@
     {:else if results && results.length > 0}
         <p>{results.length} résultat(s) trouvé(s).</p>
         <div class="results-grid">
-            {#each results as item (item.type + '-' + item.id)}
+            {#each results as item, index (item.type + '-' + item.id)}
                 {#if item.type === 'place'}
-                    <PlaceCard place={item} />
+                    <div in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
+                        <PlaceCard place={item} />
+                    </div>
                 {:else if item.type === 'restaurant'}
-                    <RestaurantCard restaurant={item} />
+                    <div in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
+                        <RestaurantCard restaurant={item} />
+                    </div>
                 {/if}
             {/each}
         </div>

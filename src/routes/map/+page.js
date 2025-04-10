@@ -32,14 +32,16 @@ export async function load() {
                 lon: p.longitude,
                 // Texte simple pour le popup, lien vers la page détail
                 popupText: `<b>${p.name}</b><br>${p.category || ''}<br><a href="/places/${p.id}">Voir détails</a>`,
-                type: 'place' // Pour différencier si besoin (couleur marqueur...)
+                type: 'place',
+                category: p.category || null
             })),
             ...(restaurants || []).map(r => ({
-                 id: `resto-${r.id}`,
+                id: `resto-${r.id}`,
                 lat: r.latitude,
                 lon: r.longitude,
                 popupText: `<b>${r.name}</b><br>${r.cuisine_type || ''}<br><a href="/restaurants/${r.id}">Voir détails</a>`,
-                type: 'restaurant'
+                type: 'restaurant',
+                cuisine: r.cuisine_type || null
             }))
         ];
 

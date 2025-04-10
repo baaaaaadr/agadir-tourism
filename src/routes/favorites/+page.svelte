@@ -7,6 +7,7 @@
     import RestaurantCard from '$lib/components/RestaurantCard.svelte';
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
     import ErrorMessage from '$lib/components/ErrorMessage.svelte';
+    import { fly } from 'svelte/transition';
 
     let favoriteDetails = [];
     let isLoading = true;
@@ -113,11 +114,15 @@
     {:else if favoriteDetails.length > 0}
          <p>Retrouvez ici les lieux et restaurants que vous avez ajoutés à vos favoris.</p>
         <div class="favorites-grid">
-            {#each favoriteDetails as item (item.type + '-' + item.id)}
+            {#each favoriteDetails as item, index (item.type + '-' + item.id)}
                 {#if item.type === 'place'}
-                    <PlaceCard place={item} />
+                    <div in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
+                        <PlaceCard place={item} />
+                    </div>
                 {:else if item.type === 'restaurant'}
-                    <RestaurantCard restaurant={item} />
+                    <div in:fly="{{ y: 20, duration: 300, delay: index * 50 }}">
+                        <RestaurantCard restaurant={item} />
+                    </div>
                 {/if}
             {/each}
         </div>
@@ -139,24 +144,30 @@
     h1 {
         color: var(--ocean-blue-dark);
         text-align: center;
-        margin-bottom: var(--space-lg);
+        margin-bottom: var(--space-xl);
     }
 
     .favorites-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
-        gap: var(--space-lg); /* Spacing between cards */
-        margin-top: var(--space-lg);
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: var(--space-lg);
+        margin-top: var(--space-xl);
+        transition: opacity 0.3s ease-in-out;
     }
 
     .no-favorites {
         text-align: center;
         font-style: italic;
         color: var(--text-secondary);
-        margin-top: var(--space-xl);
+        margin-top: var(--space-xxl);
         padding: var(--space-xl);
         background-color: var(--sandy-beige-light);
         border-radius: var(--radius-md);
+        border: 1px dashed var(--sandy-beige-dark);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        transition: opacity 0.3s ease-in-out;
     }
 
      /* Ensure cards take full width within the grid cell */
