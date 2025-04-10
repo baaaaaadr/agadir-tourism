@@ -2,7 +2,7 @@
     // Pas de script nÃ©cessaire pour une page statique
 
      // Placeholder for hero image - replace with a real image path later
-    const aboutImageUrl = '/assets/images/default-placeholder.jpg'; // <- CHANGE THIS PATH
+    const aboutImageUrl = '/assets/images/xplore-agadir-logo-full.png'; 
 </script>
 
 <svelte:head>
@@ -13,7 +13,7 @@
 <div class="static-page-container about-page"> <!-- Add common container class -->
     <h1>À Propos d'Agadir</h1>
 
-    <img src={aboutImageUrl} alt="Paysage d'Agadir" class="page-image">
+    <img src={aboutImageUrl} alt="Xplore Agadir Logo" class="about-logo-img" />
 
     <section>
         <p>
@@ -64,14 +64,12 @@
         margin-bottom: var(--space-xl);
     }
 
-    .page-image {
-        width: 100%;
-        max-height: 350px;
-        object-fit: cover;
-        border-radius: var(--radius-md); /* Use variable */
-        margin-bottom: var(--space-xl);
-        box-shadow: var(--shadow-md); /* Use variable */
-     }
+    .about-logo-img {
+        display: block;
+        max-width: 300px;
+        height: auto;
+        margin: var(--space-lg) auto var(--space-xl);
+    }
 
     section {
         margin-bottom: var(--space-lg); /* Space between text sections */

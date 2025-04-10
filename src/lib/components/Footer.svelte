@@ -37,12 +37,15 @@
 
 <footer>
     <div class="footer-content">
+        <a href="/" aria-label="Accueil Xplore Agadir" class="footer-logo-link">
+            <img src="/assets/images/xplore-agadir-logo-full.png" alt="Xplore Agadir Logo" class="footer-logo-img" />
+        </a>
+
         <div class="copyright">
-            <p>© {new Date().getFullYear()} Office du Tourisme Agadir (Maquette PWA). Tous droits réservés.</p>
+            <p> {new Date().getFullYear()} Office du Tourisme Agadir (Maquette PWA). Tous droits réservés.</p>
         </div>
 
-        <div class="footer-controls"> <!-- Wrapper for social + theme -->
-            <!-- Social Icons -->
+        <div class="footer-controls">
             <div class="social-icons">
                 {#each socialLinks as link (link.name)}
                     <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.ariaLabel} title={link.name} class="social-link">
@@ -51,7 +54,6 @@
                 {/each}
             </div>
 
-            <!-- Theme Toggle Button -->
             <button
                 class="theme-toggle-button"
                 on:click={handleThemeToggle}
@@ -65,68 +67,102 @@
                 {/if}
             </button>
         </div>
-
     </div>
 </footer>
 
 <style>
     footer {
-        padding: var(--space-lg) var(--space-md); /* Adjusted padding */
+        padding: var(--space-lg) var(--space-md);
         margin-top: var(--space-xxl);
         background-color: var(--bg-secondary);
         color: var(--text-secondary);
         font-size: 0.9em;
         border-top: 1px solid var(--border-color);
-        transition: background-color var(--transition-normal), border-color var(--transition-normal); /* Add transition */
+        transition: background-color var(--transition-normal), border-color var(--transition-normal);
     }
 
     .footer-content {
         max-width: 1100px;
         margin: 0 auto;
         display: flex;
-        flex-direction: column; /* Stack copyright and controls on mobile */
+        flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        gap: var(--space-md); /* Reduced gap for mobile */
+        gap: var(--space-md);
         text-align: center;
+    }
+
+    /* --- Footer Logo (New Layout) --- */
+    .footer-logo-link {
+        display: block;
+        margin-bottom: var(--space-lg);
+        text-align: center;
+        line-height: 1;
+    }
+    .footer-logo-img {
+        height: 45px;
+        width: auto;
+        max-width: 200px;
+        display: inline-block;
+        vertical-align: middle;
     }
 
     .copyright p {
         margin: 0;
+        font-size: 0.85em;
     }
 
-    /* New wrapper for controls */
+    /* Controls wrapper remains the same */
     .footer-controls {
         display: flex;
         align-items: center;
-        gap: var(--space-lg); /* Space between social icons and theme toggle */
+        gap: var(--space-lg);
     }
-
     .social-icons {
         display: flex;
         gap: var(--space-md);
         align-items: center;
     }
 
-    .social-link { /* Renamed class for clarity */
-        color: var(--text-secondary);
-        transition: color var(--transition-normal), transform var(--transition-normal);
-        display: inline-block;
-    }
+    /* Responsive adjustments for Desktop */
+    @media (min-width: 768px) {
+        .footer-content {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            gap: var(--space-lg);
+        }
 
-    .social-link:hover {
-        color: var(--ocean-blue); /* Use primary color on hover */
-        transform: scale(1.15); /* Slightly larger scale */
+        .footer-logo-link {
+            width: 100%;
+            order: -1;
+            margin-bottom: var(--space-lg);
+        }
+
+        .copyright {
+            order: 0;
+            text-align: left;
+        }
+
+        .footer-controls {
+            order: 1;
+            gap: var(--space-xl);
+        }
+        .social-icons {
+            gap: var(--space-lg);
+        }
     }
 
     /* Theme Toggle Button Styles */
     .theme-toggle-button {
         background: none;
-        border: 1px solid var(--border-color); /* Subtle border */
+        border: 1px solid var(--border-color);
         color: var(--text-secondary);
         cursor: pointer;
-        padding: var(--space-sm); /* Make it a bit larger */
-        border-radius: var(--radius-full); /* Keep it round */
+        padding: var(--space-sm);
+        border-radius: var(--radius-full);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -134,30 +170,25 @@
     }
 
     .theme-toggle-button:hover {
-        background-color: var(--sandy-beige-light); /* Use theme color */
+        background-color: var(--sandy-beige-light);
         color: var(--text-primary);
         border-color: var(--sandy-beige-dark);
         transform: scale(1.1);
     }
-     /* Specific hover for dark mode */
-     :global([data-theme="dark"]) .theme-toggle-button:hover {
-         background-color: var(--sandy-beige-dark); /* Darker hover */
-         border-color: var(--sandy-beige-light);
-     }
 
+    :global([data-theme="dark"]) .theme-toggle-button:hover {
+        background-color: var(--sandy-beige-dark);
+        border-color: var(--sandy-beige-light);
+    }
 
-    /* Responsive */
-    @media (min-width: 768px) {
-        .footer-content {
-            flex-direction: row; /* Side-by-side layout on larger screens */
-            text-align: left;
-            gap: var(--space-lg);
-        }
-         .footer-controls {
-             gap: var(--space-xl); /* More space on desktop */
-         }
-         .social-icons {
-            gap: var(--space-lg);
-         }
+    .social-link {
+        color: var(--text-secondary);
+        transition: color var(--transition-normal), transform var(--transition-normal);
+        display: inline-block;
+    }
+
+    .social-link:hover {
+        color: var(--ocean-blue);
+        transform: scale(1.15);
     }
 </style>

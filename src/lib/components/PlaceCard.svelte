@@ -61,21 +61,25 @@
         text-decoration: none;
         color: inherit;
         display: block;
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        border-radius: var(--radius-md); /* Use variable */
+        border-radius: var(--radius-lg); /* Slightly larger radius for a softer look */
         overflow: hidden;
         position: relative; /* Needed for absolute positioning of the button */
-        background-color: var(--bg-secondary); /* Use variable */
+        background-color: var(--bg-secondary);
+        border: 1px solid transparent; /* Start with transparent border */
+        transition: transform var(--transition-normal) ease-in-out,
+                    box-shadow var(--transition-normal) ease-in-out,
+                    border-color var(--transition-normal) ease-in-out; /* Add border-color transition */
     }
     .card-link:hover {
         transform: translateY(-5px);
-        box-shadow: var(--shadow-lg); /* Use variable */
+        box-shadow: var(--shadow-lg);
+        border-color: var(--ocean-blue-light); /* Highlight with subtle blue border on hover */
     }
 
     .card {
-        /* background-color: #fff; Removed, handled by card-link */
-        border-radius: var(--radius-md); /* Use variable */
-        box-shadow: var(--shadow-md); /* Use variable */
+        /* background-color: var(--bg-secondary); - Removed, handled by card-link */
+        /* border-radius: var(--radius-lg); - Removed, handled by card-link */
+        /* box-shadow: var(--shadow-md); - Base shadow is on card-link, hover enhances it */
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -85,61 +89,87 @@
     /* --- Favorite Button Styles --- */
     .favorite-button {
         position: absolute;
-        top: var(--space-sm); /* 8px */
-        right: var(--space-sm); /* 8px */
-        background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+        top: var(--space-sm);
+        right: var(--space-sm);
+        background-color: rgba(255, 255, 255, 0.75); /* Slightly less transparent */
         border: none;
-        border-radius: var(--radius-full); /* Circle */
-        padding: var(--space-xs); /* 4px */
+        border-radius: var(--radius-full);
+        padding: var(--space-xs);
         cursor: pointer;
-        z-index: 5; /* Above the image */
+        z-index: 5;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-secondary); /* Icon color when not favorited */
-        transition: background-color var(--transition-fast), color var(--transition-fast);
-        backdrop-filter: blur(2px); /* Slight blur effect */
+        color: var(--text-secondary);
+        transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast); /* Added transform */
+        backdrop-filter: blur(3px); /* Slightly stronger blur */
     }
 
     .favorite-button:hover {
-        background-color: rgba(255, 255, 255, 0.9);
-        color: var(--sunset-orange-dark); /* Orange hover */
+        background-color: rgba(255, 255, 255, 0.95);
+        color: var(--sunset-orange-dark);
+        transform: scale(1.1); /* Add subtle scale on hover */
     }
-    /* --- End Favorite Button Styles --- */
+
+    :global([data-theme="dark"]) .favorite-button {
+         background-color: rgba(50, 50, 50, 0.75); /* Darker background for dark mode */
+         color: var(--text-secondary);
+    }
+    :global([data-theme="dark"]) .favorite-button:hover {
+        background-color: rgba(70, 70, 70, 0.95);
+         color: var(--sunset-orange-light); /* Lighter orange for dark mode hover */
+    }
 
 
+    /* --- Card Image --- */
     .card-image {
         width: 100%;
-        height: 180px;
+        height: 180px; /* Keep height consistent */
         object-fit: cover;
+        display: block; /* Ensure no extra space */
+        /* Subtle inner shadow to lift image from background */
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
     }
 
+    /* --- Card Content --- */
     .card-content {
-        padding: var(--space-md); /* Use variable */
+        padding: var(--space-md) var(--space-lg); /* More horizontal padding */
         flex-grow: 1;
+        display: flex;
+        flex-direction: column;
     }
 
     h3 {
         margin-top: 0;
-        margin-bottom: var(--space-sm); /* Use variable */
-        font-size: 1.2rem;
-        color: var(--ocean-blue-dark); /* Use variable */
+        margin-bottom: var(--space-sm);
+        font-size: 1.15rem; /* Slightly smaller title */
+        color: var(--ocean-blue-dark);
+        line-height: 1.3;
     }
 
     .category-badge {
         display: inline-block;
-        background-color: var(--sandy-beige-light); /* Use variable */
-        color: var(--text-secondary); /* Use variable */
-        padding: 0.2em 0.6em;
-        border-radius: var(--radius-sm); /* Use variable */
-        font-size: 0.8em;
-        margin-bottom: var(--space-sm); /* Use variable */
+        background-color: var(--sandy-beige); /* Slightly darker beige */
+        color: var(--text-primary); /* Better contrast */
+        padding: 0.25em 0.7em; /* Adjust padding */
+        border-radius: var(--radius-sm);
+        font-size: 0.75rem; /* Smaller badge text */
+        font-weight: 500;
+        margin-bottom: var(--space-md); /* More space below badge */
+        align-self: flex-start; /* Prevent badge stretching */
     }
 
+    :global([data-theme="dark"]) .category-badge {
+        background-color: var(--sandy-beige-dark);
+        color: var(--text-primary);
+    }
+
+
     p {
-        font-size: 0.95rem;
-        color: var(--text-secondary); /* Use variable */
+        font-size: 0.9rem; /* Slightly smaller description */
+        color: var(--text-secondary);
         margin-bottom: 0;
-        line-height: 1.5; /* Slightly tighter line height for card description */
+        line-height: 1.5;
+        flex-grow: 1; /* Allow description to push content down if needed */
     }
 </style>

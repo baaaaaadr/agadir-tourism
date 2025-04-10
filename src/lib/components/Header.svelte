@@ -59,11 +59,11 @@
         {/if}
 
         <!-- Logo (conditionally hidden during search on small screens) -->
-         <div class="logo" class:hidden-on-search={showSearchInput}>
-             <a href="/" class="logo-link">
-              <h1>Agadir Tourism</h1>
+        <div class="logo" class:hidden-on-search={showSearchInput}>
+            <a href="/" class="logo-link" aria-label="Accueil Xplore Agadir">
+                <img src="/assets/images/xplore-agadir-icon.png" alt="Xplore Agadir Icon" class="header-logo-img" />
             </a>
-          </div>
+        </div>
 
         <!-- Search Input Area (conditionally shown) -->
         {#if showSearchInput}
@@ -110,10 +110,9 @@
     }
 
     /* Slightly different background when search is active */
-     header.search-active {
+    header.search-active {
         /* background-color: var(--ocean-blue-dark); */
-     }
-
+    }
 
     .header-content {
         display: flex;
@@ -126,15 +125,27 @@
 
     /* --- Logo --- */
     .logo {
-        flex-grow: 1; /* Takes up space */
+        flex-grow: 1;
         text-align: center;
-        /* Transition for smooth hide/show */
-         transition: opacity 0.2s ease, transform 0.2s ease;
-         opacity: 1;
-         transform: scale(1);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        opacity: 1;
+        transform: scale(1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    .logo-link { color: white; text-decoration: none; display: inline-block; }
-    .logo-link h1 { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; margin: 0; line-height: 1; }
+    .logo-link {
+        display: inline-block;
+        line-height: 1;
+        color: white;
+        text-decoration: none;
+    }
+    .header-logo-img {
+        height: 40px;
+        width: auto;
+        max-width: 100%;
+        vertical-align: middle;
+    }
 
     /* --- Search Input Area --- */
     .search-input-container {
@@ -214,10 +225,7 @@
 
      /* --- Responsive Adjustments --- */
      @media (max-width: 600px) {
-        .logo-link h1 {
-            font-size: 1.25rem;
-         }
-         .header-content {
+        .header-content {
             height: 56px;
          }
          /* Hide logo when search is active on small screens */

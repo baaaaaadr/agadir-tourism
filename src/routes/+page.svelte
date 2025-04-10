@@ -1,24 +1,23 @@
 <script>
   import WeatherWidget from '$lib/components/WeatherWidget.svelte';
-  // Import icons from lucide-svelte if you want to use them instead of emojis
-  // import { MapPin, Utensils, Calendar, Bus, Info, Phone, Map as MapIcon } from 'lucide-svelte';
+  // Import the chosen Lucide icons
+  import { Map, Landmark, UtensilsCrossed, CalendarDays, Bus, Info } from 'lucide-svelte';
 
   // We still have access to 'data' from +page.js if we want to use places/restaurants later
   export let data;
 
-  // DÃ©finition des raccourcis - keeping emojis for simplicity now
-  // You could replace 'icon' with a Lucide component like: icon: MapIcon
+  // Update shortcuts array to use the imported icon components
   const shortcuts = [
-    { href: '/map', label: 'Carte Interactive', icon: '🗺️' },
-    { href: '/places', label: 'Sites à Visiter', icon: '🏛️' }, // Changed icon
-    { href: '/restaurants', label: 'Où Manger', icon: '🍽️' }, // Changed icon
-    { href: '/events', label: 'Événements', icon: '🗓️' }, // Changed icon
-    { href: '/transport', label: 'Transport', icon: '🚌' }, // Changed icon
-    { href: '/contacts', label: 'Infos Utiles', icon: 'ℹ️' }
+    { href: '/map', label: 'Carte Interactive', icon: Map }, // Use component
+    { href: '/places', label: 'Sites à Visiter', icon: Landmark }, // Use component
+    { href: '/restaurants', label: 'Où Manger', icon: UtensilsCrossed }, // Use component
+    { href: '/events', label: 'Événements', icon: CalendarDays }, // Use component
+    { href: '/transport', label: 'Transport', icon: Bus }, // Use component
+    { href: '/contacts', label: 'Infos Utiles', icon: Info } // Use component
   ];
 
   // Placeholder for hero image - replace with a real image path later
-  const heroImageUrl = '/assets/images/default-placeholder.jpg'; // <- CHANGE THIS PATH to a nice Agadir image if you have one
+  const heroImageUrl = '/assets/images/default-placeholder.jpg'; // <- CHANGE THIS PATH
 
 </script>
 
@@ -46,7 +45,9 @@
     <div class="shortcuts-grid">
       {#each shortcuts as shortcut (shortcut.href)}
         <a href={shortcut.href} class="shortcut-card">
-          <div class="shortcut-icon">{shortcut.icon}</div>
+          <div class="shortcut-icon">
+            <svelte:component this={shortcut.icon} size={40} strokeWidth={1.5} />
+          </div>
           <!-- If using Lucide: <svelte:component this={shortcut.icon} size={40} stroke-width={1.5} /> -->
           <span class="shortcut-label">{shortcut.label}</span>
         </a>
@@ -185,10 +186,14 @@
   }
 
   .shortcut-icon {
-    font-size: 2.5rem; /* Larger icons */
-    margin-bottom: var(--space-md); /* Space between icon and label */
-    line-height: 1; /* Prevent extra space from emoji line height */
-  }
+  margin-bottom: var(--space-md); /* Space between icon and label */
+  color: var(--ocean-blue); /* Use theme color for icon */
+  /* size={40} and strokeWidth={1.5} are set directly on the component */
+  /* Remove font-size and line-height specific to emojis */
+  display: flex; /* Center icon if needed, though size prop usually handles it */
+  align-items: center;
+  justify-content: center;
+}
 
   .shortcut-label {
     font-size: 1rem;

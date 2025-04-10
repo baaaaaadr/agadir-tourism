@@ -1,6 +1,6 @@
-﻿Structure du dossier pour le volume Acer
-Le numéro de série du volume est 0000007F 7498:EC45
-C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
+﻿Structure du dossier
+Le numéro de série du volume est 0000009E 9690:CFCF
+H:\MY APPS\AGADIR TOURISM\SRC
 │   app.css
 │   app.d.ts
 │   app.html
@@ -85,7 +85,7 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 ==================== CONTENU DES FICHIERS ====================
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\ErrorMessage.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\components\ErrorMessage.svelte ==========
 
 <script>
     export let message = "Une erreur s'est produite.";
@@ -112,10 +112,10 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\ErrorMessage.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\ErrorMessage.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Footer.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\components\Footer.svelte ==========
 
 <script>
     import { browser } from '$app/environment'; // To check for window.matchMedia
@@ -156,12 +156,15 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 
 <footer>
     <div class="footer-content">
+        <a href="/" aria-label="Accueil Xplore Agadir" class="footer-logo-link">
+            <img src="/assets/images/xplore-agadir-logo-full.png" alt="Xplore Agadir Logo" class="footer-logo-img" />
+        </a>
+
         <div class="copyright">
-            <p>Â© {new Date().getFullYear()} Office du Tourisme Agadir (Maquette PWA). Tous droits rÃ©servÃ©s.</p>
+            <p> {new Date().getFullYear()} Office du Tourisme Agadir (Maquette PWA). Tous droits rÃ©servÃ©s.</p>
         </div>
 
-        <div class="footer-controls"> <!-- Wrapper for social + theme -->
-            <!-- Social Icons -->
+        <div class="footer-controls">
             <div class="social-icons">
                 {#each socialLinks as link (link.name)}
                     <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.ariaLabel} title={link.name} class="social-link">
@@ -170,7 +173,6 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
                 {/each}
             </div>
 
-            <!-- Theme Toggle Button -->
             <button
                 class="theme-toggle-button"
                 on:click={handleThemeToggle}
@@ -184,68 +186,102 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
                 {/if}
             </button>
         </div>
-
     </div>
 </footer>
 
 <style>
     footer {
-        padding: var(--space-lg) var(--space-md); /* Adjusted padding */
+        padding: var(--space-lg) var(--space-md);
         margin-top: var(--space-xxl);
         background-color: var(--bg-secondary);
         color: var(--text-secondary);
         font-size: 0.9em;
         border-top: 1px solid var(--border-color);
-        transition: background-color var(--transition-normal), border-color var(--transition-normal); /* Add transition */
+        transition: background-color var(--transition-normal), border-color var(--transition-normal);
     }
 
     .footer-content {
         max-width: 1100px;
         margin: 0 auto;
         display: flex;
-        flex-direction: column; /* Stack copyright and controls on mobile */
+        flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        gap: var(--space-md); /* Reduced gap for mobile */
+        gap: var(--space-md);
         text-align: center;
+    }
+
+    /* --- Footer Logo (New Layout) --- */
+    .footer-logo-link {
+        display: block;
+        margin-bottom: var(--space-lg);
+        text-align: center;
+        line-height: 1;
+    }
+    .footer-logo-img {
+        height: 45px;
+        width: auto;
+        max-width: 200px;
+        display: inline-block;
+        vertical-align: middle;
     }
 
     .copyright p {
         margin: 0;
+        font-size: 0.85em;
     }
 
-    /* New wrapper for controls */
+    /* Controls wrapper remains the same */
     .footer-controls {
         display: flex;
         align-items: center;
-        gap: var(--space-lg); /* Space between social icons and theme toggle */
+        gap: var(--space-lg);
     }
-
     .social-icons {
         display: flex;
         gap: var(--space-md);
         align-items: center;
     }
 
-    .social-link { /* Renamed class for clarity */
-        color: var(--text-secondary);
-        transition: color var(--transition-normal), transform var(--transition-normal);
-        display: inline-block;
-    }
+    /* Responsive adjustments for Desktop */
+    @media (min-width: 768px) {
+        .footer-content {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            gap: var(--space-lg);
+        }
 
-    .social-link:hover {
-        color: var(--ocean-blue); /* Use primary color on hover */
-        transform: scale(1.15); /* Slightly larger scale */
+        .footer-logo-link {
+            width: 100%;
+            order: -1;
+            margin-bottom: var(--space-lg);
+        }
+
+        .copyright {
+            order: 0;
+            text-align: left;
+        }
+
+        .footer-controls {
+            order: 1;
+            gap: var(--space-xl);
+        }
+        .social-icons {
+            gap: var(--space-lg);
+        }
     }
 
     /* Theme Toggle Button Styles */
     .theme-toggle-button {
         background: none;
-        border: 1px solid var(--border-color); /* Subtle border */
+        border: 1px solid var(--border-color);
         color: var(--text-secondary);
         cursor: pointer;
-        padding: var(--space-sm); /* Make it a bit larger */
-        border-radius: var(--radius-full); /* Keep it round */
+        padding: var(--space-sm);
+        border-radius: var(--radius-full);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -253,38 +289,33 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
     }
 
     .theme-toggle-button:hover {
-        background-color: var(--sandy-beige-light); /* Use theme color */
+        background-color: var(--sandy-beige-light);
         color: var(--text-primary);
         border-color: var(--sandy-beige-dark);
         transform: scale(1.1);
     }
-     /* Specific hover for dark mode */
-     :global([data-theme="dark"]) .theme-toggle-button:hover {
-         background-color: var(--sandy-beige-dark); /* Darker hover */
-         border-color: var(--sandy-beige-light);
-     }
 
+    :global([data-theme="dark"]) .theme-toggle-button:hover {
+        background-color: var(--sandy-beige-dark);
+        border-color: var(--sandy-beige-light);
+    }
 
-    /* Responsive */
-    @media (min-width: 768px) {
-        .footer-content {
-            flex-direction: row; /* Side-by-side layout on larger screens */
-            text-align: left;
-            gap: var(--space-lg);
-        }
-         .footer-controls {
-             gap: var(--space-xl); /* More space on desktop */
-         }
-         .social-icons {
-            gap: var(--space-lg);
-         }
+    .social-link {
+        color: var(--text-secondary);
+        transition: color var(--transition-normal), transform var(--transition-normal);
+        display: inline-block;
+    }
+
+    .social-link:hover {
+        color: var(--ocean-blue);
+        transform: scale(1.15);
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Footer.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\Footer.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Header.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\components\Header.svelte ==========
 
 <script>
     import { goto } from '$app/navigation'; // Import navigation function
@@ -347,11 +378,11 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
         {/if}
 
         <!-- Logo (conditionally hidden during search on small screens) -->
-         <div class="logo" class:hidden-on-search={showSearchInput}>
-             <a href="/" class="logo-link">
-              <h1>Agadir Tourism</h1>
+        <div class="logo" class:hidden-on-search={showSearchInput}>
+            <a href="/" class="logo-link" aria-label="Accueil Xplore Agadir">
+                <img src="/assets/images/xplore-agadir-icon.png" alt="Xplore Agadir Icon" class="header-logo-img" />
             </a>
-          </div>
+        </div>
 
         <!-- Search Input Area (conditionally shown) -->
         {#if showSearchInput}
@@ -398,10 +429,9 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
     }
 
     /* Slightly different background when search is active */
-     header.search-active {
+    header.search-active {
         /* background-color: var(--ocean-blue-dark); */
-     }
-
+    }
 
     .header-content {
         display: flex;
@@ -414,15 +444,27 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 
     /* --- Logo --- */
     .logo {
-        flex-grow: 1; /* Takes up space */
+        flex-grow: 1;
         text-align: center;
-        /* Transition for smooth hide/show */
-         transition: opacity 0.2s ease, transform 0.2s ease;
-         opacity: 1;
-         transform: scale(1);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        opacity: 1;
+        transform: scale(1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    .logo-link { color: white; text-decoration: none; display: inline-block; }
-    .logo-link h1 { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; margin: 0; line-height: 1; }
+    .logo-link {
+        display: inline-block;
+        line-height: 1;
+        color: white;
+        text-decoration: none;
+    }
+    .header-logo-img {
+        height: 40px;
+        width: auto;
+        max-width: 100%;
+        vertical-align: middle;
+    }
 
     /* --- Search Input Area --- */
     .search-input-container {
@@ -502,10 +544,7 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 
      /* --- Responsive Adjustments --- */
      @media (max-width: 600px) {
-        .logo-link h1 {
-            font-size: 1.25rem;
-         }
-         .header-content {
+        .header-content {
             height: 56px;
          }
          /* Hide logo when search is active on small screens */
@@ -525,10 +564,10 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Header.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\Header.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\LoadingSpinner.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\components\LoadingSpinner.svelte ==========
 
 <div class="spinner-container">
     <div class="spinner"></div>
@@ -559,10 +598,10 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\LoadingSpinner.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\LoadingSpinner.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Map.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\components\Map.svelte ==========
 
 <script>
     import { browser } from '$app/environment';
@@ -739,10 +778,10 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
     :global(.leaflet-container a.leaflet-popup-close-button) { color: #555 !important; padding: 6px 6px 0 0 !important; }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\Map.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\Map.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\PlaceCard.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\components\PlaceCard.svelte ==========
 
 <script>
     import { favoritesStore } from '$lib/stores/favoritesStore'; // Import the store
@@ -807,21 +846,25 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
         text-decoration: none;
         color: inherit;
         display: block;
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        border-radius: var(--radius-md); /* Use variable */
+        border-radius: var(--radius-lg); /* Slightly larger radius for a softer look */
         overflow: hidden;
         position: relative; /* Needed for absolute positioning of the button */
-        background-color: var(--bg-secondary); /* Use variable */
+        background-color: var(--bg-secondary);
+        border: 1px solid transparent; /* Start with transparent border */
+        transition: transform var(--transition-normal) ease-in-out,
+                    box-shadow var(--transition-normal) ease-in-out,
+                    border-color var(--transition-normal) ease-in-out; /* Add border-color transition */
     }
     .card-link:hover {
         transform: translateY(-5px);
-        box-shadow: var(--shadow-lg); /* Use variable */
+        box-shadow: var(--shadow-lg);
+        border-color: var(--ocean-blue-light); /* Highlight with subtle blue border on hover */
     }
 
     .card {
-        /* background-color: #fff; Removed, handled by card-link */
-        border-radius: var(--radius-md); /* Use variable */
-        box-shadow: var(--shadow-md); /* Use variable */
+        /* background-color: var(--bg-secondary); - Removed, handled by card-link */
+        /* border-radius: var(--radius-lg); - Removed, handled by card-link */
+        /* box-shadow: var(--shadow-md); - Base shadow is on card-link, hover enhances it */
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -831,69 +874,95 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
     /* --- Favorite Button Styles --- */
     .favorite-button {
         position: absolute;
-        top: var(--space-sm); /* 8px */
-        right: var(--space-sm); /* 8px */
-        background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+        top: var(--space-sm);
+        right: var(--space-sm);
+        background-color: rgba(255, 255, 255, 0.75); /* Slightly less transparent */
         border: none;
-        border-radius: var(--radius-full); /* Circle */
-        padding: var(--space-xs); /* 4px */
+        border-radius: var(--radius-full);
+        padding: var(--space-xs);
         cursor: pointer;
-        z-index: 5; /* Above the image */
+        z-index: 5;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-secondary); /* Icon color when not favorited */
-        transition: background-color var(--transition-fast), color var(--transition-fast);
-        backdrop-filter: blur(2px); /* Slight blur effect */
+        color: var(--text-secondary);
+        transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast); /* Added transform */
+        backdrop-filter: blur(3px); /* Slightly stronger blur */
     }
 
     .favorite-button:hover {
-        background-color: rgba(255, 255, 255, 0.9);
-        color: var(--sunset-orange-dark); /* Orange hover */
+        background-color: rgba(255, 255, 255, 0.95);
+        color: var(--sunset-orange-dark);
+        transform: scale(1.1); /* Add subtle scale on hover */
     }
-    /* --- End Favorite Button Styles --- */
+
+    :global([data-theme="dark"]) .favorite-button {
+         background-color: rgba(50, 50, 50, 0.75); /* Darker background for dark mode */
+         color: var(--text-secondary);
+    }
+    :global([data-theme="dark"]) .favorite-button:hover {
+        background-color: rgba(70, 70, 70, 0.95);
+         color: var(--sunset-orange-light); /* Lighter orange for dark mode hover */
+    }
 
 
+    /* --- Card Image --- */
     .card-image {
         width: 100%;
-        height: 180px;
+        height: 180px; /* Keep height consistent */
         object-fit: cover;
+        display: block; /* Ensure no extra space */
+        /* Subtle inner shadow to lift image from background */
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
     }
 
+    /* --- Card Content --- */
     .card-content {
-        padding: var(--space-md); /* Use variable */
+        padding: var(--space-md) var(--space-lg); /* More horizontal padding */
         flex-grow: 1;
+        display: flex;
+        flex-direction: column;
     }
 
     h3 {
         margin-top: 0;
-        margin-bottom: var(--space-sm); /* Use variable */
-        font-size: 1.2rem;
-        color: var(--ocean-blue-dark); /* Use variable */
+        margin-bottom: var(--space-sm);
+        font-size: 1.15rem; /* Slightly smaller title */
+        color: var(--ocean-blue-dark);
+        line-height: 1.3;
     }
 
     .category-badge {
         display: inline-block;
-        background-color: var(--sandy-beige-light); /* Use variable */
-        color: var(--text-secondary); /* Use variable */
-        padding: 0.2em 0.6em;
-        border-radius: var(--radius-sm); /* Use variable */
-        font-size: 0.8em;
-        margin-bottom: var(--space-sm); /* Use variable */
+        background-color: var(--sandy-beige); /* Slightly darker beige */
+        color: var(--text-primary); /* Better contrast */
+        padding: 0.25em 0.7em; /* Adjust padding */
+        border-radius: var(--radius-sm);
+        font-size: 0.75rem; /* Smaller badge text */
+        font-weight: 500;
+        margin-bottom: var(--space-md); /* More space below badge */
+        align-self: flex-start; /* Prevent badge stretching */
     }
 
+    :global([data-theme="dark"]) .category-badge {
+        background-color: var(--sandy-beige-dark);
+        color: var(--text-primary);
+    }
+
+
     p {
-        font-size: 0.95rem;
-        color: var(--text-secondary); /* Use variable */
+        font-size: 0.9rem; /* Slightly smaller description */
+        color: var(--text-secondary);
         margin-bottom: 0;
-        line-height: 1.5; /* Slightly tighter line height for card description */
+        line-height: 1.5;
+        flex-grow: 1; /* Allow description to push content down if needed */
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\PlaceCard.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\PlaceCard.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\RestaurantCard.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\components\RestaurantCard.svelte ==========
 
 <script>
     import { favoritesStore } from '$lib/stores/favoritesStore'; // Import the store
@@ -958,24 +1027,26 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 </a>
 
 <style>
-    /* Styles very similar to PlaceCard.svelte */
+    /* Styles virtually identical to PlaceCard.svelte for consistency */
     .card-link {
         text-decoration: none;
         color: inherit;
         display: block;
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        border-radius: var(--radius-md);
+        border-radius: var(--radius-lg); /* Slightly larger radius */
         overflow: hidden;
-         position: relative; /* Needed for button */
-         background-color: var(--bg-secondary);
+        position: relative;
+        background-color: var(--bg-secondary);
+        border: 1px solid transparent;
+        transition: transform var(--transition-normal) ease-in-out,
+                    box-shadow var(--transition-normal) ease-in-out,
+                    border-color var(--transition-normal) ease-in-out;
     }
     .card-link:hover {
         transform: translateY(-5px);
         box-shadow: var(--shadow-lg);
+        border-color: var(--ocean-blue-light);
     }
     .card {
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-md);
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -983,11 +1054,11 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
     }
 
     /* --- Favorite Button Styles (Identical to PlaceCard) --- */
-     .favorite-button {
+    .favorite-button {
         position: absolute;
         top: var(--space-sm);
         right: var(--space-sm);
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 255, 0.75);
         border: none;
         border-radius: var(--radius-full);
         padding: var(--space-xs);
@@ -997,61 +1068,96 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
         align-items: center;
         justify-content: center;
         color: var(--text-secondary);
-        transition: background-color var(--transition-fast), color var(--transition-fast);
-         backdrop-filter: blur(2px);
+        transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+        backdrop-filter: blur(3px);
     }
 
     .favorite-button:hover {
-        background-color: rgba(255, 255, 255, 0.9);
-         color: var(--sunset-orange-dark);
+        background-color: rgba(255, 255, 255, 0.95);
+        color: var(--sunset-orange-dark);
+        transform: scale(1.1);
+    }
+
+    :global([data-theme="dark"]) .favorite-button {
+         background-color: rgba(50, 50, 50, 0.75);
+         color: var(--text-secondary);
+    }
+    :global([data-theme="dark"]) .favorite-button:hover {
+        background-color: rgba(70, 70, 70, 0.95);
+         color: var(--sunset-orange-light);
     }
     /* --- End Favorite Button Styles --- */
 
+    /* --- Card Image --- */
     .card-image {
         width: 100%;
         height: 180px;
         object-fit: cover;
+        display: block;
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
     }
+
+    /* --- Card Content --- */
     .card-content {
-        padding: var(--space-md);
+        padding: var(--space-md) var(--space-lg);
         flex-grow: 1;
+        display: flex;
+        flex-direction: column;
     }
     h3 {
         margin-top: 0;
         margin-bottom: var(--space-sm);
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         color: var(--ocean-blue-dark);
+        line-height: 1.3;
     }
     .badges {
-        margin-bottom: var(--space-sm);
+        margin-bottom: var(--space-md); /* More space below badges */
+        display: flex; /* Align badges horizontally */
+        flex-wrap: wrap; /* Allow wrapping */
+        gap: var(--space-sm); /* Gap between badges */
     }
     .category-badge {
         display: inline-block;
-        background-color: var(--sandy-beige-light);
-        color: var(--text-secondary);
-        padding: 0.2em 0.6em;
+        padding: 0.25em 0.7em;
         border-radius: var(--radius-sm);
-        font-size: 0.8em;
-        margin-right: var(--space-xs);
-        margin-bottom: var(--space-xs); /* Allow wrapping */
+        font-size: 0.75rem;
+        font-weight: 500;
+        /* Remove margin-right/bottom, use gap */
+    }
+     .category-badge.cuisine {
+        background-color: var(--sandy-beige);
+        color: var(--text-primary);
     }
      .category-badge.price {
-        background-color: var(--ocean-blue-light); /* Different color for price */
+        background-color: var(--ocean-blue-light);
         color: var(--ocean-blue-dark);
-        font-weight: 500;
+        font-weight: 600; /* Make price slightly bolder */
     }
-    p {
-        font-size: 0.95rem;
+
+    :global([data-theme="dark"]) .category-badge.cuisine {
+        background-color: var(--sandy-beige-dark);
+        color: var(--text-primary);
+    }
+     :global([data-theme="dark"]) .category-badge.price {
+        background-color: var(--ocean-blue); /* Adjust dark theme price bg */
+        color: white; /* Make price text white in dark mode */
+    }
+
+
+    p { /* Description */
+        font-size: 0.9rem;
         color: var(--text-secondary);
         margin-bottom: 0;
-         line-height: 1.5;
+        line-height: 1.5;
+        flex-grow: 1;
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\RestaurantCard.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\RestaurantCard.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\SideNav.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\components\SideNav.svelte ==========
 
 <script>
 	// Importe les transitions Svelte
@@ -1221,10 +1327,10 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
 	}
   </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\SideNav.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\SideNav.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\WeatherWidget.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\components\WeatherWidget.svelte ==========
 
 <script>
     import { browser } from '$app/environment';
@@ -1417,10 +1523,10 @@ C:\USERS\MINIMONSTER\CASCADEPROJECTS\AGADIR TOURISM\AGADIR-PWA-SVELTEKIT\SRC
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\components\WeatherWidget.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\WeatherWidget.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\favoritesStore.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\stores\favoritesStore.js ==========
 
 // src/lib/stores/favoritesStore.js
 import { writable } from 'svelte/store';
@@ -1537,10 +1643,10 @@ export const favoritesStore = {
 // but remember it needs the current store value passed to it to be reactive.
 // Example of reactive check in component: $: isFav = $favoritesStore.some(f => f.id === itemId && f.type === itemType)
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\favoritesStore.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\stores\favoritesStore.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\navStore.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\stores\navStore.js ==========
 
 // src/lib/stores/navStore.js
 import { writable } from 'svelte/store';
@@ -1551,10 +1657,10 @@ import { writable } from 'svelte/store';
  */
 export const isSideNavOpen = writable(false); // Par dÃ©faut, le menu est fermÃ©
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\navStore.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\stores\navStore.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\themeStore.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\stores\themeStore.js ==========
 
 // src/lib/stores/themeStore.js
 import { writable } from 'svelte/store';
@@ -1678,18 +1784,18 @@ if (browser) {
     applyTheme(initialTheme);
 }
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\stores\themeStore.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\stores\themeStore.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\index.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\index.js ==========
 
 // place files you want to import through the `$lib` alias in this folder.
 
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\index.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\index.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\supabaseClient.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\lib\supabaseClient.js ==========
 
 import { createClient } from '@supabase/supabase-js';
 
@@ -1718,16 +1824,16 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 // La sÃ©curitÃ© repose ENTIÃˆREMENT sur les Row Level Security (RLS) Policies
 // que tu as dÃ©finies dans Supabase. Assure-toi qu'elles sont correctes !
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\lib\supabaseClient.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\supabaseClient.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\about\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\about\+page.svelte ==========
 
 <script>
     // Pas de script nÃƒÂ©cessaire pour une page statique
 
      // Placeholder for hero image - replace with a real image path later
-    const aboutImageUrl = '/assets/images/default-placeholder.jpg'; // <- CHANGE THIS PATH
+    const aboutImageUrl = '/assets/images/xplore-agadir-logo-full.png'; 
 </script>
 
 <svelte:head>
@@ -1738,7 +1844,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 <div class="static-page-container about-page"> <!-- Add common container class -->
     <h1>Ã€ Propos d'Agadir</h1>
 
-    <img src={aboutImageUrl} alt="Paysage d'Agadir" class="page-image">
+    <img src={aboutImageUrl} alt="Xplore Agadir Logo" class="about-logo-img" />
 
     <section>
         <p>
@@ -1789,14 +1895,12 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
         margin-bottom: var(--space-xl);
     }
 
-    .page-image {
-        width: 100%;
-        max-height: 350px;
-        object-fit: cover;
-        border-radius: var(--radius-md); /* Use variable */
-        margin-bottom: var(--space-xl);
-        box-shadow: var(--shadow-md); /* Use variable */
-     }
+    .about-logo-img {
+        display: block;
+        max-width: 300px;
+        height: auto;
+        margin: var(--space-lg) auto var(--space-xl);
+    }
 
     section {
         margin-bottom: var(--space-lg); /* Space between text sections */
@@ -1832,10 +1936,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
      }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\about\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\about\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\conseils\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\conseils\+page.svelte ==========
 
 <script>
   // No script needed
@@ -2007,10 +2111,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
    .conseils-page { }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\conseils\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\conseils\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\contacts\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\contacts\+page.svelte ==========
 
 <script>
     // No script needed
@@ -2170,10 +2274,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
      .contacts-page {}
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\contacts\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\contacts\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\currency\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\currency\+page.svelte ==========
 
 <script lang="ts">
     // --- KEEP YOUR EXISTING SCRIPT BLOCK ---
@@ -2520,10 +2624,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
      .currency-page {}
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\currency\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\currency\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\events\+page.js ==========
 
 import { supabase } from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit';
@@ -2564,10 +2668,10 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\events\+page.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\events\+page.svelte ==========
 
 <script lang="ts">
     import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
@@ -2859,10 +2963,10 @@ export async function load() {
 
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\events\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\events\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\favorites\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\favorites\+page.svelte ==========
 
 <script>
     import { onMount } from 'svelte';
@@ -3031,10 +3135,10 @@ export async function load() {
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\favorites\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\favorites\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\map\+page.js ==========
 
 import { supabase } from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit';
@@ -3091,10 +3195,10 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\map\+page.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\map\+page.svelte ==========
 
 <script>
     import { browser } from '$app/environment';
@@ -3165,10 +3269,10 @@ export async function load() {
      } */
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\map\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\map\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\phrasebook\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\phrasebook\+page.svelte ==========
 
 <script>
     // Keep your existing categories array
@@ -3356,22 +3460,22 @@ export async function load() {
     .phrasebook-page { }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\phrasebook\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\phrasebook\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\places\[id]\+page.js ==========
 
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\places\[id]\+page.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\places\[id]\+page.svelte ==========
 
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\[id]\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\places\[id]\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\+page.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\places\+page.js ==========
 
 // src/routes/places/+page.js
 import { supabase } from '$lib/supabaseClient';
@@ -3400,10 +3504,10 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\+page.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\places\+page.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\places\+page.svelte ==========
 
 <script>
     import PlaceCard from '$lib/components/PlaceCard.svelte';
@@ -3481,22 +3585,22 @@ export async function load() {
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\places\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\places\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\[id]\+page.js ==========
 
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\[id]\+page.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\[id]\+page.svelte ==========
 
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\[id]\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\[id]\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\+page.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\+page.js ==========
 
 // src/routes/restaurants/+page.js
 import { supabase } from '$lib/supabaseClient';
@@ -3525,10 +3629,10 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\+page.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\+page.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\+page.svelte ==========
 
 <script>
     import RestaurantCard from '$lib/components/RestaurantCard.svelte';
@@ -3606,10 +3710,10 @@ export async function load() {
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\restaurants\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\restaurants\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\search\+page.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\search\+page.js ==========
 
 // src/routes/search/+page.js
 import { supabase } from '$lib/supabaseClient';
@@ -3676,10 +3780,10 @@ export async function load({ url }) {
     }
 }
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\search\+page.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\search\+page.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\search\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\search\+page.svelte ==========
 
 <script>
     import PlaceCard from '$lib/components/PlaceCard.svelte';
@@ -3786,10 +3890,10 @@ export async function load({ url }) {
     }
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\search\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\search\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\transport\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\transport\+page.svelte ==========
 
 <script>
   // No script needed
@@ -3902,10 +4006,10 @@ export async function load({ url }) {
    .transport-page {}
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\transport\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\transport\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+layout.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\+layout.svelte ==========
 
 <script>
 	import Header from '$lib/components/Header.svelte';
@@ -3980,10 +4084,10 @@ export async function load({ url }) {
      } */
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+layout.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\+layout.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\+page.js ==========
 
 import { supabase } from '$lib/supabaseClient';
 import { error } from '@sveltejs/kit'; // Pour gÃ©rer les erreurs de chargement
@@ -4027,32 +4131,31 @@ export async function load() {
     }
 }
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\+page.js ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.svelte ==========
+========== FICHIER: H:\my apps\agadir tourism\src\routes\+page.svelte ==========
 
 <script>
   import WeatherWidget from '$lib/components/WeatherWidget.svelte';
-  // Import icons from lucide-svelte if you want to use them instead of emojis
-  // import { MapPin, Utensils, Calendar, Bus, Info, Phone, Map as MapIcon } from 'lucide-svelte';
+  // Import the chosen Lucide icons
+  import { Map, Landmark, UtensilsCrossed, CalendarDays, Bus, Info } from 'lucide-svelte';
 
   // We still have access to 'data' from +page.js if we want to use places/restaurants later
   export let data;
 
-  // DÃƒÂ©finition des raccourcis - keeping emojis for simplicity now
-  // You could replace 'icon' with a Lucide component like: icon: MapIcon
+  // Update shortcuts array to use the imported icon components
   const shortcuts = [
-    { href: '/map', label: 'Carte Interactive', icon: 'ðŸ—ºï¸' },
-    { href: '/places', label: 'Sites Ã  Visiter', icon: 'ðŸ›ï¸' }, // Changed icon
-    { href: '/restaurants', label: 'OÃ¹ Manger', icon: 'ðŸ½ï¸' }, // Changed icon
-    { href: '/events', label: 'Ã‰vÃ©nements', icon: 'ðŸ—“ï¸' }, // Changed icon
-    { href: '/transport', label: 'Transport', icon: 'ðŸšŒ' }, // Changed icon
-    { href: '/contacts', label: 'Infos Utiles', icon: 'â„¹ï¸' }
+    { href: '/map', label: 'Carte Interactive', icon: Map }, // Use component
+    { href: '/places', label: 'Sites Ã  Visiter', icon: Landmark }, // Use component
+    { href: '/restaurants', label: 'OÃ¹ Manger', icon: UtensilsCrossed }, // Use component
+    { href: '/events', label: 'Ã‰vÃ©nements', icon: CalendarDays }, // Use component
+    { href: '/transport', label: 'Transport', icon: Bus }, // Use component
+    { href: '/contacts', label: 'Infos Utiles', icon: Info } // Use component
   ];
 
   // Placeholder for hero image - replace with a real image path later
-  const heroImageUrl = '/assets/images/default-placeholder.jpg'; // <- CHANGE THIS PATH to a nice Agadir image if you have one
+  const heroImageUrl = '/assets/images/default-placeholder.jpg'; // <- CHANGE THIS PATH
 
 </script>
 
@@ -4080,7 +4183,9 @@ export async function load() {
     <div class="shortcuts-grid">
       {#each shortcuts as shortcut (shortcut.href)}
         <a href={shortcut.href} class="shortcut-card">
-          <div class="shortcut-icon">{shortcut.icon}</div>
+          <div class="shortcut-icon">
+            <svelte:component this={shortcut.icon} size={40} strokeWidth={1.5} />
+          </div>
           <!-- If using Lucide: <svelte:component this={shortcut.icon} size={40} stroke-width={1.5} /> -->
           <span class="shortcut-label">{shortcut.label}</span>
         </a>
@@ -4219,10 +4324,14 @@ export async function load() {
   }
 
   .shortcut-icon {
-    font-size: 2.5rem; /* Larger icons */
-    margin-bottom: var(--space-md); /* Space between icon and label */
-    line-height: 1; /* Prevent extra space from emoji line height */
-  }
+  margin-bottom: var(--space-md); /* Space between icon and label */
+  color: var(--ocean-blue); /* Use theme color for icon */
+  /* size={40} and strokeWidth={1.5} are set directly on the component */
+  /* Remove font-size and line-height specific to emojis */
+  display: flex; /* Center icon if needed, though size prop usually handles it */
+  align-items: center;
+  justify-content: center;
+}
 
   .shortcut-label {
     font-size: 1rem;
@@ -4261,10 +4370,10 @@ export async function load() {
 
 </style>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\routes\+page.svelte ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\routes\+page.svelte ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.css ==========
+========== FICHIER: H:\my apps\agadir tourism\src\app.css ==========
 
 /* src/app.css */
 
@@ -4595,10 +4704,10 @@ main {
     padding: var(--space-md) var(--space-xl); /* 16px 32px */
 }
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.css ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\app.css ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.html ==========
+========== FICHIER: H:\my apps\agadir tourism\src\app.html ==========
 
 <!doctype html>
 <html lang="fr">
@@ -4627,10 +4736,10 @@ main {
 	</body>
 </html>
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\app.html ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\app.html ==========
 
 
-========== FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\service-worker.js ==========
+========== FICHIER: H:\my apps\agadir tourism\src\service-worker.js ==========
 
 /// <reference types="@sveltejs/kit" />
 import { build, files, version } from '$service-worker';
@@ -4779,6 +4888,6 @@ self.addEventListener('fetch', (event) => {
     // console.log('SW: Fetching', event.request.url);
 });
 
-========== FIN FICHIER: C:\Users\MiniMonster\CascadeProjects\Agadir tourism\agadir-pwa-sveltekit\src\service-worker.js ==========
+========== FIN FICHIER: H:\my apps\agadir tourism\src\service-worker.js ==========
 
 
