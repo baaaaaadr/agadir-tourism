@@ -3,6 +3,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import SideNav from '$lib/components/SideNav.svelte';
 	import ErrorMessage from '$lib/components/ErrorMessage.svelte';
+	import BottomNav from '$lib/components/BottomNav.svelte';
 	import { isSideNavOpen } from '$lib/stores/navStore';
     // --- Theme Imports ---
 	import { themeStore, applyTheme } from '$lib/stores/themeStore.js'; // Import store and helper
@@ -37,6 +38,7 @@
 		{/if}
 	</main>
 
+	<BottomNav />
 	<Footer />
 </div>
 
@@ -51,9 +53,8 @@
 
 	main {
 		flex: 1;
-		/* padding: var(--space-lg) var(--space-md); - Padding now applied via .static-page-container or component-specific */
-        padding-top: var(--space-lg);
-        padding-bottom: var(--space-xl);
+		padding-top: var(--space-lg);
+		padding-bottom: var(--space-xl);
 		max-width: 1200px;
 		margin-left: auto; /* Center content */
         margin-right: auto;
@@ -62,11 +63,16 @@
         padding-left: var(--space-md); /* Add horizontal padding here */
         padding-right: var(--space-md);
 	}
-     /* Optional: Ensure container takes full width */
-     /* @media (min-width: 1200px) {
+
+	/* Ajuster le padding du footer pour éviter le chevauchement avec le BottomNav */
+	footer {
+		padding-top: 60px; /* Hauteur approximative du BottomNav */
+	}
+
+    /* Ajuster le padding du main sur mobile pour le BottomNav */
+    @media (max-width: 767px) {
         main {
-             padding-left: 0;
-             padding-right: 0;
+            padding-bottom: calc(60px + var(--space-lg) + env(safe-area-inset-bottom));
         }
-     } */
+    }
 </style>

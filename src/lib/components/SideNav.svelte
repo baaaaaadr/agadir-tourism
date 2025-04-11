@@ -29,7 +29,6 @@
 	  { path: '/transport', label: 'Transport', icon: Bus },
 	  { path: '/phrasebook', label: 'Phrases Utiles', icon: Book },
 	  { path: '/currency', label: 'Monnaie', icon: DollarSign },
-	  { path: '/favorites', label: 'Mes Favoris', icon: Heart }, 
 	  { path: '/conseils', label: 'Conseils', icon: InfoIcon }, // Ou Settings?
 	  { path: '/contacts', label: 'Contacts Utiles', icon: Phone },
 	  { path: '/about', label: 'À Propos', icon: Users } // Ou InfoIcon si Conseils prend Settings?

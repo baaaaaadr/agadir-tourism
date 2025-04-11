@@ -1,6 +1,8 @@
+<!-- START OF FILE: src/lib/components/Header.svelte -->
 <script>
     import { goto } from '$app/navigation'; // Import navigation function
-    import { Menu, Search, X } from 'lucide-svelte'; // Add X icon
+    // Import icons needed, including Heart
+    import { Menu, Search, X, Heart } from 'lucide-svelte';
     import { isSideNavOpen } from '$lib/stores/navStore';
     import { fly } from 'svelte/transition'; // Import transition
 
@@ -88,11 +90,19 @@
         {/if}
 
 
-        <!-- Original Search Toggle Button (always visible unless input is shown) -->
+        <!-- Buttons on the right (Favorites, Search Toggle) -->
         {#if !showSearchInput}
-             <button class="search-button" on:click={toggleSearchInput} aria-label="Ouvrir la recherche">
-                <Search size={24} />
-             </button>
+            <div class="header-right-actions">
+                <!-- Favorites Button -->
+                <a href="/favorites" aria-label="Voir les favoris" title="Mes Favoris" class="header-action-button favorites-link-button">
+                    <Heart size={24} />
+                </a>
+
+                 <!-- Original Search Toggle Button -->
+                 <button class="search-button header-action-button" on:click={toggleSearchInput} aria-label="Ouvrir la recherche">
+                    <Search size={24} />
+                 </button>
+            </div>
         {/if}
     </div>
 </header>
@@ -121,6 +131,7 @@
         height: 60px;
         max-width: 1200px;
         margin: 0 auto;
+        gap: var(--space-sm); /* Add gap between items */
     }
 
     /* --- Logo --- */
@@ -133,6 +144,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        /* Adjust margin if needed due to gap */
+        margin-left: auto;
+        margin-right: auto;
     }
     .logo-link {
         display: inline-block;
@@ -203,11 +217,10 @@
 
 
     /* --- Buttons --- */
-    .menu-button,
-    .search-button {
+    .menu-button { /* Specific style for menu button */
         background: transparent;
         border: none;
-        color: white;
+        color: white; /* Keep default color */
         cursor: pointer;
         padding: var(--space-sm);
         border-radius: var(--radius-full);
@@ -218,10 +231,52 @@
         flex-shrink: 0; /* Prevent buttons from shrinking */
     }
 
-    .menu-button:hover,
-    .search-button:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+    /* ! --- New styles for Menu Icon Color --- ! */
+    .menu-button svg {
+        color: var(--sandy-beige-light); /* Change icon color to light beige */
+        transition: color var(--transition-fast);
     }
+
+    .menu-button:hover {
+        background-color: transparent; /* Remove background change on hover */
+    }
+
+    .menu-button:hover svg {
+        color: var(--sandy-beige); /* Optional: Darken beige on hover */
+    }
+    /* ! --- End New Menu Icon Styles --- ! */
+
+
+    /* --- General Header Action Buttons (Search, Favorites) --- */
+    .header-right-actions { /* Wrapper for right-side buttons */
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs); /* Small gap between Fav and Search */
+        flex-shrink: 0;
+    }
+
+    .header-action-button { /* Shared style for Fav link and Search button */
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: var(--space-sm);
+        border-radius: var(--radius-full);
+        display: flex; /* Ensures icon inside is centered */
+        align-items: center;
+        justify-content: center;
+        transition: background-color var(--transition-normal);
+        flex-shrink: 0;
+        text-decoration: none; /* Remove underline from link if it's an <a> */
+    }
+    .header-action-button:hover {
+         background-color: rgba(255, 255, 255, 0.1); /* Default hover for Fav/Search */
+    }
+    /* Ensure the icon color is set correctly if needed */
+    .header-action-button svg {
+         color: white; /* Default color for Fav/Search icons */
+    }
+
 
      /* --- Responsive Adjustments --- */
      @media (max-width: 600px) {
@@ -244,3 +299,4 @@
     }
 
 </style>
+<!-- END OF FILE: src/lib/components/Header.svelte -->
