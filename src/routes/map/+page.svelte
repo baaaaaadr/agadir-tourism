@@ -103,7 +103,7 @@
 
 <section class="map-page-section">
 	<h1>Carte Interactive d'Agadir</h1>
-	<p>Découvrez les lieux et restaurants directement sur la carte.</p>
+	<p class="intro-text">Découvrez les lieux et restaurants directement sur la carte.</p>
 
 	<!-- Collapsible Filters Section -->
 	{#if categoriesDerived || cuisinesDerived}
@@ -193,148 +193,146 @@
 </section>
 
 <style>
-	.map-page-section {
-		/* background-color: #fff; */ /* Removed, inherits from layout */
-		/* padding: 1.5rem; */ /* Removed, inherits from layout */
-		/* border-radius: 8px; */ /* Removed */
-		/* box-shadow: 0 2px 10px rgba(0,0,0,0.1); */ /* Removed */
-        max-width: 100%; /* Ensure section takes available width */
-	}
+    /* src/routes/map/+page.svelte styles */
 
-	h1 {
-		margin-top: 0;
-		color: var(--ocean-blue-dark); /* Use theme color */
-		text-align: center; /* Center title */
-		margin-bottom: var(--space-sm); /* Reduce space below H1 */
-	}
-	p {
-		/* Default paragraph for intro text */
-		margin-bottom: var(--space-lg); /* More space below intro */
-		color: var(--text-secondary); /* Use theme color */
-		text-align: center; /* Center intro text */
-	}
+    .map-page-section {
+        max-width: 100%; /* Allow section to span width for better map display */
+    }
 
-	/* --- Collapsible Filter Styles --- */
-	.filters-details {
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-md);
-		margin-bottom: var(--space-lg); /* Space below the whole filters section */
-		background-color: var(--bg-secondary); /* Light background for the whole block */
-        overflow: hidden; /* Ensure children stay within rounded corners */
-	}
+    h1 {
+        margin-top: 0;
+        color: var(--ocean-blue-dark);
+        text-align: center;
+        margin-bottom: var(--space-sm);
+    }
+    p.intro-text { /* Added class for clarity */
+        margin-bottom: var(--space-lg);
+        color: var(--text-secondary);
+        text-align: center;
+    }
 
-	.filters-summary {
-		padding: var(--space-md);
-		cursor: pointer;
-		font-weight: 600;
-		color: var(--ocean-blue-dark);
-		list-style: none; /* Remove default marker/arrow */
-		display: flex;
-		justify-content: space-between; /* Push icon to the right */
-		align-items: center;
-		transition: background-color var(--transition-fast);
-	}
+    /* --- Collapsible Filter Styles --- */
+    .filters-details {
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-lg);
+        background-color: var(--bg-secondary);
+        overflow: hidden;
+    }
+
+    .filters-summary {
+        padding: var(--space-sm) var(--space-md); /* Adjusted padding */
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--ocean-blue-dark);
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color var(--transition-fast);
+        user-select: none;
+    }
     .filters-summary:hover {
-         background-color: var(--sandy-beige-light); /* Subtle hover on summary */
+        background-color: var(--sandy-beige-light);
+    }
+    .filters-summary::-webkit-details-marker { display: none; }
+
+    .filters-toggle-icon {
+        font-size: 0.9em; /* Slightly larger icon */
+        display: inline-block;
+        margin-left: var(--space-sm);
+        transition: transform var(--transition-fast);
+        color: var(--text-secondary); /* Color for the icon */
+    }
+    .filters-details[open] .filters-summary {
+         border-bottom: 1px solid var(--border-color); /* Add separator when open */
+         background-color: var(--sandy-beige-light); /* Keep hover color when open */
+    }
+    /* Optional: Rotate icon when open */
+    /* .filters-details[open] .filters-toggle-icon { transform: rotate(180deg); } */
+
+    .filters-container {
+        padding: var(--space-md) var(--space-lg); /* Use consistent padding */
+        /* border-top removed, handled by summary border now */
     }
 
-	/* Remove default marker in Webkit */
-	.filters-summary::-webkit-details-marker {
-		display: none;
-	}
+    .filter-group {
+        border: none;
+        padding: 0;
+        margin: 0 0 var(--space-lg) 0; /* Consistent margin */
+    }
+    .filter-group:last-child { margin-bottom: 0; }
 
-	.filters-toggle-icon {
-		font-size: 0.8em;
-		display: inline-block;
-		margin-left: var(--space-sm);
-		transition: transform var(--transition-fast);
-	}
-    /* Rotate icon when open (optional) */
-	/* .filters-details[open] .filters-toggle-icon {
-        transform: rotate(180deg);
-    } */
-
-	/* Style for the container *inside* details */
-	.filters-container {
-		padding: var(--space-lg); /* Add padding when open */
-		border-top: 1px solid var(--border-color); /* Separator line */
-        /* margin-bottom: 0; REMOVED - padding is enough */
-	}
-
-    /* Remove outer border/padding from groups inside */
-	.filters-details .filter-group {
-		border: none;
-		padding: 0;
-		margin-bottom: var(--space-lg); /* Space between filter groups */
-	}
-    .filters-details .filter-group:last-child {
-        margin-bottom: 0; /* No margin on last group inside */
+    .filter-group legend {
+        font-size: 1.05rem; /* Slightly smaller legend */
+        font-weight: 600;
+        color: var(--ocean-blue-dark);
+        padding-bottom: var(--space-xs);
+        margin-bottom: var(--space-md); /* More space before checkboxes */
+        border-bottom: 1px solid var(--sandy-beige-dark);
+        width: 100%;
     }
 
-	.filter-group legend {
-		font-size: 1.1rem;
-		font-weight: 600;
-		color: var(--ocean-blue-dark);
-		padding-bottom: var(--space-xs); /* Space below legend */
-        margin-bottom: var(--space-sm); /* More space before checkboxes */
-        border-bottom: 1px solid var(--sandy-beige-dark); /* Underline legend */
-        width: 100%; /* Make underline span full width */
-	}
+    .filter-controls {
+        margin-bottom: var(--space-md);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+    }
+    /* Ensure buttons use standard classes */
+    .filter-controls .btn { /* Apply base button style if not already */
+       /* Styles inherited via class names like btn-secondary btn-sm */
+    }
 
-	.filter-controls {
-		margin-bottom: var(--space-md); /* Space below buttons */
-		display: flex;
-        flex-wrap: wrap; /* Allow buttons to wrap */
-		gap: var(--space-sm);
-	}
-
-	.checkbox-list {
-		display: grid;
-		/* Responsive columns for checkboxes */
-		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-		gap: var(--space-sm) var(--space-md); /* Row and column gap */
-        max-height: 200px; /* Limit height and allow scroll if many items */
+    .checkbox-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Adjust min width if needed */
+        gap: var(--space-sm) var(--space-md);
+        max-height: 200px;
         overflow-y: auto;
-        padding-right: var(--space-sm); /* Padding for scrollbar */
-	}
+        padding: var(--space-xs) var(--space-sm) var(--space-xs) var(--space-xs); /* Padding for scrollbar + visual */
+        border: 1px solid var(--sandy-beige-dark); /* Add subtle border to list */
+        border-radius: var(--radius-sm);
+        background-color: var(--bg-primary); /* Ensure background contrasts */
+    }
 
-	.checkbox-list label {
-		display: flex;
-		align-items: center;
-		gap: var(--space-sm); /* Increased gap */
-		color: var(--text-primary);
-		cursor: pointer;
-        font-size: 0.9rem; /* Slightly smaller text */
-        white-space: nowrap; /* Prevent text wrapping */
-        overflow: hidden; /* Hide overflow */
-        text-overflow: ellipsis; /* Add ellipsis if text too long */
-	}
-     .checkbox-list label:hover {
-         color: var(--ocean-blue); /* Highlight on hover */
-     }
+    .checkbox-list label {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        color: var(--text-primary);
+        cursor: pointer;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: var(--space-xs) 0; /* Add slight vertical padding */
+        transition: color var(--transition-fast);
+    }
+    .checkbox-list label:hover {
+        color: var(--ocean-blue);
+    }
 
-	.checkbox-list input[type='checkbox'] {
-		margin: 0;
-        width: 1em; /* Consistent size */
+    .checkbox-list input[type='checkbox'] {
+        margin: 0;
+        width: 1em;
         height: 1em;
         cursor: pointer;
-        accent-color: var(--ocean-blue); /* Color the checkmark */
-        flex-shrink: 0; /* Prevent checkbox shrinking */
-	}
+        accent-color: var(--ocean-blue); /* Theme color for check */
+        flex-shrink: 0;
+        vertical-align: middle; /* Align better with text */
+    }
     /* --- End Filter Styles --- */
 
 
-	/* --- Map Container Styling --- */
-	/* Target the Map component specifically using its mapId prop if needed,
-       or style the container generated by Leaflet more globally */
-	:global(#main-map.map-container-style) {
-		/* Ensure height is defined via the global rules in Map.svelte or here */
-		/* height: 500px; */ /* Already defined in Map.svelte global rule */
-		border-radius: var(--radius-md);
-		border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-sm);
-        margin-top: var(--space-lg); /* Space between filters/title and map */
-	}
+    /* --- Map Container Styling --- */
+    :global(#main-map.map-container-style) {
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-md); /* Slightly stronger shadow */
+        margin-top: var(--space-lg);
+        /* Height is controlled globally in Map.svelte or its specific global rule */
+    }
 
     /* Message when filters hide all markers */
     .no-results-message {
@@ -345,6 +343,12 @@
         padding: var(--space-lg);
         background-color: var(--sandy-beige-light);
         border-radius: var(--radius-md);
+        border: 1px dashed var(--sandy-beige-dark); /* Dashed border */
+    }
+
+    /* Loading spinner alignment */
+    :global(.spinner-container) {
+        margin-top: var(--space-xl);
     }
 
 </style>

@@ -113,10 +113,10 @@
         color: white;
         position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: 1200;
         box-shadow: var(--shadow-md);
         padding: 0 var(--space-md);
-        transition: background-color 0.3s ease; /* Smooth transition */
+        transition: background-color 0.3s ease;
     }
 
     /* Slightly different background when search is active */

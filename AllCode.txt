@@ -1,5 +1,5 @@
 ﻿Structure du dossier
-Le numéro de série du volume est 000000D0 9690:CFCF
+Le numéro de série du volume est 000000B8 9690:CFCF
 H:\MY APPS\AGADIR TOURISM\SRC
 │   app.css
 │   app.d.ts
@@ -201,9 +201,9 @@ H:\MY APPS\AGADIR TOURISM\SRC
 ========== FICHIER: H:\my apps\agadir tourism\src\lib\components\Footer.svelte ==========
 
 <script>
-    import { browser } from '$app/environment'; // To check for window.matchMedia
-    import { themeStore } from '$lib/stores/themeStore.js'; // Import theme store
-    import { Facebook, Instagram, Twitter, Youtube, Linkedin, Sun, Moon } from 'lucide-svelte'; // Added Sun, Moon icons
+    import { browser } from '$app/environment';
+    import { themeStore } from '$lib/stores/themeStore.js';
+    import { Facebook, Instagram, Twitter, Youtube, Linkedin, Sun, Moon, Download } from 'lucide-svelte';
 
     // Social Links (as before)
     const socialLinks = [
@@ -212,6 +212,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
         { name: 'Twitter', href: '#', icon: Twitter, ariaLabel: 'Suivez-nous sur Twitter (X)' },
         { name: 'YouTube', href: '#', icon: Youtube, ariaLabel: 'Suivez-nous sur YouTube' },
     ];
+
+    // PWA Install Props
+    export let showInstallButton = false;
+    export let handleInstallClick = () => { console.warn('handleInstallClick function not passed to Footer'); };
 
     // --- Theme Toggle Logic ---
     let isCurrentlyDark = false; // Reactive variable to show the correct icon
@@ -240,7 +244,7 @@ H:\MY APPS\AGADIR TOURISM\SRC
 <footer>
     <div class="footer-content">
         <a href="/" aria-label="Accueil Xplore Agadir" class="footer-logo-link">
-            <img src="/assets/images/xplore-agadir-logo-full.png" alt="Xplore Agadir Logo" class="footer-logo-img" />
+            <img src="/assets/images/xplore-agadir-icon.png" alt="Xplore Agadir Logo" class="footer-logo-img" />
         </a>
 
         <div class="copyright">
@@ -255,6 +259,19 @@ H:\MY APPS\AGADIR TOURISM\SRC
                     </a>
                 {/each}
             </div>
+
+            <!-- Install App Button (Conditional) -->
+            {#if showInstallButton}
+                <button
+                    class="btn btn-accent install-button"
+                    on:click={handleInstallClick}
+                    title="Installer l'application"
+                    aria-label="Installer l'application PWA"
+                >
+                    <Download size={18} />
+                    Installer l'App
+                </button>
+            {/if}
 
             <button
                 class="theme-toggle-button"
@@ -297,12 +314,12 @@ H:\MY APPS\AGADIR TOURISM\SRC
     /* --- Footer Logo (New Layout) --- */
     .footer-logo-link {
         display: block;
-        margin-bottom: var(--space-lg);
+        margin-bottom: var(--space-md);
         text-align: center;
         line-height: 1;
     }
     .footer-logo-img {
-        height: 45px;
+        height: 60px;
         width: auto;
         max-width: 200px;
         display: inline-block;
@@ -340,7 +357,7 @@ H:\MY APPS\AGADIR TOURISM\SRC
         .footer-logo-link {
             width: 100%;
             order: -1;
-            margin-bottom: var(--space-lg);
+            margin-bottom: var(--space-md);
         }
 
         .copyright {
@@ -354,6 +371,13 @@ H:\MY APPS\AGADIR TOURISM\SRC
         }
         .social-icons {
             gap: var(--space-lg);
+        }
+    }
+
+    /* Add padding below the footer ONLY on mobile to prevent overlap with BottomNav */
+    @media (max-width: 767px) {
+        footer {
+            padding-bottom: calc(60px + var(--space-lg) + env(safe-area-inset-bottom));
         }
     }
 
@@ -392,6 +416,34 @@ H:\MY APPS\AGADIR TOURISM\SRC
     .social-link:hover {
         color: var(--ocean-blue);
         transform: scale(1.15);
+    }
+
+    /* Install Button Styles */
+    .install-button {
+        background-color: var(--ocean-blue);
+        color: white;
+        border: none;
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.85rem;
+        border-radius: var(--radius-full);
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        transition: background-color var(--transition-normal), transform var(--transition-fast);
+    }
+
+    .install-button svg {
+        color: currentColor; /* Inherits white color from button */
+        margin-right: var(--space-sm);
+    }
+
+    .install-button:hover {
+        background-color: var(--ocean-blue-dark);
+        transform: scale(1.05);
+    }
+
+    .install-button:active {
+        transform: scale(0.95);
     }
 </style>
 
@@ -515,10 +567,10 @@ H:\MY APPS\AGADIR TOURISM\SRC
         color: white;
         position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: 1200;
         box-shadow: var(--shadow-md);
         padding: 0 var(--space-md);
-        transition: background-color 0.3s ease; /* Smooth transition */
+        transition: background-color 0.3s ease;
     }
 
     /* Slightly different background when search is active */
@@ -753,7 +805,7 @@ H:\MY APPS\AGADIR TOURISM\SRC
     export let mapId = 'leaflet-map';
     export let minZoom = 10; // Optional: Set a minimum zoom level
 
-    // RÃƒÂ©fÃƒÂ©rences et ÃƒÂ©tat interne
+    // RÃ©fÃ©rences et Ã©tat interne
     let mapContainerElement = null;
     let mapInstance = null;
     let markerLayerGroup = null;
@@ -775,20 +827,20 @@ H:\MY APPS\AGADIR TOURISM\SRC
             await tick();
 
             if (!mapContainerElement) {
-                 console.error(`[${mapId}] Ãƒâ€°lÃƒÂ©ment conteneur introuvable au montage.`);
-                 errorLoading = "Erreur interne: Conteneur de carte non trouvÃƒÂ©.";
+                 console.error(`[${mapId}] Ã‰lÃ©ment conteneur introuvable au montage.`);
+                 errorLoading = "Erreur interne: Conteneur de carte non trouvÃ©.";
                  isLoading = false;
                  return;
              }
             if (typeof window.L === 'undefined' || window.L === null) {
-                console.error(`[${mapId}] ERREUR: Objet global L non trouvÃƒÂ©.`);
+                console.error(`[${mapId}] ERREUR: Objet global L non trouvÃ©.`);
                 errorLoading = "Impossible de charger la librairie de carte (CDN).";
                 isLoading = false;
                 return;
             }
 
             L = window.L; // Assign global L
-             console.log(`[${mapId}] Objet global L trouvÃƒÂ©.`);
+             console.log(`[${mapId}] Objet global L trouvÃ©.`);
 
             // --- Re-create bounds object now that L is defined ---
             // You could also move the const definitions inside onMount if L is guaranteed
@@ -860,22 +912,58 @@ H:\MY APPS\AGADIR TOURISM\SRC
     }
 
     function updateMapMarkers(newMarkers) {
-        // ... (keep existing code)
-         if (!mapInstance || !markerLayerGroup || !L) return;
-         markerLayerGroup.clearLayers();
-         (newMarkers || []).forEach(markerInfo => {
+        if (!mapInstance || !markerLayerGroup || !L) return;
+        markerLayerGroup.clearLayers();
+        (newMarkers || []).forEach(markerInfo => {
             if (markerInfo.lat != null && markerInfo.lon != null) {
-                 try {
-                    const marker = L.marker([markerInfo.lat, markerInfo.lon]);
-                    if (markerInfo.popupText) {
-                         marker.bindPopup(markerInfo.popupText, { closeButton: true, autoClose: false });
+                try {
+                    // 1. Determine Marker Class based on type (and optionally category/cuisine)
+                    let markerClass = 'custom-map-marker'; // Base class
+                    if (markerInfo.type === 'place') {
+                        markerClass += ' marker-type-place';
+                        // --- Optional: Add specific category classes ---
+                        // Example: if (markerInfo.category === 'Plage') markerClass += ' marker-cat-beach';
+                        // Add more else if blocks for other categories here if needed
+                    } else if (markerInfo.type === 'restaurant') {
+                        markerClass += ' marker-type-restaurant';
+                        // --- Optional: Add specific cuisine classes ---
+                        // Example: if (markerInfo.cuisine === 'Marocain') markerClass += ' marker-cuisine-marocain';
+                        // Add more else if blocks for other cuisines here if needed
                     }
-                     marker.addTo(markerLayerGroup);
-                 } catch (e) {
-                    console.error(`[${mapId}] Erreur crÃƒÂ©ation marqueur (CDN): `, markerInfo, e);
-                 }
+
+                    // 2. Create the L.divIcon instance
+                    const customIcon = L.divIcon({
+                        className: markerClass,
+                        // Correct Bounding Box: width=20, height=20(circle)+15(line)=35
+                        iconSize: [20, 35],
+                        // Correct Anchor: X=Center(20/2)=10, Y=Total height(20+15)=35
+                        iconAnchor: [10, 35],
+                        // Correct Popup Anchor: Above circle center (X=0 relative to anchor, Y=negative(radius+stem+offset))
+                        // Y = -(10 + 15 + 3) = -28 (approx)
+                        popupAnchor: [0, -28]
+                    });
+
+                    // 3. Create the marker using the custom icon
+                    const marker = L.marker([markerInfo.lat, markerInfo.lon], {
+                        icon: customIcon,
+                        // Optional: Add alt text for accessibility
+                        alt: markerInfo.name || 'Map marker'
+                    });
+
+                    // 4. Bind popup (same as before)
+                    if (markerInfo.popupText) {
+                        marker.bindPopup(markerInfo.popupText, { closeButton: true, autoClose: false });
+                    }
+
+                    // 5. Add marker to layer group (same as before)
+                    marker.addTo(markerLayerGroup);
+
+                } catch (e) {
+                    // Update error message context if needed
+                    console.error(`[${mapId}] Erreur crÃ©ation marqueur custom: `, markerInfo, e);
+                }
             }
-         });
+        });
     }
 
     // --- Reactivity (keep existing code) ---
@@ -915,6 +1003,11 @@ H:\MY APPS\AGADIR TOURISM\SRC
     :global(.leaflet-popup-content a) { color: var(--ocean-blue, #0077cc); font-weight: bold; text-decoration: none; } /* Use variable */
     :global(.leaflet-popup-content a:hover) { text-decoration: underline; }
     :global(.leaflet-container a.leaflet-popup-close-button) { color: #555 !important; padding: 6px 6px 0 0 !important; }
+    /* Add custom marker styles here */
+    :global(.custom-map-marker) { /* Base class for custom markers */ }
+    :global(.marker-type-place) { /* Style for place markers */ }
+    :global(.marker-type-restaurant) { /* Style for restaurant markers */ }
+    /* Add more styles for specific categories or cuisines if needed */
 </style>
 
 ========== FIN FICHIER: H:\my apps\agadir tourism\src\lib\components\Map.svelte ==========
@@ -3467,7 +3560,7 @@ export async function load() {
 
 <section class="map-page-section">
 	<h1>Carte Interactive d'Agadir</h1>
-	<p>DÃ©couvrez les lieux et restaurants directement sur la carte.</p>
+	<p class="intro-text">DÃ©couvrez les lieux et restaurants directement sur la carte.</p>
 
 	<!-- Collapsible Filters Section -->
 	{#if categoriesDerived || cuisinesDerived}
@@ -3557,148 +3650,146 @@ export async function load() {
 </section>
 
 <style>
-	.map-page-section {
-		/* background-color: #fff; */ /* Removed, inherits from layout */
-		/* padding: 1.5rem; */ /* Removed, inherits from layout */
-		/* border-radius: 8px; */ /* Removed */
-		/* box-shadow: 0 2px 10px rgba(0,0,0,0.1); */ /* Removed */
-        max-width: 100%; /* Ensure section takes available width */
-	}
+    /* src/routes/map/+page.svelte styles */
 
-	h1 {
-		margin-top: 0;
-		color: var(--ocean-blue-dark); /* Use theme color */
-		text-align: center; /* Center title */
-		margin-bottom: var(--space-sm); /* Reduce space below H1 */
-	}
-	p {
-		/* Default paragraph for intro text */
-		margin-bottom: var(--space-lg); /* More space below intro */
-		color: var(--text-secondary); /* Use theme color */
-		text-align: center; /* Center intro text */
-	}
+    .map-page-section {
+        max-width: 100%; /* Allow section to span width for better map display */
+    }
 
-	/* --- Collapsible Filter Styles --- */
-	.filters-details {
-		border: 1px solid var(--border-color);
-		border-radius: var(--radius-md);
-		margin-bottom: var(--space-lg); /* Space below the whole filters section */
-		background-color: var(--bg-secondary); /* Light background for the whole block */
-        overflow: hidden; /* Ensure children stay within rounded corners */
-	}
+    h1 {
+        margin-top: 0;
+        color: var(--ocean-blue-dark);
+        text-align: center;
+        margin-bottom: var(--space-sm);
+    }
+    p.intro-text { /* Added class for clarity */
+        margin-bottom: var(--space-lg);
+        color: var(--text-secondary);
+        text-align: center;
+    }
 
-	.filters-summary {
-		padding: var(--space-md);
-		cursor: pointer;
-		font-weight: 600;
-		color: var(--ocean-blue-dark);
-		list-style: none; /* Remove default marker/arrow */
-		display: flex;
-		justify-content: space-between; /* Push icon to the right */
-		align-items: center;
-		transition: background-color var(--transition-fast);
-	}
+    /* --- Collapsible Filter Styles --- */
+    .filters-details {
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-lg);
+        background-color: var(--bg-secondary);
+        overflow: hidden;
+    }
+
+    .filters-summary {
+        padding: var(--space-sm) var(--space-md); /* Adjusted padding */
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--ocean-blue-dark);
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color var(--transition-fast);
+        user-select: none;
+    }
     .filters-summary:hover {
-         background-color: var(--sandy-beige-light); /* Subtle hover on summary */
+        background-color: var(--sandy-beige-light);
+    }
+    .filters-summary::-webkit-details-marker { display: none; }
+
+    .filters-toggle-icon {
+        font-size: 0.9em; /* Slightly larger icon */
+        display: inline-block;
+        margin-left: var(--space-sm);
+        transition: transform var(--transition-fast);
+        color: var(--text-secondary); /* Color for the icon */
+    }
+    .filters-details[open] .filters-summary {
+         border-bottom: 1px solid var(--border-color); /* Add separator when open */
+         background-color: var(--sandy-beige-light); /* Keep hover color when open */
+    }
+    /* Optional: Rotate icon when open */
+    /* .filters-details[open] .filters-toggle-icon { transform: rotate(180deg); } */
+
+    .filters-container {
+        padding: var(--space-md) var(--space-lg); /* Use consistent padding */
+        /* border-top removed, handled by summary border now */
     }
 
-	/* Remove default marker in Webkit */
-	.filters-summary::-webkit-details-marker {
-		display: none;
-	}
+    .filter-group {
+        border: none;
+        padding: 0;
+        margin: 0 0 var(--space-lg) 0; /* Consistent margin */
+    }
+    .filter-group:last-child { margin-bottom: 0; }
 
-	.filters-toggle-icon {
-		font-size: 0.8em;
-		display: inline-block;
-		margin-left: var(--space-sm);
-		transition: transform var(--transition-fast);
-	}
-    /* Rotate icon when open (optional) */
-	/* .filters-details[open] .filters-toggle-icon {
-        transform: rotate(180deg);
-    } */
-
-	/* Style for the container *inside* details */
-	.filters-container {
-		padding: var(--space-lg); /* Add padding when open */
-		border-top: 1px solid var(--border-color); /* Separator line */
-        /* margin-bottom: 0; REMOVED - padding is enough */
-	}
-
-    /* Remove outer border/padding from groups inside */
-	.filters-details .filter-group {
-		border: none;
-		padding: 0;
-		margin-bottom: var(--space-lg); /* Space between filter groups */
-	}
-    .filters-details .filter-group:last-child {
-        margin-bottom: 0; /* No margin on last group inside */
+    .filter-group legend {
+        font-size: 1.05rem; /* Slightly smaller legend */
+        font-weight: 600;
+        color: var(--ocean-blue-dark);
+        padding-bottom: var(--space-xs);
+        margin-bottom: var(--space-md); /* More space before checkboxes */
+        border-bottom: 1px solid var(--sandy-beige-dark);
+        width: 100%;
     }
 
-	.filter-group legend {
-		font-size: 1.1rem;
-		font-weight: 600;
-		color: var(--ocean-blue-dark);
-		padding-bottom: var(--space-xs); /* Space below legend */
-        margin-bottom: var(--space-sm); /* More space before checkboxes */
-        border-bottom: 1px solid var(--sandy-beige-dark); /* Underline legend */
-        width: 100%; /* Make underline span full width */
-	}
+    .filter-controls {
+        margin-bottom: var(--space-md);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+    }
+    /* Ensure buttons use standard classes */
+    .filter-controls .btn { /* Apply base button style if not already */
+       /* Styles inherited via class names like btn-secondary btn-sm */
+    }
 
-	.filter-controls {
-		margin-bottom: var(--space-md); /* Space below buttons */
-		display: flex;
-        flex-wrap: wrap; /* Allow buttons to wrap */
-		gap: var(--space-sm);
-	}
-
-	.checkbox-list {
-		display: grid;
-		/* Responsive columns for checkboxes */
-		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-		gap: var(--space-sm) var(--space-md); /* Row and column gap */
-        max-height: 200px; /* Limit height and allow scroll if many items */
+    .checkbox-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Adjust min width if needed */
+        gap: var(--space-sm) var(--space-md);
+        max-height: 200px;
         overflow-y: auto;
-        padding-right: var(--space-sm); /* Padding for scrollbar */
-	}
+        padding: var(--space-xs) var(--space-sm) var(--space-xs) var(--space-xs); /* Padding for scrollbar + visual */
+        border: 1px solid var(--sandy-beige-dark); /* Add subtle border to list */
+        border-radius: var(--radius-sm);
+        background-color: var(--bg-primary); /* Ensure background contrasts */
+    }
 
-	.checkbox-list label {
-		display: flex;
-		align-items: center;
-		gap: var(--space-sm); /* Increased gap */
-		color: var(--text-primary);
-		cursor: pointer;
-        font-size: 0.9rem; /* Slightly smaller text */
-        white-space: nowrap; /* Prevent text wrapping */
-        overflow: hidden; /* Hide overflow */
-        text-overflow: ellipsis; /* Add ellipsis if text too long */
-	}
-     .checkbox-list label:hover {
-         color: var(--ocean-blue); /* Highlight on hover */
-     }
+    .checkbox-list label {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        color: var(--text-primary);
+        cursor: pointer;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: var(--space-xs) 0; /* Add slight vertical padding */
+        transition: color var(--transition-fast);
+    }
+    .checkbox-list label:hover {
+        color: var(--ocean-blue);
+    }
 
-	.checkbox-list input[type='checkbox'] {
-		margin: 0;
-        width: 1em; /* Consistent size */
+    .checkbox-list input[type='checkbox'] {
+        margin: 0;
+        width: 1em;
         height: 1em;
         cursor: pointer;
-        accent-color: var(--ocean-blue); /* Color the checkmark */
-        flex-shrink: 0; /* Prevent checkbox shrinking */
-	}
+        accent-color: var(--ocean-blue); /* Theme color for check */
+        flex-shrink: 0;
+        vertical-align: middle; /* Align better with text */
+    }
     /* --- End Filter Styles --- */
 
 
-	/* --- Map Container Styling --- */
-	/* Target the Map component specifically using its mapId prop if needed,
-       or style the container generated by Leaflet more globally */
-	:global(#main-map.map-container-style) {
-		/* Ensure height is defined via the global rules in Map.svelte or here */
-		/* height: 500px; */ /* Already defined in Map.svelte global rule */
-		border-radius: var(--radius-md);
-		border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-sm);
-        margin-top: var(--space-lg); /* Space between filters/title and map */
-	}
+    /* --- Map Container Styling --- */
+    :global(#main-map.map-container-style) {
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-md); /* Slightly stronger shadow */
+        margin-top: var(--space-lg);
+        /* Height is controlled globally in Map.svelte or its specific global rule */
+    }
 
     /* Message when filters hide all markers */
     .no-results-message {
@@ -3709,6 +3800,12 @@ export async function load() {
         padding: var(--space-lg);
         background-color: var(--sandy-beige-light);
         border-radius: var(--radius-md);
+        border: 1px dashed var(--sandy-beige-dark); /* Dashed border */
+    }
+
+    /* Loading spinner alignment */
+    :global(.spinner-container) {
+        margin-top: var(--space-xl);
     }
 
 </style>
@@ -4301,15 +4398,19 @@ export async function load({ url }) {
 </div>
 
 <style>
+    /* src/routes/search/+page.svelte styles */
+
     .search-page-container {
-        max-width: 1200px;
+        max-width: 1200px; /* Consistent max-width */
         margin: 0 auto;
+        padding-bottom: var(--space-xxl); /* Ensure space at bottom */
     }
 
     h1 {
         color: var(--ocean-blue-dark);
         text-align: center;
         margin-bottom: var(--space-lg);
+        margin-top: 0;
     }
 
     /* General message styling */
@@ -4318,18 +4419,26 @@ export async function load({ url }) {
         color: var(--text-secondary);
         margin-bottom: var(--space-xl);
     }
-     .search-message {
-         font-style: italic;
-     }
+    .search-message { /* For 'Please enter search term' */
+        font-style: italic;
+         margin-top: var(--space-xl);
+         padding: var(--space-xl);
+         background-color: var(--sandy-beige-light);
+         border-radius: var(--radius-md);
+         max-width: 600px; /* Limit width */
+         margin-left: auto;
+         margin-right: auto;
+    }
 
     .results-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+        /* Match grid from places/restaurants pages */
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: var(--space-lg);
         margin-top: var(--space-lg);
     }
 
-    .no-results {
+    .no-results { /* Style for 'No results found for "query"' */
         text-align: center;
         font-style: italic;
         color: var(--text-secondary);
@@ -4337,11 +4446,28 @@ export async function load({ url }) {
         padding: var(--space-xl);
         background-color: var(--sandy-beige-light);
         border-radius: var(--radius-md);
+        border: 1px dashed var(--sandy-beige-dark); /* Dashed border */
+        max-width: 600px; /* Limit width */
+        margin-left: auto;
+        margin-right: auto;
     }
 
     /* Ensure cards take full width */
     :global(.results-grid .card-link) {
-         width: 100%;
+        width: 100%;
+    }
+
+    /* Loading spinner alignment */
+    :global(.spinner-container) {
+        margin-top: var(--space-xl);
+    }
+
+    /* Error message alignment/styling */
+    :global(.error-message) {
+        margin-top: var(--space-xl);
+        max-width: 600px; /* Limit width */
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>
 
@@ -4479,6 +4605,12 @@ export async function load({ url }) {
 	import '../app.css';
 
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+
+	let installPromptEvent = null;
+	let showInstallButton = false;
+
 	$: error = $page.error;
 
     // --- Theme Subscription ---
@@ -4488,9 +4620,43 @@ export async function load({ url }) {
     }
     // --- End Theme Subscription ---
 
+	onMount(() => {
+		if (browser) {
+			window.addEventListener('beforeinstallprompt', (event) => {
+				event.preventDefault();
+				installPromptEvent = event;
+				showInstallButton = true;
+				console.log('\'beforeinstallprompt\' event captured.');
+			});
+
+			window.addEventListener('appinstalled', () => {
+				showInstallButton = false;
+				installPromptEvent = null;
+				console.log('PWA was installed');
+			});
+		}
+	});
+
+	async function handleInstallClick() {
+		if (!installPromptEvent) {
+			console.log('Install prompt event not available.');
+			return;
+		}
+		try {
+			installPromptEvent.prompt();
+			const { outcome } = await installPromptEvent.userChoice;
+			console.log(`User response to the install prompt: ${outcome}`);
+			installPromptEvent = null;
+			showInstallButton = false;
+		} catch (error) {
+			console.error('Error showing install prompt:', error);
+			installPromptEvent = null;
+			showInstallButton = false;
+		}
+	}
 </script>
 
-<!-- RÃƒâ€°-AJOUTÃƒâ€° : Affiche SideNav si le store est true -->
+<!-- RÃ‰-AJOUTÃ‰ : Affiche SideNav si le store est true -->
 {#if $isSideNavOpen}
 	<SideNav />
 {/if}
@@ -4507,7 +4673,7 @@ export async function load({ url }) {
 	</main>
 
 	<BottomNav />
-	<Footer />
+	<Footer showInstallButton={showInstallButton} handleInstallClick={handleInstallClick} />
 </div>
 
 <style>
@@ -5043,7 +5209,49 @@ main {
   padding: var(--space-lg) var(--space-md); /* Utilise les variables d'espacement */
 }
 
-/* --- 4. Styles pour les Boutons --- */
+/* === Custom Map Markers (Circle + Line Pin Style) === */
+
+.custom-map-marker {
+    /* The Circle Part */
+    width: 20px;  /* Increased size */
+    height: 20px; /* Increased size */
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    box-sizing: border-box;
+    background-color: var(--medium-gray);
+}
+
+/* The Line (Stem) Part */
+.custom-map-marker::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 15px;
+    background-color: white; /* Changed to white */
+    /* Optional: add a very subtle shadow to the stem if needed */
+    /* box-shadow: 0px 1px 1px rgba(0,0,0,0.3); */
+}
+
+/* --- Color Modifiers (Apply only to the circle) --- */
+.custom-map-marker.marker-type-place {
+    background-color: var(--ocean-blue);
+    /* No need to set 'color' here anymore */
+}
+.custom-map-marker.marker-type-restaurant {
+    background-color: var(--sunset-orange);
+}
+
+/* Keep other optional specific styles commented out or remove */
+/* .custom-map-marker.marker-cat-beach { ... } */
+
+/* === Custom Map Markers === */
+
+/* === 4. Styles pour les Boutons === */
 
 /* Style de base commun Ã  tous les boutons */
 .btn {

@@ -11,6 +11,12 @@
 	import '../app.css';
 
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+
+	let installPromptEvent = null;
+	let showInstallButton = false;
+
 	$: error = $page.error;
 
     // --- Theme Subscription ---
@@ -20,9 +26,43 @@
     }
     // --- End Theme Subscription ---
 
+	onMount(() => {
+		if (browser) {
+			window.addEventListener('beforeinstallprompt', (event) => {
+				event.preventDefault();
+				installPromptEvent = event;
+				showInstallButton = true;
+				console.log('\'beforeinstallprompt\' event captured.');
+			});
+
+			window.addEventListener('appinstalled', () => {
+				showInstallButton = false;
+				installPromptEvent = null;
+				console.log('PWA was installed');
+			});
+		}
+	});
+
+	async function handleInstallClick() {
+		if (!installPromptEvent) {
+			console.log('Install prompt event not available.');
+			return;
+		}
+		try {
+			installPromptEvent.prompt();
+			const { outcome } = await installPromptEvent.userChoice;
+			console.log(`User response to the install prompt: ${outcome}`);
+			installPromptEvent = null;
+			showInstallButton = false;
+		} catch (error) {
+			console.error('Error showing install prompt:', error);
+			installPromptEvent = null;
+			showInstallButton = false;
+		}
+	}
 </script>
 
-<!-- RÃ‰-AJOUTÃ‰ : Affiche SideNav si le store est true -->
+<!-- RÉ-AJOUTÉ : Affiche SideNav si le store est true -->
 {#if $isSideNavOpen}
 	<SideNav />
 {/if}
@@ -39,7 +79,7 @@
 	</main>
 
 	<BottomNav />
-	<Footer />
+	<Footer showInstallButton={showInstallButton} handleInstallClick={handleInstallClick} />
 </div>
 
 <style>

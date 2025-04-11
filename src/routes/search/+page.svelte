@@ -64,15 +64,19 @@
 </div>
 
 <style>
+    /* src/routes/search/+page.svelte styles */
+
     .search-page-container {
-        max-width: 1200px;
+        max-width: 1200px; /* Consistent max-width */
         margin: 0 auto;
+        padding-bottom: var(--space-xxl); /* Ensure space at bottom */
     }
 
     h1 {
         color: var(--ocean-blue-dark);
         text-align: center;
         margin-bottom: var(--space-lg);
+        margin-top: 0;
     }
 
     /* General message styling */
@@ -81,18 +85,26 @@
         color: var(--text-secondary);
         margin-bottom: var(--space-xl);
     }
-     .search-message {
-         font-style: italic;
-     }
+    .search-message { /* For 'Please enter search term' */
+        font-style: italic;
+         margin-top: var(--space-xl);
+         padding: var(--space-xl);
+         background-color: var(--sandy-beige-light);
+         border-radius: var(--radius-md);
+         max-width: 600px; /* Limit width */
+         margin-left: auto;
+         margin-right: auto;
+    }
 
     .results-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid */
+        /* Match grid from places/restaurants pages */
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: var(--space-lg);
         margin-top: var(--space-lg);
     }
 
-    .no-results {
+    .no-results { /* Style for 'No results found for "query"' */
         text-align: center;
         font-style: italic;
         color: var(--text-secondary);
@@ -100,10 +112,27 @@
         padding: var(--space-xl);
         background-color: var(--sandy-beige-light);
         border-radius: var(--radius-md);
+        border: 1px dashed var(--sandy-beige-dark); /* Dashed border */
+        max-width: 600px; /* Limit width */
+        margin-left: auto;
+        margin-right: auto;
     }
 
     /* Ensure cards take full width */
     :global(.results-grid .card-link) {
-         width: 100%;
+        width: 100%;
+    }
+
+    /* Loading spinner alignment */
+    :global(.spinner-container) {
+        margin-top: var(--space-xl);
+    }
+
+    /* Error message alignment/styling */
+    :global(.error-message) {
+        margin-top: var(--space-xl);
+        max-width: 600px; /* Limit width */
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>

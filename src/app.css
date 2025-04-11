@@ -202,7 +202,49 @@ main {
   padding: var(--space-lg) var(--space-md); /* Utilise les variables d'espacement */
 }
 
-/* --- 4. Styles pour les Boutons --- */
+/* === Custom Map Markers (Circle + Line Pin Style) === */
+
+.custom-map-marker {
+    /* The Circle Part */
+    width: 20px;  /* Increased size */
+    height: 20px; /* Increased size */
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    box-sizing: border-box;
+    background-color: var(--medium-gray);
+}
+
+/* The Line (Stem) Part */
+.custom-map-marker::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 15px;
+    background-color: white; /* Changed to white */
+    /* Optional: add a very subtle shadow to the stem if needed */
+    /* box-shadow: 0px 1px 1px rgba(0,0,0,0.3); */
+}
+
+/* --- Color Modifiers (Apply only to the circle) --- */
+.custom-map-marker.marker-type-place {
+    background-color: var(--ocean-blue);
+    /* No need to set 'color' here anymore */
+}
+.custom-map-marker.marker-type-restaurant {
+    background-color: var(--sunset-orange);
+}
+
+/* Keep other optional specific styles commented out or remove */
+/* .custom-map-marker.marker-cat-beach { ... } */
+
+/* === Custom Map Markers === */
+
+/* === 4. Styles pour les Boutons === */
 
 /* Style de base commun à tous les boutons */
 .btn {

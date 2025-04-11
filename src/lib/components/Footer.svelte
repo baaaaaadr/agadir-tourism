@@ -1,7 +1,7 @@
 <script>
-    import { browser } from '$app/environment'; // To check for window.matchMedia
-    import { themeStore } from '$lib/stores/themeStore.js'; // Import theme store
-    import { Facebook, Instagram, Twitter, Youtube, Linkedin, Sun, Moon } from 'lucide-svelte'; // Added Sun, Moon icons
+    import { browser } from '$app/environment';
+    import { themeStore } from '$lib/stores/themeStore.js';
+    import { Facebook, Instagram, Twitter, Youtube, Linkedin, Sun, Moon, Download } from 'lucide-svelte';
 
     // Social Links (as before)
     const socialLinks = [
@@ -10,6 +10,10 @@
         { name: 'Twitter', href: '#', icon: Twitter, ariaLabel: 'Suivez-nous sur Twitter (X)' },
         { name: 'YouTube', href: '#', icon: Youtube, ariaLabel: 'Suivez-nous sur YouTube' },
     ];
+
+    // PWA Install Props
+    export let showInstallButton = false;
+    export let handleInstallClick = () => { console.warn('handleInstallClick function not passed to Footer'); };
 
     // --- Theme Toggle Logic ---
     let isCurrentlyDark = false; // Reactive variable to show the correct icon
@@ -38,7 +42,7 @@
 <footer>
     <div class="footer-content">
         <a href="/" aria-label="Accueil Xplore Agadir" class="footer-logo-link">
-            <img src="/assets/images/xplore-agadir-logo-full.png" alt="Xplore Agadir Logo" class="footer-logo-img" />
+            <img src="/assets/images/xplore-agadir-icon.png" alt="Xplore Agadir Logo" class="footer-logo-img" />
         </a>
 
         <div class="copyright">
@@ -53,6 +57,19 @@
                     </a>
                 {/each}
             </div>
+
+            <!-- Install App Button (Conditional) -->
+            {#if showInstallButton}
+                <button
+                    class="btn btn-accent install-button"
+                    on:click={handleInstallClick}
+                    title="Installer l'application"
+                    aria-label="Installer l'application PWA"
+                >
+                    <Download size={18} />
+                    Installer l'App
+                </button>
+            {/if}
 
             <button
                 class="theme-toggle-button"
@@ -95,12 +112,12 @@
     /* --- Footer Logo (New Layout) --- */
     .footer-logo-link {
         display: block;
-        margin-bottom: var(--space-lg);
+        margin-bottom: var(--space-md);
         text-align: center;
         line-height: 1;
     }
     .footer-logo-img {
-        height: 45px;
+        height: 60px;
         width: auto;
         max-width: 200px;
         display: inline-block;
@@ -138,7 +155,7 @@
         .footer-logo-link {
             width: 100%;
             order: -1;
-            margin-bottom: var(--space-lg);
+            margin-bottom: var(--space-md);
         }
 
         .copyright {
@@ -152,6 +169,13 @@
         }
         .social-icons {
             gap: var(--space-lg);
+        }
+    }
+
+    /* Add padding below the footer ONLY on mobile to prevent overlap with BottomNav */
+    @media (max-width: 767px) {
+        footer {
+            padding-bottom: calc(60px + var(--space-lg) + env(safe-area-inset-bottom));
         }
     }
 
@@ -190,5 +214,33 @@
     .social-link:hover {
         color: var(--ocean-blue);
         transform: scale(1.15);
+    }
+
+    /* Install Button Styles */
+    .install-button {
+        background-color: var(--ocean-blue);
+        color: white;
+        border: none;
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.85rem;
+        border-radius: var(--radius-full);
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        transition: background-color var(--transition-normal), transform var(--transition-fast);
+    }
+
+    .install-button svg {
+        color: currentColor; /* Inherits white color from button */
+        margin-right: var(--space-sm);
+    }
+
+    .install-button:hover {
+        background-color: var(--ocean-blue-dark);
+        transform: scale(1.05);
+    }
+
+    .install-button:active {
+        transform: scale(0.95);
     }
 </style>

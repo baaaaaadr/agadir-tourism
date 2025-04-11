@@ -9,7 +9,7 @@
     export let mapId = 'leaflet-map';
     export let minZoom = 10; // Optional: Set a minimum zoom level
 
-    // RÃ©fÃ©rences et Ã©tat interne
+    // Références et état interne
     let mapContainerElement = null;
     let mapInstance = null;
     let markerLayerGroup = null;
@@ -31,20 +31,20 @@
             await tick();
 
             if (!mapContainerElement) {
-                 console.error(`[${mapId}] Ã‰lÃ©ment conteneur introuvable au montage.`);
-                 errorLoading = "Erreur interne: Conteneur de carte non trouvÃ©.";
+                 console.error(`[${mapId}] Élément conteneur introuvable au montage.`);
+                 errorLoading = "Erreur interne: Conteneur de carte non trouvé.";
                  isLoading = false;
                  return;
              }
             if (typeof window.L === 'undefined' || window.L === null) {
-                console.error(`[${mapId}] ERREUR: Objet global L non trouvÃ©.`);
+                console.error(`[${mapId}] ERREUR: Objet global L non trouvé.`);
                 errorLoading = "Impossible de charger la librairie de carte (CDN).";
                 isLoading = false;
                 return;
             }
 
             L = window.L; // Assign global L
-             console.log(`[${mapId}] Objet global L trouvÃ©.`);
+             console.log(`[${mapId}] Objet global L trouvé.`);
 
             // --- Re-create bounds object now that L is defined ---
             // You could also move the const definitions inside onMount if L is guaranteed
@@ -116,22 +116,58 @@
     }
 
     function updateMapMarkers(newMarkers) {
-        // ... (keep existing code)
-         if (!mapInstance || !markerLayerGroup || !L) return;
-         markerLayerGroup.clearLayers();
-         (newMarkers || []).forEach(markerInfo => {
+        if (!mapInstance || !markerLayerGroup || !L) return;
+        markerLayerGroup.clearLayers();
+        (newMarkers || []).forEach(markerInfo => {
             if (markerInfo.lat != null && markerInfo.lon != null) {
-                 try {
-                    const marker = L.marker([markerInfo.lat, markerInfo.lon]);
-                    if (markerInfo.popupText) {
-                         marker.bindPopup(markerInfo.popupText, { closeButton: true, autoClose: false });
+                try {
+                    // 1. Determine Marker Class based on type (and optionally category/cuisine)
+                    let markerClass = 'custom-map-marker'; // Base class
+                    if (markerInfo.type === 'place') {
+                        markerClass += ' marker-type-place';
+                        // --- Optional: Add specific category classes ---
+                        // Example: if (markerInfo.category === 'Plage') markerClass += ' marker-cat-beach';
+                        // Add more else if blocks for other categories here if needed
+                    } else if (markerInfo.type === 'restaurant') {
+                        markerClass += ' marker-type-restaurant';
+                        // --- Optional: Add specific cuisine classes ---
+                        // Example: if (markerInfo.cuisine === 'Marocain') markerClass += ' marker-cuisine-marocain';
+                        // Add more else if blocks for other cuisines here if needed
                     }
-                     marker.addTo(markerLayerGroup);
-                 } catch (e) {
-                    console.error(`[${mapId}] Erreur crÃ©ation marqueur (CDN): `, markerInfo, e);
-                 }
+
+                    // 2. Create the L.divIcon instance
+                    const customIcon = L.divIcon({
+                        className: markerClass,
+                        // Correct Bounding Box: width=20, height=20(circle)+15(line)=35
+                        iconSize: [20, 35],
+                        // Correct Anchor: X=Center(20/2)=10, Y=Total height(20+15)=35
+                        iconAnchor: [10, 35],
+                        // Correct Popup Anchor: Above circle center (X=0 relative to anchor, Y=negative(radius+stem+offset))
+                        // Y = -(10 + 15 + 3) = -28 (approx)
+                        popupAnchor: [0, -28]
+                    });
+
+                    // 3. Create the marker using the custom icon
+                    const marker = L.marker([markerInfo.lat, markerInfo.lon], {
+                        icon: customIcon,
+                        // Optional: Add alt text for accessibility
+                        alt: markerInfo.name || 'Map marker'
+                    });
+
+                    // 4. Bind popup (same as before)
+                    if (markerInfo.popupText) {
+                        marker.bindPopup(markerInfo.popupText, { closeButton: true, autoClose: false });
+                    }
+
+                    // 5. Add marker to layer group (same as before)
+                    marker.addTo(markerLayerGroup);
+
+                } catch (e) {
+                    // Update error message context if needed
+                    console.error(`[${mapId}] Erreur création marqueur custom: `, markerInfo, e);
+                }
             }
-         });
+        });
     }
 
     // --- Reactivity (keep existing code) ---
@@ -171,4 +207,9 @@
     :global(.leaflet-popup-content a) { color: var(--ocean-blue, #0077cc); font-weight: bold; text-decoration: none; } /* Use variable */
     :global(.leaflet-popup-content a:hover) { text-decoration: underline; }
     :global(.leaflet-container a.leaflet-popup-close-button) { color: #555 !important; padding: 6px 6px 0 0 !important; }
+    /* Add custom marker styles here */
+    :global(.custom-map-marker) { /* Base class for custom markers */ }
+    :global(.marker-type-place) { /* Style for place markers */ }
+    :global(.marker-type-restaurant) { /* Style for restaurant markers */ }
+    /* Add more styles for specific categories or cuisines if needed */
 </style>
